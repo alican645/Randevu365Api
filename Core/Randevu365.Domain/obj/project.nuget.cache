@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "OT/ujrHR0uE=",
+  "success": true,
+  "projectFilePath": "/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Domain/Randevu365.Domain.csproj",
+  "expectedPackageFiles": [
+    "/Users/alicanaydin/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/10.0.0/microsoft.extensions.dependencyinjection.abstractions.10.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

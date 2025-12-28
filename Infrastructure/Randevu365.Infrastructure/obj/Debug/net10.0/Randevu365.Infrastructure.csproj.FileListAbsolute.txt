@@ -1,0 +1,17 @@
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Infrastructure.deps.json
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Infrastructure.dll
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Infrastructure.pdb
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.AssemblyInfoInputs.cache
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.AssemblyInfo.cs
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.dll
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/refint/Randevu365.Infrastructure.dll
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.pdb
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/ref/Randevu365.Infrastructure.dll
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.csproj.AssemblyReference.cache
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Application.dll
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Domain.dll
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Application.pdb
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Domain.pdb
+/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu3.22A321B0.Up2Date

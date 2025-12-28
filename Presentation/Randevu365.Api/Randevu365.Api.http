@@ -1,0 +1,6 @@
+@Randevu365.Api_HostAddress = http://localhost:5192
+
+GET {{Randevu365.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

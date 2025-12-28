@@ -1,0 +1,15 @@
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Application.deps.json
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Application.dll
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Application.pdb
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.AssemblyInfoInputs.cache
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.AssemblyInfo.cs
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.csproj.CoreCompileInputs.cache
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.dll
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/obj/Debug/net10.0/refint/Randevu365.Application.dll
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.pdb
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/obj/Debug/net10.0/ref/Randevu365.Application.dll
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Domain.dll
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Domain.pdb
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.csproj.AssemblyReference.cache
+/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/obj/Debug/net10.0/Randevu3.20482AD9.Up2Date

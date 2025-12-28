@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{BA2AD81C-5EFE-4584-9B25-90B1D63A5BFC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{1583AC1F-44B5-4A9C-B6EF-C78790C87CC1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{A286A2EE-9FAD-45DE-932D-CF50A0B19DFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Randevu365.Domain", "Core\Randevu365.Domain\Randevu365.Domain.csproj", "{451C3CF1-6085-4034-957E-9838A257D62D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Randevu365.Application", "Core\Randevu365.Application\Randevu365.Application.csproj", "{CD38CE33-D257-49E0-AD8D-0DFA567E6C64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Randevu365.Infrastructure", "Infrastructure\Randevu365.Infrastructure\Randevu365.Infrastructure.csproj", "{F3847A50-79E1-489F-BE56-FDC72B99E3B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Randevu365.Persistence", "Infrastructure\Randevu365.Persistence\Randevu365.Persistence.csproj", "{7FCF83A7-1C12-465E-B9D8-7A52069045E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Randevu365.Api", "Presentation\Randevu365.Api\Randevu365.Api.csproj", "{F393C585-BC6C-4207-90CD-6D9C5FCB7091}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{451C3CF1-6085-4034-957E-9838A257D62D} = {BA2AD81C-5EFE-4584-9B25-90B1D63A5BFC}
+		{CD38CE33-D257-49E0-AD8D-0DFA567E6C64} = {BA2AD81C-5EFE-4584-9B25-90B1D63A5BFC}
+		{F3847A50-79E1-489F-BE56-FDC72B99E3B0} = {1583AC1F-44B5-4A9C-B6EF-C78790C87CC1}
+		{7FCF83A7-1C12-465E-B9D8-7A52069045E4} = {1583AC1F-44B5-4A9C-B6EF-C78790C87CC1}
+		{F393C585-BC6C-4207-90CD-6D9C5FCB7091} = {A286A2EE-9FAD-45DE-932D-CF50A0B19DFD}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{451C3CF1-6085-4034-957E-9838A257D62D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{451C3CF1-6085-4034-957E-9838A257D62D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{451C3CF1-6085-4034-957E-9838A257D62D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{451C3CF1-6085-4034-957E-9838A257D62D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD38CE33-D257-49E0-AD8D-0DFA567E6C64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD38CE33-D257-49E0-AD8D-0DFA567E6C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD38CE33-D257-49E0-AD8D-0DFA567E6C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD38CE33-D257-49E0-AD8D-0DFA567E6C64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3847A50-79E1-489F-BE56-FDC72B99E3B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3847A50-79E1-489F-BE56-FDC72B99E3B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3847A50-79E1-489F-BE56-FDC72B99E3B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3847A50-79E1-489F-BE56-FDC72B99E3B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FCF83A7-1C12-465E-B9D8-7A52069045E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FCF83A7-1C12-465E-B9D8-7A52069045E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FCF83A7-1C12-465E-B9D8-7A52069045E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FCF83A7-1C12-465E-B9D8-7A52069045E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F393C585-BC6C-4207-90CD-6D9C5FCB7091}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F393C585-BC6C-4207-90CD-6D9C5FCB7091}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F393C585-BC6C-4207-90CD-6D9C5FCB7091}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F393C585-BC6C-4207-90CD-6D9C5FCB7091}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

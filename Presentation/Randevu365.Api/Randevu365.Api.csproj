@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\Core\Randevu365.Domain\Randevu365.Domain.csproj"/>
+        <ProjectReference Include="..\..\Core\Randevu365.Application\Randevu365.Application.csproj"/>
+        <ProjectReference Include="..\..\Infrastructure\Randevu365.Infrastructure\Randevu365.Infrastructure.csproj"/>
+        <ProjectReference Include="..\..\Infrastructure\Randevu365.Persistence\Randevu365.Persistence.csproj"/>
+    </ItemGroup>
+</Project>
