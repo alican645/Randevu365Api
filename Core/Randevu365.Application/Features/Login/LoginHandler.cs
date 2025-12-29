@@ -1,10 +1,11 @@
 using MediatR;
+using Randevu365.Application.Common.Responses;
 using Randevu365.Application.Interfaces;
 using Randevu365.Domain.Entities;
 
 namespace Randevu365.Application.Features.Login;
 
-public class LoginHandler : IRequestHandler<LoginRequest, LoginResponse>
+public class LoginHandler : IRequestHandler<LoginRequest, ApiResponse<LoginResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IJwtService _jwtService;
@@ -15,7 +16,7 @@ public class LoginHandler : IRequestHandler<LoginRequest, LoginResponse>
         _jwtService = jwtService;
     }
 
-    public async Task<LoginResponse> Handle(LoginRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<LoginResponse>> Handle(LoginRequest request, CancellationToken cancellationToken)
     {
         // Get user by email
         var readRepository = _unitOfWork.GetReadRepository<AppUser>();
@@ -24,13 +25,13 @@ public class LoginHandler : IRequestHandler<LoginRequest, LoginResponse>
         // Validate user exists
         if (user == null)
         {
-            throw new UnauthorizedAccessException("Geçersiz email veya şifre.");
+            return ApiResponse<LoginResponse>.UnauthorizedResult("Geçersiz email veya şifre.");
         }
 
         // Validate password (TODO: Use password hashing in production!)
         if (user.Password != request.Password)
         {
-            throw new UnauthorizedAccessException("Geçersiz email veya şifre.");
+            return ApiResponse<LoginResponse>.UnauthorizedResult("Geçersiz email veya şifre.");
         }
 
         // Generate tokens
@@ -42,11 +43,13 @@ public class LoginHandler : IRequestHandler<LoginRequest, LoginResponse>
 
         // TODO: Store refresh token in database for validation
 
-        return new LoginResponse
+        var loginResponse = new LoginResponse
         {
             Token = accessToken,
             RefreshToken = refreshToken,
             RefreshTokenExpiry = refreshTokenExpiry
         };
+
+        return ApiResponse<LoginResponse>.SuccessResult(loginResponse, "Giriş başarılı.");
     }
 }

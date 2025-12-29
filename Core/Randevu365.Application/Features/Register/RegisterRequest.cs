@@ -1,9 +1,10 @@
 
 using MediatR;
+using Randevu365.Application.Common.Responses;
 
 namespace Randevu365.Application.Features.Register;
 
-public record RegisterRequest : IRequest<RegisterResponse>
+public record RegisterRequest : IRequest<ApiResponse<RegisterResponse>>
 {
     // AppUser properties
     public required string Email { get; set; }

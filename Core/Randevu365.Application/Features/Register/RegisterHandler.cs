@@ -1,42 +1,59 @@
 using MediatR;
+using Randevu365.Application.Common.Responses;
 using Randevu365.Application.Interfaces;
 using Randevu365.Domain.Entities;
 using Randevu365.Domain.Enum;
 
 namespace Randevu365.Application.Features.Register;
 
-public class RegisterHandler : IRequestHandler<RegisterRequest, RegisterResponse>
+public class RegisterHandler : IRequestHandler<RegisterRequest, ApiResponse<RegisterResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IJwtService _jwtService;
 
-    public RegisterHandler(IUnitOfWork unitOfWork, IJwtService jwtService)
+    public RegisterHandler(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
-        _jwtService = jwtService;
     }
 
-    public async Task<RegisterResponse> Handle(RegisterRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<RegisterResponse>> Handle(RegisterRequest request, CancellationToken cancellationToken)
     {
-
+        // Check if user already exists
         var existingUser = await _unitOfWork.GetReadRepository<AppUser>().GetAsync(x => x.Email == request.Email);
         if (existingUser != null)
         {
-            return new RegisterResponse
-            {
-                Success = false,
-                Message = "User already exists"
-            };
+            return ApiResponse<RegisterResponse>.FailResult("Bu email adresi zaten kayıtlı.");
         }
-        var appUser = new AppUser(request.Email, request.Password, (Roles)request.Role);
+
+        // Create user information
+        var userInformation = new AppUserInformation
+        {
+            Name = request.Name,
+            Surname = request.Surname,
+            Age = request.Age,
+            Gender = request.Gender,
+            PhoneNumber = request.PhoneNumber,
+            Height = request.Height,
+            Weight = request.Weight
+        };
+
+        await _unitOfWork.GetWriteRepository<AppUserInformation>().AddAsync(userInformation);
+        await _unitOfWork.SaveAsync();
+
+        // Create user with information reference
+        var appUser = new AppUser(request.Email, request.Password, (Roles)request.Role)
+        {
+            AppUserInformationId = userInformation.Id,
+            AppUserInformation = userInformation
+        };
 
         await _unitOfWork.GetWriteRepository<AppUser>().AddAsync(appUser);
         await _unitOfWork.SaveAsync();
 
-        return new RegisterResponse
+        var registerResponse = new RegisterResponse
         {
-            Success = true,
-            Message = "User registered successfully"
+            UserId = appUser.Id
         };
+
+        return ApiResponse<RegisterResponse>.CreatedResult(registerResponse, "Kullanıcı başarıyla oluşturuldu.");
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace Randevu365.Application.Interfaces;
 
-public interface IReadRepository <T> where T : class
+public interface IReadRepository<T> where T : class
 {
     Task<IList<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null,
         Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
