@@ -1,5 +1,7 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Randevu365.Application.Common.Responses;
 using Randevu365.Application.Features.Login;
 using Randevu365.Application.Features.Register;
 
@@ -20,47 +22,26 @@ public class AuthController : ControllerBase
     /// Kullanıcı girişi yapar ve JWT token döner
     /// </summary>
     [HttpPost("login")]
-    public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request)
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(ApiResponse<LoginResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<LoginResponse>), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ApiResponse<LoginResponse>), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        try
-        {
-            var response = await _mediator.Send(request);
-            return Ok(response);
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            return Unauthorized(new { message = ex.Message });
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
     }
 
     /// <summary>
     /// Yeni kullanıcı kaydı oluşturur
     /// </summary>
     [HttpPost("register")]
-    public async Task<ActionResult<RegisterResponse>> Register([FromBody] RegisterRequest request)
+    [ProducesResponseType(typeof(ApiResponse<RegisterResponse>), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ApiResponse<RegisterResponse>), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
-        try
-        {
-            var response = await _mediator.Send(request);
-
-            if (!response.Success)
-            {
-                return BadRequest(response);
-            }
-
-            return Ok(response);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(new RegisterResponse
-            {
-                Success = false,
-                Message = ex.Message
-            });
-        }
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
     }
 }
+
