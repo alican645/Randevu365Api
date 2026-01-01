@@ -18,7 +18,7 @@ public class RegisterHandler : IRequestHandler<RegisterRequest, ApiResponse<Regi
     public async Task<ApiResponse<RegisterResponse>> Handle(RegisterRequest request, CancellationToken cancellationToken)
     {
         // Check if user already exists
-        var existingUser = await _unitOfWork.GetReadRepository<AppUser>().GetAsync(x => x.Email == request.Email);
+        var existingUser = await _unitOfWork.GetReadRepository<Domain.Entities.AppUser>().GetAsync(x => x.Email == request.Email);
         if (existingUser != null)
         {
             return ApiResponse<RegisterResponse>.FailResult("Bu email adresi zaten kayıtlı.");
@@ -40,13 +40,13 @@ public class RegisterHandler : IRequestHandler<RegisterRequest, ApiResponse<Regi
         await _unitOfWork.SaveAsync();
 
         // Create user with information reference
-        var appUser = new AppUser(request.Email, request.Password, (Roles)request.Role)
+        var appUser = new Domain.Entities.AppUser(request.Email, request.Password, request.Role)
         {
             AppUserInformationId = userInformation.Id,
             AppUserInformation = userInformation
         };
 
-        await _unitOfWork.GetWriteRepository<AppUser>().AddAsync(appUser);
+        await _unitOfWork.GetWriteRepository<Domain.Entities.AppUser>().AddAsync(appUser);
         await _unitOfWork.SaveAsync();
 
         var registerResponse = new RegisterResponse

@@ -3,11 +3,11 @@ using Randevu365.Domain.Enum;
 
 namespace Randevu365.Domain.Entities;
 
-public class AppUser(string email, string password , Roles role) : BaseEntity
+public class AppUser(string email, string password, string role) : BaseEntity
 {
-    public String Email { get; set; } = email;
-    public String Password { get; set; } = password;
-    public Roles Role { get; set; }
+    public string Email { get; set; } = email;
+    public string Password { get; set; } = password;
+    public string Role { get; set; } = role;
     public int? AppUserInformationId { get; set; }
     public virtual AppUserInformation? AppUserInformation { get; set; }
     public virtual ICollection<Business>? Businesses { get; set; } = new List<Business>();

@@ -1,0 +1,31 @@
+using MediatR;
+using Randevu365.Application.Common.Responses;
+using Randevu365.Application.Interfaces;
+using Randevu365.Domain.Entities;
+
+namespace Randevu365.Application.Features.Businesses.Commands.DeleteBusiness;
+
+public class DeleteBusinessCommandHandler : IRequestHandler<DeleteBusinessCommandRequest, ApiResponse<DeleteBusinessCommandResponse>>
+{
+    private readonly IUnitOfWork _unitOfWork;
+
+    public DeleteBusinessCommandHandler(IUnitOfWork unitOfWork)
+    {
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<ApiResponse<DeleteBusinessCommandResponse>> Handle(DeleteBusinessCommandRequest request, CancellationToken cancellationToken)
+    {
+        var business = await _unitOfWork.GetReadRepository<Business>().GetAsync(x => x.Id == request.Id);
+
+        if (business == null)
+        {
+            return ApiResponse<DeleteBusinessCommandResponse>.NotFoundResult("Business not found.");
+        }
+
+        await _unitOfWork.GetWriteRepository<Business>().HardDeleteAsync(business);
+        await _unitOfWork.SaveAsync();
+
+        return ApiResponse<DeleteBusinessCommandResponse>.SuccessResult(new DeleteBusinessCommandResponse { Id = request.Id }, "Business deleted successfully.");
+    }
+}

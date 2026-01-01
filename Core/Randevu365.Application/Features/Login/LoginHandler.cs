@@ -19,7 +19,7 @@ public class LoginHandler : IRequestHandler<LoginRequest, ApiResponse<LoginRespo
     public async Task<ApiResponse<LoginResponse>> Handle(LoginRequest request, CancellationToken cancellationToken)
     {
         // Get user by email
-        var readRepository = _unitOfWork.GetReadRepository<AppUser>();
+        var readRepository = _unitOfWork.GetReadRepository<Domain.Entities.AppUser>();
         var user = await readRepository.GetAsync(u => u.Email == request.Email && !u.IsDeleted);
 
         // Validate user exists
@@ -34,6 +34,7 @@ public class LoginHandler : IRequestHandler<LoginRequest, ApiResponse<LoginRespo
             return ApiResponse<LoginResponse>.UnauthorizedResult("Geçersiz email veya şifre.");
         }
 
+        var role = user.Role.ToString();
         // Generate tokens
         var accessToken = _jwtService.GenerateAccessToken(user.Id, user.Email, user.Role.ToString());
         var refreshToken = _jwtService.GenerateRefreshToken();
@@ -47,7 +48,9 @@ public class LoginHandler : IRequestHandler<LoginRequest, ApiResponse<LoginRespo
         {
             Token = accessToken,
             RefreshToken = refreshToken,
-            RefreshTokenExpiry = refreshTokenExpiry
+            RefreshTokenExpiry = refreshTokenExpiry,
+            Role = role
+
         };
 
         return ApiResponse<LoginResponse>.SuccessResult(loginResponse, "Giriş başarılı.");

@@ -7,9 +7,10 @@ namespace Randevu365.Application.Features.Register;
 public record RegisterRequest : IRequest<ApiResponse<RegisterResponse>>
 {
     // AppUser properties
+    
     public required string Email { get; set; }
     public required string Password { get; set; }
-    public required int Role { get; set; }
+    public required string Role { get; set; }
 
     // AppUserInformation properties
     public required string Name { get; set; }
