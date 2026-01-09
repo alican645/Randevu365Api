@@ -16,11 +16,16 @@ public class CreateBusinessLocationCommandHandler : IRequestHandler<CreateBusine
 
     public async Task<ApiResponse<CreateBusinessLocationCommandResponse>> Handle(CreateBusinessLocationCommandRequest request, CancellationToken cancellationToken)
     {
+        var existingLocation = await _unitOfWork.GetReadRepository<BusinessLocation>().GetAsync(x => x.BusinessId == request.BusinessId);
+        if (existingLocation != null)
+        {
+            return ApiResponse<CreateBusinessLocationCommandResponse>.ConflictResult("İşyeri konumu zaten mevcut.");
+        }
         var location = new BusinessLocation(request.BusinessId, request.Latitude, request.Longitude);
 
         await _unitOfWork.GetWriteRepository<BusinessLocation>().AddAsync(location);
         await _unitOfWork.SaveAsync();
 
-        return ApiResponse<CreateBusinessLocationCommandResponse>.SuccessResult(new CreateBusinessLocationCommandResponse { Id = location.Id }, "Business location added successfully.");
+        return ApiResponse<CreateBusinessLocationCommandResponse>.SuccessResult(new CreateBusinessLocationCommandResponse { Id = location.Id }, "İşyeri konumu başarıyla eklendi.");
     }
 }

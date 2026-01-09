@@ -18,10 +18,30 @@ public class GetAllBusinessesQueryHandler : IRequestHandler<GetAllBusinessesQuer
     public async Task<ApiResponse<IList<GetAllBusinessesQueryResponse>>> Handle(GetAllBusinessesQueryRequest request, CancellationToken cancellationToken)
     {
         var businesses = await _unitOfWork.GetReadRepository<Business>().GetAllAsync(
-            include: q => q.Include(b => b.BusinessLocations).Include(b => b.BusinessPhotos)
+            include: q => q.Include(b => b.BusinessLocations)
+                .Include(b => b.AppUser).ThenInclude(u => u!.AppUserInformation)
         );
 
-        var response = businesses.Select(b => new GetAllBusinessesQueryResponse { Business = b }).ToList();
+        var response = businesses.Select(b => new GetAllBusinessesQueryResponse
+        {
+            Id = b.Id,
+            BusinessName = b.BusinessName,
+            BusinessAddress = b.BusinessAddress,
+            BusinessCity = b.BusinessCity,
+            BusinessPhone = b.BusinessPhone,
+            BusinessEmail = b.BusinessEmail,
+            BusinessCountry = b.BusinessCountry,
+            CreatedAt = b.CreatedAt,
+            AppUserId = b.AppUserId,
+            OwnerName = b.AppUser?.AppUserInformation?.Name,
+            BusinessLocations = b.BusinessLocations.Select(l => new BusinessLocationDto
+            {
+                Id = l.Id,
+                Latitude = l.Latitude,
+                Longitude = l.Longitude
+            }).ToList()
+        }).ToList();
+
         return ApiResponse<IList<GetAllBusinessesQueryResponse>>.SuccessResult(response);
     }
 }

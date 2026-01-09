@@ -5,7 +5,8 @@ using Randevu365.Domain.Entities;
 
 namespace Randevu365.Application.Features.BusinessPhotos.Commands.DeleteBusinessPhoto;
 
-public class DeleteBusinessPhotoCommandHandler : IRequestHandler<DeleteBusinessPhotoCommandRequest, ApiResponse<DeleteBusinessPhotoCommandResponse>>
+public class DeleteBusinessPhotoCommandHandler : IRequestHandler<DeleteBusinessPhotoCommandRequest,
+    ApiResponse<DeleteBusinessPhotoCommandResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -14,18 +15,23 @@ public class DeleteBusinessPhotoCommandHandler : IRequestHandler<DeleteBusinessP
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<ApiResponse<DeleteBusinessPhotoCommandResponse>> Handle(DeleteBusinessPhotoCommandRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<DeleteBusinessPhotoCommandResponse>> Handle(DeleteBusinessPhotoCommandRequest request,
+        CancellationToken cancellationToken)
     {
-        var photo = await _unitOfWork.GetReadRepository<BusinessPhoto>().GetAsync(x => x.Id == request.Id);
+        var photo = await _unitOfWork.GetReadRepository<BusinessPhoto>().GetAsync(x =>
+            x.Id == request.BusinessPhotoId &&
+            x.BusinessId == request.BusinessId);
 
         if (photo == null)
         {
-            return ApiResponse<DeleteBusinessPhotoCommandResponse>.NotFoundResult("Business photo not found.");
+            return ApiResponse<DeleteBusinessPhotoCommandResponse>.NotFoundResult("Fotoğraf bulunamadı.");
         }
 
         await _unitOfWork.GetWriteRepository<BusinessPhoto>().HardDeleteAsync(photo);
         await _unitOfWork.SaveAsync();
 
-        return ApiResponse<DeleteBusinessPhotoCommandResponse>.SuccessResult(new DeleteBusinessPhotoCommandResponse { Id = request.Id }, "Business photo deleted successfully.");
+        return ApiResponse<DeleteBusinessPhotoCommandResponse>.SuccessResult(
+            new DeleteBusinessPhotoCommandResponse { Id = request.BusinessPhotoId },
+            "Fotoğraf başarıyla silindi.");
     }
 }

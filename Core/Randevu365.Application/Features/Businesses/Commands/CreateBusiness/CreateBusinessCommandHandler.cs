@@ -8,14 +8,21 @@ namespace Randevu365.Application.Features.Businesses.Commands.CreateBusiness;
 public class CreateBusinessCommandHandler : IRequestHandler<CreateBusinessCommandRequest, ApiResponse<CreateBusinessCommandResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICurrentUserService _currentUserService;
 
-    public CreateBusinessCommandHandler(IUnitOfWork unitOfWork)
+    public CreateBusinessCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
     {
         _unitOfWork = unitOfWork;
+        _currentUserService = currentUserService;
     }
 
     public async Task<ApiResponse<CreateBusinessCommandResponse>> Handle(CreateBusinessCommandRequest request, CancellationToken cancellationToken)
     {
+        if (_currentUserService.UserId is null)
+        {
+            return ApiResponse<CreateBusinessCommandResponse>.UnauthorizedResult("Kullanıcı oturumu bulunamadı.");
+        }
+
         var business = new Business
         {
             BusinessName = request.BusinessName,
@@ -24,7 +31,7 @@ public class CreateBusinessCommandHandler : IRequestHandler<CreateBusinessComman
             BusinessPhone = request.BusinessPhone,
             BusinessEmail = request.BusinessEmail,
             BusinessCountry = request.BusinessCountry,
-            AppUserId = request.AppUserId
+            AppUserId = _currentUserService.UserId.Value
         };
 
         await _unitOfWork.GetWriteRepository<Business>().AddAsync(business);

@@ -20,7 +20,7 @@ public class UpdateBusinessCommandHandler : IRequestHandler<UpdateBusinessComman
 
         if (businessResult == null)
         {
-            return ApiResponse<UpdateBusinessCommandResponse>.NotFoundResult("Business not found.");
+            return ApiResponse<UpdateBusinessCommandResponse>.NotFoundResult("İşyeri bulunamadı.");
         }
 
         businessResult.BusinessName = request.BusinessName;
@@ -33,6 +33,6 @@ public class UpdateBusinessCommandHandler : IRequestHandler<UpdateBusinessComman
         await _unitOfWork.GetWriteRepository<Business>().UpdateAsync(businessResult);
         await _unitOfWork.SaveAsync();
 
-        return ApiResponse<UpdateBusinessCommandResponse>.SuccessResult(new UpdateBusinessCommandResponse { Id = businessResult.Id }, "Business updated successfully.");
+        return ApiResponse<UpdateBusinessCommandResponse>.SuccessResult(new UpdateBusinessCommandResponse { Id = businessResult.Id }, "İşyeri başarıyla güncellendi.");
     }
 }

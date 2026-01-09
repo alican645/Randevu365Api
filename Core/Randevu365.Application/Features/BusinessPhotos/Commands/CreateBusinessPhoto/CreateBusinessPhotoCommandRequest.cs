@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Randevu365.Application.Common.Responses;
 
 namespace Randevu365.Application.Features.BusinessPhotos.Commands.CreateBusinessPhoto;
@@ -6,6 +7,6 @@ namespace Randevu365.Application.Features.BusinessPhotos.Commands.CreateBusiness
 public class CreateBusinessPhotoCommandRequest : IRequest<ApiResponse<CreateBusinessPhotoCommandResponse>>
 {
     public int BusinessId { get; set; }
-    public string? PhotoPath { get; set; }
-    public bool IsActive { get; set; }
+    public IFormFile? Photo { get; set; }
+    public bool IsActive { get; set; } = true;
 }

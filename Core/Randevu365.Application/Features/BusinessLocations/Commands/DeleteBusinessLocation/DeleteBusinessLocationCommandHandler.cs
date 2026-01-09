@@ -20,12 +20,12 @@ public class DeleteBusinessLocationCommandHandler : IRequestHandler<DeleteBusine
 
         if (location == null)
         {
-            return ApiResponse<DeleteBusinessLocationCommandResponse>.NotFoundResult("Business location not found.");
+            return ApiResponse<DeleteBusinessLocationCommandResponse>.NotFoundResult("İşyeri konumu bulunamadı.");
         }
 
         await _unitOfWork.GetWriteRepository<BusinessLocation>().HardDeleteAsync(location);
         await _unitOfWork.SaveAsync();
 
-        return ApiResponse<DeleteBusinessLocationCommandResponse>.SuccessResult(new DeleteBusinessLocationCommandResponse { Id = request.Id }, "Business location deleted successfully.");
+        return ApiResponse<DeleteBusinessLocationCommandResponse>.SuccessResult(new DeleteBusinessLocationCommandResponse { Id = request.Id }, "İşyeri konumu başarıyla silindi.");
     }
 }

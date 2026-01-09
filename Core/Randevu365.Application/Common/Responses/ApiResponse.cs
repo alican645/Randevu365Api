@@ -115,6 +115,17 @@ public class ApiResponse<T>
             StatusCode = 404,
             Message = message
         };
+
+    /// <summary>
+    /// Conflict (409) response oluşturur
+    /// </summary>
+    public static ApiResponse<T> ConflictResult(string message = "Çakışma oluştu")
+        => new()
+        {
+            Success = false,
+            StatusCode = 409,
+            Message = message
+        };
 }
 
 /// <summary>

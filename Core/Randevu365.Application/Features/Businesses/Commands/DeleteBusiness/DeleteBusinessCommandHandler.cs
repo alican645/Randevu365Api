@@ -20,12 +20,12 @@ public class DeleteBusinessCommandHandler : IRequestHandler<DeleteBusinessComman
 
         if (business == null)
         {
-            return ApiResponse<DeleteBusinessCommandResponse>.NotFoundResult("Business not found.");
+            return ApiResponse<DeleteBusinessCommandResponse>.NotFoundResult("İşyeri bulunamadı.");
         }
 
         await _unitOfWork.GetWriteRepository<Business>().HardDeleteAsync(business);
         await _unitOfWork.SaveAsync();
 
-        return ApiResponse<DeleteBusinessCommandResponse>.SuccessResult(new DeleteBusinessCommandResponse { Id = request.Id }, "Business deleted successfully.");
+        return ApiResponse<DeleteBusinessCommandResponse>.SuccessResult(new DeleteBusinessCommandResponse { Id = request.Id }, "İşyeri başarıyla silindi.");
     }
 }

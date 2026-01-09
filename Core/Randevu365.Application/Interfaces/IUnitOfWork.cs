@@ -1,3 +1,5 @@
+using Randevu365.Domain.Base;
+
 namespace Randevu365.Application.Interfaces;
 
 public interface IUnitOfWork : IAsyncDisposable

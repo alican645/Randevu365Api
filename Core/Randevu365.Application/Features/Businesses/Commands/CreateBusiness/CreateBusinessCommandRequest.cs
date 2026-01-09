@@ -11,5 +11,4 @@ public class CreateBusinessCommandRequest : IRequest<ApiResponse<CreateBusinessC
     public required string BusinessPhone { get; set; }
     public required string BusinessEmail { get; set; }
     public required string BusinessCountry { get; set; }
-    public int AppUserId { get; set; }
 }

@@ -5,5 +5,6 @@ namespace Randevu365.Application.Features.BusinessPhotos.Commands.DeleteBusiness
 
 public class DeleteBusinessPhotoCommandRequest : IRequest<ApiResponse<DeleteBusinessPhotoCommandResponse>>
 {
-    public int Id { get; set; }
+    public int BusinessId { get; set; }
+    public int BusinessPhotoId { get; set; }
 }

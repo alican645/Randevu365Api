@@ -20,7 +20,7 @@ public class UpdateBusinessLocationCommandHandler : IRequestHandler<UpdateBusine
 
         if (location == null)
         {
-            return ApiResponse<UpdateBusinessLocationCommandResponse>.NotFoundResult("Business location not found.");
+            return ApiResponse<UpdateBusinessLocationCommandResponse>.NotFoundResult("İşyeri konumu bulunamadı.");
         }
 
         location.Latitude = request.Latitude;
@@ -29,6 +29,6 @@ public class UpdateBusinessLocationCommandHandler : IRequestHandler<UpdateBusine
         await _unitOfWork.GetWriteRepository<BusinessLocation>().UpdateAsync(location);
         await _unitOfWork.SaveAsync();
 
-        return ApiResponse<UpdateBusinessLocationCommandResponse>.SuccessResult(new UpdateBusinessLocationCommandResponse { Id = location.Id }, "Business location updated successfully.");
+        return ApiResponse<UpdateBusinessLocationCommandResponse>.SuccessResult(new UpdateBusinessLocationCommandResponse { Id = location.Id }, "İşyeri konumu başarıyla güncellendi.");
     }
 }
