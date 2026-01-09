@@ -37,7 +37,8 @@ public class BusinessConfiguration : IEntityTypeConfiguration<Business>
             .HasMaxLength(100);
 
         builder.Property(x => x.CreatedAt)
-            .IsRequired();
+            .IsRequired()
+            .HasDefaultValue(DateTime.Now);
 
         builder.Property(x => x.IsDeleted)
             .IsRequired()

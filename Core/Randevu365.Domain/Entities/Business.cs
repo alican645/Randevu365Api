@@ -15,4 +15,6 @@ public class Business : BaseEntity
     public virtual AppUser? AppUser { get; set; }
     public virtual ICollection<BusinessLocation> BusinessLocations { get; set; } = new List<BusinessLocation>();
     public virtual ICollection<BusinessPhoto> BusinessPhotos { get; set; } = new List<BusinessPhoto>();
+    public virtual ICollection<BusinessComment> BusinessComments { get; set; } = new List<BusinessComment>();
+    public virtual ICollection<BusinessRating> BusinessRatings { get; set; } = new List<BusinessRating>();
 }

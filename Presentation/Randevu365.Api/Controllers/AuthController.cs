@@ -18,26 +18,15 @@ public class AuthController : ControllerBase
         _mediator = mediator;
     }
 
-    /// <summary>
-    /// Kullanıcı girişi yapar ve JWT token döner
-    /// </summary>
     [HttpPost("login")]
     [AllowAnonymous]
-    [ProducesResponseType(typeof(ApiResponse<LoginResponse>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ApiResponse<LoginResponse>), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ApiResponse<LoginResponse>), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         var response = await _mediator.Send(request);
         return StatusCode(response.StatusCode, response);
     }
 
-    /// <summary>
-    /// Yeni kullanıcı kaydı oluşturur
-    /// </summary>
     [HttpPost("register")]
-    [ProducesResponseType(typeof(ApiResponse<RegisterResponse>), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ApiResponse<RegisterResponse>), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
         var response = await _mediator.Send(request);

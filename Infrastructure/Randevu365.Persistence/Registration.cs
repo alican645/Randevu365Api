@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Randevu365.Application.Interfaces;
 using Randevu365.Persistence.Context;
 using Randevu365.Persistence.Repositories;
+using Randevu365.Persistence.Services;
 
 namespace Randevu365.Persistence;
 
@@ -22,7 +23,9 @@ public static class Registration
         services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
 
         // UnitOfWork Registration
-        services.AddScoped<IUnitOfWork, Randevu365.Persistence.UnitOfWork.UnitOfWork>();
+        services.AddScoped<IUnitOfWork,UnitOfWork.UnitOfWork>();
+        services.AddScoped<IHubService, HubService>();
+        services.AddScoped<IConversationIdHelper, ConversationIdHelper>();
 
         return services;
     }

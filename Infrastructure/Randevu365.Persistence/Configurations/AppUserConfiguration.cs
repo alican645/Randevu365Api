@@ -21,20 +21,20 @@ public class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
 
         builder.Property(x => x.Role)
             .IsRequired()
-            .HasConversion<int>();
-            
-        builder.Property(x => x.CreatedAt)
-            .IsRequired();
+            .HasMaxLength(50);
 
         builder.Property(x => x.IsDeleted)
             .IsRequired()
             .HasDefaultValue(false);
-        
+
+        builder.Property(x => x.CreatedAt)
+            .IsRequired()
+            .HasDefaultValue(DateTime.Now);
         builder.HasOne(x => x.AppUserInformation)
             .WithOne()
             .HasForeignKey<AppUser>(x => x.AppUserInformationId)
             .OnDelete(DeleteBehavior.SetNull);
-        
+
         builder.HasMany(x => x.Businesses)
             .WithOne(x => x.AppUser)
             .HasForeignKey(x => x.AppUserId)

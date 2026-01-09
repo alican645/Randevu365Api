@@ -20,7 +20,8 @@ public class BusinessPhotoConfiguration : IEntityTypeConfiguration<BusinessPhoto
             .HasDefaultValue(true);
 
         builder.Property(x => x.CreatedAt)
-            .IsRequired();
+            .IsRequired()
+            .HasDefaultValue(DateTime.Now);
 
         builder.Property(x => x.IsDeleted)
             .IsRequired()

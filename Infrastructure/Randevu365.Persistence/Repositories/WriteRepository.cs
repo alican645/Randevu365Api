@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Randevu365.Application.Interfaces;
+using Randevu365.Domain.Base;
 
 namespace Randevu365.Persistence.Repositories;
 

@@ -11,4 +11,6 @@ public class AppUser(string email, string password, string role) : BaseEntity
     public int? AppUserInformationId { get; set; }
     public virtual AppUserInformation? AppUserInformation { get; set; }
     public virtual ICollection<Business>? Businesses { get; set; } = new List<Business>();
+    public virtual ICollection<BusinessComment> BusinessComments { get; set; } = new List<BusinessComment>();
+    public virtual ICollection<BusinessRating> BusinessRatings { get; set; } = new List<BusinessRating>();
 }

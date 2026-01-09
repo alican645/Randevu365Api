@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Randevu365.Api.Hubs;
 using Randevu365.Application;
 using Randevu365.Domain;
 using Randevu365.Infrastructure;
@@ -18,6 +19,7 @@ builder.Configuration
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAuthentication(options =>
 {
@@ -79,6 +81,9 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddPersistence(builder.Configuration);
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<Randevu365.Application.Interfaces.ICurrentUserService, Randevu365.Api.Services.CurrentUserService>();
+
 
 var app = builder.Build();
 
@@ -88,8 +93,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseAuthentication();
 app.UseAuthorization();   // Sonra yetkisini kontrol et
 app.MapControllers();
+app.MapHub<ChatHub>("/chatHub");
 
 app.UseHttpsRedirection();
 

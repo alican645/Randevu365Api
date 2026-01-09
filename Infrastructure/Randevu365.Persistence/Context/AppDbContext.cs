@@ -10,13 +10,16 @@ public class AppDbContext : DbContext, IAppDbContext
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
-    
+
     public DbSet<AppUser> AppUsers { get; set; }
     public DbSet<Business> Businesses { get; set; }
     public DbSet<AppUserInformation> AppUserInformations { get; set; }
     public DbSet<BusinessLocation> BusinessLocations { get; set; }
     public DbSet<BusinessPhoto> BusinessPhotos { get; set; }
-    
+    public DbSet<BusinessComment> BusinessComments { get; set; }
+    public DbSet<BusinessRating> BusinessRatings { get; set; }
+    public DbSet<Message> Messages { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

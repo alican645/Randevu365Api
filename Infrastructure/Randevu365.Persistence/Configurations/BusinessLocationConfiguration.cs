@@ -21,7 +21,8 @@ public class BusinessLocationConfiguration : IEntityTypeConfiguration<BusinessLo
             .HasPrecision(18, 8);
 
         builder.Property(x => x.CreatedAt)
-            .IsRequired();
+            .IsRequired()
+            .HasDefaultValue(DateTime.Now);
 
         builder.Property(x => x.IsDeleted)
             .IsRequired()

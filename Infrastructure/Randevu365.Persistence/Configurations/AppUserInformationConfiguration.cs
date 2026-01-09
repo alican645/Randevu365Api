@@ -37,7 +37,8 @@ public class AppUserInformationConfiguration : IEntityTypeConfiguration<AppUserI
             .IsRequired();
 
         builder.Property(x => x.CreatedAt)
-            .IsRequired();
+            .IsRequired()
+            .HasDefaultValue(DateTime.Now);
 
         builder.Property(x => x.IsDeleted)
             .IsRequired()

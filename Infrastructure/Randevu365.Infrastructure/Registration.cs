@@ -12,10 +12,8 @@ public static class Registration
         // JWT Service
         services.AddScoped<IJwtService, JwtService>();
 
-        // TODO: Add other external services here
-        // services.AddScoped<IEmailService, EmailService>();
-        // services.AddScoped<ISmsService, SmsService>();
-        // services.AddScoped<IFileStorageService, FileStorageService>();
+        // File Service
+        services.AddScoped<IFileService, FileService>();
 
         return services;
     }
