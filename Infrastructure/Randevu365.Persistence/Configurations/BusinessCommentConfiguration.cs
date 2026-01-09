@@ -11,7 +11,7 @@ public class BusinessCommentConfiguration : IEntityTypeConfiguration<BusinessCom
     {
         builder.HasKey(b => b.Id);
         builder.Property(b => b.Comment).IsRequired();
-        builder.Property(b => b.CreatedAt).IsRequired().HasDefaultValue(DateTime.Now);
+        builder.Property(b => b.CreatedAt).IsRequired();
         builder.HasOne(b => b.Business).WithMany(b => b.BusinessComments).HasForeignKey(b => b.BusinessId);
         builder.HasOne(b => b.AppUser).WithMany(b => b.BusinessComments).HasForeignKey(b => b.AppUserId);
     }

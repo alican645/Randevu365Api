@@ -28,8 +28,7 @@ public class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
             .HasDefaultValue(false);
 
         builder.Property(x => x.CreatedAt)
-            .IsRequired()
-            .HasDefaultValue(DateTime.Now);
+            .IsRequired();
         builder.HasOne(x => x.AppUserInformation)
             .WithOne()
             .HasForeignKey<AppUser>(x => x.AppUserInformationId)

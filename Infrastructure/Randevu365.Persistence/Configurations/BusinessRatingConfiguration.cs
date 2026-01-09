@@ -10,7 +10,7 @@ public class BusinessRatingConfiguration : IEntityTypeConfiguration<BusinessRati
     {
         builder.HasKey(b => b.Id);
         builder.Property(b => b.Rating).IsRequired();
-        builder.Property(b => b.CreatedAt).IsRequired().HasDefaultValue(DateTime.Now);
+        builder.Property(b => b.CreatedAt).IsRequired();
         builder.HasOne(b => b.Business).WithMany(b => b.BusinessRatings).HasForeignKey(b => b.BusinessId);
         builder.HasOne(b => b.AppUser).WithMany(b => b.BusinessRatings).HasForeignKey(b => b.AppUserId);
     }

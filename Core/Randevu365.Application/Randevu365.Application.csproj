@@ -19,6 +19,10 @@
 
     <ItemGroup>
       <Folder Include="Bases\" />
+      <Folder Include="Features\BusinessComments\Commands\GetCommentByCommentId\" />
+      <Folder Include="Features\BusinessComments\Commands\GetCommentsByBusinessId\" />
+      <Folder Include="Features\BusinessComments\Commands\GetCommentsByUserId\" />
+      <Folder Include="Features\BusinessComments\Queries\" />
     </ItemGroup>
 
 </Project>
