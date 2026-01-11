@@ -5,10 +5,18 @@ using Randevu365.Application.Features.Businesses.Commands.CreateBusiness;
 using Randevu365.Application.Features.Businesses.Commands.DeleteBusiness;
 using Randevu365.Application.Features.Businesses.Commands.UpdateBusiness;
 using Randevu365.Application.Features.Businesses.Queries.GetBusinessById;
+using Randevu365.Application.Features.BusinessHours.Commands.CreateBusinessHour;
+using Randevu365.Application.Features.BusinessHours.Commands.DeleteBusinessHour;
+using Randevu365.Application.Features.BusinessHours.Commands.UpdateBusinessHour;
+using Randevu365.Application.Features.BusinessHours.Queries.GetBusinessHoursByBusinessId;
 using Randevu365.Application.Features.BusinessLocations.Commands.CreateBusinessLocation;
 using Randevu365.Application.Features.BusinessLocations.Commands.DeleteBusinessLocation;
 using Randevu365.Application.Features.BusinessLocations.Commands.UpdateBusinessLocation;
 using Randevu365.Application.Features.BusinessLocations.Queries.GetBusinessLocationByBusinessId;
+using Randevu365.Application.Features.BusinessLogo.Commands.CreateBusinessLogo;
+using Randevu365.Application.Features.BusinessLogo.Commands.DeleteBusinessLogo;
+using Randevu365.Application.Features.BusinessLogo.Commands.UpdateBusinessLogo;
+using Randevu365.Application.Features.BusinessLogo.Queries.GetBusinessLogoByBusinessId;
 using Randevu365.Application.Features.BusinessPhotos.Commands.CreateBusinessPhoto;
 using Randevu365.Application.Features.BusinessPhotos.Commands.DeleteBusinessPhoto;
 using Randevu365.Application.Features.BusinessPhotos.Queries.GetBusinessPhotosByBusinessId;
@@ -105,6 +113,66 @@ public class BusinessController : ControllerBase
 
     [HttpPost("location/delete")]
     public async Task<IActionResult> DeleteLocation(DeleteBusinessLocationCommandRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+    #endregion
+
+    #region Business Hours
+    [HttpGet("gethours/{businessId}")]
+    public async Task<IActionResult> GetHours(int businessId)
+    {
+        var response = await _mediator.Send(new GetBusinessHoursByBusinessIdQueryRequest { BusinessId = businessId });
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("hour/create")]
+    public async Task<IActionResult> CreateHour(CreateBusinessHourCommandRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("hour/update")]
+    public async Task<IActionResult> UpdateHour(UpdateBusinessHourCommandRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("hour/delete")]
+    public async Task<IActionResult> DeleteHour(DeleteBusinessHourCommandRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+    #endregion
+
+    #region Business Logo
+    [HttpGet("getlogo/{businessId}")]
+    public async Task<IActionResult> GetLogo(int businessId)
+    {
+        var response = await _mediator.Send(new GetBusinessLogoByBusinessIdQueryRequest { BusinessId = businessId });
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("logo/create")]
+    public async Task<IActionResult> CreateLogo(CreateBusinessLogoCommandRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("logo/update")]
+    public async Task<IActionResult> UpdateLogo(UpdateBusinessLogoCommandRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("logo/delete")]
+    public async Task<IActionResult> DeleteLogo(DeleteBusinessLogoCommandRequest request)
     {
         var response = await _mediator.Send(request);
         return StatusCode(response.StatusCode, response);

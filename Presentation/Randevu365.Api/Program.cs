@@ -17,10 +17,10 @@ builder.Configuration
     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -40,17 +40,19 @@ builder.Services.AddAuthentication(options =>
             Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!))
     };
 });
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "Randevu365 API",
-        Version = "v1"
+        Version = "v1",
+        Description = "Randevu365 API Documentation"
     });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "JWT token girin. Örnek: eyJhbGciOiJIUzI1NiIs...",
+        Description = "JWT token girin. Örnek: Bearer eyJhbGciOiJIUzI1NiIs...",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
@@ -74,7 +76,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
 // Onion Architecture Layer Registrations
 builder.Services.AddDomain();
 builder.Services.AddApplication();
@@ -84,24 +85,31 @@ builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<Randevu365.Application.Interfaces.ICurrentUserService, Randevu365.Api.Services.CurrentUserService>();
 
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ÖNEMLİ: Middleware sıralaması kritik!
+// 1. HTTPS Redirection (en başta olmalı)
+app.UseHttpsRedirection();
+
+// 2. Swagger (Development'ta)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Randevu365 API V1");
+        c.RoutePrefix = "swagger";
+    });
 }
+
+// 3. Authentication (önce kim olduğunu belirle)
 app.UseAuthentication();
-app.UseAuthorization();   // Sonra yetkisini kontrol et
+
+// 4. Authorization (sonra yetkisini kontrol et)
+app.UseAuthorization();
+
+// 5. Routing
 app.MapControllers();
 app.MapHub<ChatHub>("/chatHub");
 
-app.UseHttpsRedirection();
-
-
-
-
 app.Run();
-

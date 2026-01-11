@@ -17,4 +17,6 @@ public class Business : BaseEntity
     public virtual ICollection<BusinessPhoto> BusinessPhotos { get; set; } = new List<BusinessPhoto>();
     public virtual ICollection<BusinessComment> BusinessComments { get; set; } = new List<BusinessComment>();
     public virtual ICollection<BusinessRating> BusinessRatings { get; set; } = new List<BusinessRating>();
+    public virtual BusinessLogo? BusinessLogo { get; set; }
+    public virtual ICollection<BusinessHour> BusinessHours { get; set; } = new List<BusinessHour>();
 }

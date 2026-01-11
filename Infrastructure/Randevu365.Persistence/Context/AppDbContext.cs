@@ -29,6 +29,8 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<BusinessRating> BusinessRatings { get; set; }
     public DbSet<Message> Messages { get; set; }
     public DbSet<AuditLog> AuditLogs { get; set; }
+    public DbSet<BusinessLogo> BusinessLogos { get; set; }
+    public DbSet<BusinessHour> BusinessHours { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -52,9 +54,9 @@ public class AppDbContext : DbContext, IAppDbContext
                     break;
             }
         }
-        
+
         var auditEntries = OnBeforeSaveChanges();
-        
+
         var result = await base.SaveChangesAsync(cancellationToken);
 
         // Save audit logs after SaveChanges (to get generated Ids)
