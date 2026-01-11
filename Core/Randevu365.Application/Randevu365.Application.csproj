@@ -23,6 +23,7 @@
       <Folder Include="Features\BusinessComments\Commands\GetCommentsByBusinessId\" />
       <Folder Include="Features\BusinessComments\Commands\GetCommentsByUserId\" />
       <Folder Include="Features\BusinessComments\Queries\" />
+      <Folder Include="Features\BusinessProfile\Queries\" />
     </ItemGroup>
 
 </Project>

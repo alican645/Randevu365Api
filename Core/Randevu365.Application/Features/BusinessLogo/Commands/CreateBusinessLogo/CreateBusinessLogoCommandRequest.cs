@@ -7,5 +7,5 @@ namespace Randevu365.Application.Features.BusinessLogo.Commands.CreateBusinessLo
 public class CreateBusinessLogoCommandRequest : IRequest<ApiResponse<CreateBusinessLogoCommandResponse>>
 {
     public int BusinessId { get; set; }
-    public required string LogoUrl { get; set; }
+    public IFormFile? Logo { get; set; }
 }

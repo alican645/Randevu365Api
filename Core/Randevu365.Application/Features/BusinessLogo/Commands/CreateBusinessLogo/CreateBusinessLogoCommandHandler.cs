@@ -8,10 +8,12 @@ namespace Randevu365.Application.Features.BusinessLogo.Commands.CreateBusinessLo
 public class CreateBusinessLogoCommandHandler : IRequestHandler<CreateBusinessLogoCommandRequest, ApiResponse<CreateBusinessLogoCommandResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IFileService _fileService;
 
-    public CreateBusinessLogoCommandHandler(IUnitOfWork unitOfWork)
+    public CreateBusinessLogoCommandHandler(IUnitOfWork unitOfWork, IFileService fileService)
     {
         _unitOfWork = unitOfWork;
+        _fileService = fileService;
     }
 
     public async Task<ApiResponse<CreateBusinessLogoCommandResponse>> Handle(CreateBusinessLogoCommandRequest request, CancellationToken cancellationToken)
@@ -20,13 +22,27 @@ public class CreateBusinessLogoCommandHandler : IRequestHandler<CreateBusinessLo
         var existingLogo = await _unitOfWork.GetReadRepository<Entities.BusinessLogo>().GetAsync(x => x.BusinessId == request.BusinessId);
         if (existingLogo != null)
         {
-            return ApiResponse<CreateBusinessLogoCommandResponse>.FailResult("A logo already exists for this business. Please update the existing logo.");
+            return ApiResponse<CreateBusinessLogoCommandResponse>.ConflictResult("A logo already exists for this business. Please update the existing logo.");
         }
+
+        if (request.Logo == null || request.Logo.Length == 0)
+        {
+            return ApiResponse<CreateBusinessLogoCommandResponse>.FailResult("Logo file cannot be empty.");
+        }
+
+        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+        var extension = Path.GetExtension(request.Logo.FileName).ToLowerInvariant();
+        if (!allowedExtensions.Contains(extension))
+        {
+            return ApiResponse<CreateBusinessLogoCommandResponse>.FailResult("Invalid file type. Allowed types: jpg, jpeg, png, gif, webp");
+        }
+
+        var logoUrl = await _fileService.UploadFileAsync(request.Logo, $"business/{request.BusinessId}/logo");
 
         var businessLogo = new Entities.BusinessLogo
         {
             BusinessId = request.BusinessId,
-            LogoUrl = request.LogoUrl
+            LogoUrl = logoUrl
         };
 
         await _unitOfWork.GetWriteRepository<Entities.BusinessLogo>().AddAsync(businessLogo);

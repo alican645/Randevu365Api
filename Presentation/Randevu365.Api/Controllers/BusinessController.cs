@@ -158,7 +158,7 @@ public class BusinessController : ControllerBase
     }
 
     [HttpPost("logo/create")]
-    public async Task<IActionResult> CreateLogo(CreateBusinessLogoCommandRequest request)
+    public async Task<IActionResult> CreateLogo([FromForm] CreateBusinessLogoCommandRequest request)
     {
         var response = await _mediator.Send(request);
         return StatusCode(response.StatusCode, response);
