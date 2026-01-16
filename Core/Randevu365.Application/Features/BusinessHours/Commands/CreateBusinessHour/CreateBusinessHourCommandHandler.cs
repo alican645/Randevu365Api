@@ -16,6 +16,15 @@ public class CreateBusinessHourCommandHandler : IRequestHandler<CreateBusinessHo
 
     public async Task<ApiResponse<CreateBusinessHourCommandResponse>> Handle(CreateBusinessHourCommandRequest request, CancellationToken cancellationToken)
     {
+
+        var validator = new CreateBusinessHourCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<CreateBusinessHourCommandResponse>.FailResult(errors);
+        }
+
         var businessHour = new BusinessHour
         {
             Day = request.Day,

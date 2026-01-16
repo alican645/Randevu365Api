@@ -20,11 +20,12 @@ using Randevu365.Application.Features.BusinessLogo.Queries.GetBusinessLogoByBusi
 using Randevu365.Application.Features.BusinessPhotos.Commands.CreateBusinessPhoto;
 using Randevu365.Application.Features.BusinessPhotos.Commands.DeleteBusinessPhoto;
 using Randevu365.Application.Features.BusinessPhotos.Queries.GetBusinessPhotosByBusinessId;
+using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessProfileByBusinessOwnerId;
 using Randevu365.Domain.Enum;
 
 namespace Randevu365.Api.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/business")]
 [ApiController]
 [Authorize(Roles = Roles.BusinessOwner)]
 public class BusinessController : ControllerBase
@@ -37,6 +38,13 @@ public class BusinessController : ControllerBase
     }
 
     #region Business Configuration
+    [HttpGet("myprofile")]
+    public async Task<IActionResult> GetMyProfile()
+    {
+        var response = await _mediator.Send(new GetBusinessProfileByBusinessOwnerIdQueryRequest());
+        return StatusCode(response.StatusCode, response);
+    }
+
     [HttpGet("getbyid/{id}")]
     public async Task<IActionResult> GetById(int id)
     {

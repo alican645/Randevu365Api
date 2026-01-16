@@ -16,6 +16,14 @@ public class UpdateBusinessLogoCommandHandler : IRequestHandler<UpdateBusinessLo
 
     public async Task<ApiResponse<UpdateBusinessLogoCommandResponse>> Handle(UpdateBusinessLogoCommandRequest request, CancellationToken cancellationToken)
     {
+        var validator = new UpdateBusinessLogoCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<UpdateBusinessLogoCommandResponse>.FailResult(errors);
+        }
+
         var businessLogo = await _unitOfWork.GetReadRepository<Entities.BusinessLogo>().GetAsync(x => x.BusinessId == request.BusinessId);
         if (businessLogo == null)
         {

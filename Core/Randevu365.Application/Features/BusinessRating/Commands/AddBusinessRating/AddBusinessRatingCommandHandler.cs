@@ -25,9 +25,12 @@ public class AddBusinessRatingCommandHandler : IRequestHandler<AddBusinessRating
             return ApiResponse<AddBusinessRatingCommandResponse>.UnauthorizedResult("Kullanıcı kimliği bulunamadı.");
         }
 
-        if (request.Rating < 1 || request.Rating > 5)
+        var validator = new AddBusinessRatingCommandValidator();
+        var result = await validator.ValidateAsync(request);
+        if (!result.IsValid)
         {
-            return ApiResponse<AddBusinessRatingCommandResponse>.FailResult("Puan 1 ile 5 arasında olmalıdır.");
+            var errors = result.Errors.Select(error => error.ErrorMessage).ToList();
+            return ApiResponse<AddBusinessRatingCommandResponse>.FailResult(errors);
         }
 
         var business = await _unitOfWork.GetReadRepository<Business>().GetAsync(x => x.Id == request.BusinessId);

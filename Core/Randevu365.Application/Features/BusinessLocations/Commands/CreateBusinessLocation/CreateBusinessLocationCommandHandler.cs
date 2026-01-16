@@ -16,6 +16,14 @@ public class CreateBusinessLocationCommandHandler : IRequestHandler<CreateBusine
 
     public async Task<ApiResponse<CreateBusinessLocationCommandResponse>> Handle(CreateBusinessLocationCommandRequest request, CancellationToken cancellationToken)
     {
+        var validator = new CreateBusinessLocationCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<CreateBusinessLocationCommandResponse>.FailResult(errors);
+        }
+
         var existingLocation = await _unitOfWork.GetReadRepository<BusinessLocation>().GetAsync(x => x.BusinessId == request.BusinessId);
         if (existingLocation != null)
         {

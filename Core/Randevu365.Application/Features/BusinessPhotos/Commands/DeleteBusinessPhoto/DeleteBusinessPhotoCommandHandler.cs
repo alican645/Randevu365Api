@@ -18,6 +18,15 @@ public class DeleteBusinessPhotoCommandHandler : IRequestHandler<DeleteBusinessP
     public async Task<ApiResponse<DeleteBusinessPhotoCommandResponse>> Handle(DeleteBusinessPhotoCommandRequest request,
         CancellationToken cancellationToken)
     {
+        // Validation
+        var validator = new DeleteBusinessPhotoCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<DeleteBusinessPhotoCommandResponse>.FailResult(errors);
+        }
+
         var photo = await _unitOfWork.GetReadRepository<BusinessPhoto>().GetAsync(x =>
             x.Id == request.BusinessPhotoId &&
             x.BusinessId == request.BusinessId);

@@ -18,17 +18,13 @@ public class CreateBusinessPhotoCommandHandler : IRequestHandler<CreateBusinessP
 
     public async Task<ApiResponse<CreateBusinessPhotoCommandResponse>> Handle(CreateBusinessPhotoCommandRequest request, CancellationToken cancellationToken)
     {
-        if (request.Photo == null || request.Photo.Length == 0)
-        {
-            return ApiResponse<CreateBusinessPhotoCommandResponse>.FailResult("Fotoğraf dosyası boş olamaz.");
-        }
 
-        // Validate file type
-        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
-        var extension = Path.GetExtension(request.Photo.FileName).ToLowerInvariant();
-        if (!allowedExtensions.Contains(extension))
+        var validator = new CreateBusinessPhotoCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
         {
-            return ApiResponse<CreateBusinessPhotoCommandResponse>.FailResult("Geçersiz dosya tipi. İzin verilen dosya tipleri: jpg, jpeg, png, gif, webp");
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<CreateBusinessPhotoCommandResponse>.FailResult(errors);
         }
 
         var isFull = await _unitOfWork.GetReadRepository<BusinessPhoto>().CountAsync(b => b.BusinessId == request.BusinessId);
@@ -37,8 +33,6 @@ public class CreateBusinessPhotoCommandHandler : IRequestHandler<CreateBusinessP
             return ApiResponse<CreateBusinessPhotoCommandResponse>.FailResult("Bir işletme için en fazla 5 fotoğraf olabilir.");
         }
 
-
-        // Upload the file
         var photoPath = await _fileService.UploadFileAsync(request.Photo, $"business/{request.BusinessId}/photos");
 
         var photo = new BusinessPhoto

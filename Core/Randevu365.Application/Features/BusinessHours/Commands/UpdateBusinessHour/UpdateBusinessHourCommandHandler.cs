@@ -16,6 +16,15 @@ public class UpdateBusinessHourCommandHandler : IRequestHandler<UpdateBusinessHo
 
     public async Task<ApiResponse<UpdateBusinessHourCommandResponse>> Handle(UpdateBusinessHourCommandRequest request, CancellationToken cancellationToken)
     {
+
+        var validator = new UpdateBusinessHourCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<UpdateBusinessHourCommandResponse>.FailResult(errors);
+        }
+
         var businessHour = await _unitOfWork.GetReadRepository<BusinessHour>().GetAsync(x => x.Id == request.Id);
         if (businessHour == null)
         {

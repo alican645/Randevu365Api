@@ -16,6 +16,15 @@ public class UpdateBusinessLocationCommandHandler : IRequestHandler<UpdateBusine
 
     public async Task<ApiResponse<UpdateBusinessLocationCommandResponse>> Handle(UpdateBusinessLocationCommandRequest request, CancellationToken cancellationToken)
     {
+
+        var validator = new UpdateBusinessLocationCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<UpdateBusinessLocationCommandResponse>.FailResult(errors);
+        }
+
         var location = await _unitOfWork.GetReadRepository<BusinessLocation>().GetAsync(x => x.Id == request.Id);
 
         if (location == null)

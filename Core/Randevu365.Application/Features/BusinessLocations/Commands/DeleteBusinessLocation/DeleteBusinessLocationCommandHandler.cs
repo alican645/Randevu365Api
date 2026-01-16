@@ -16,6 +16,14 @@ public class DeleteBusinessLocationCommandHandler : IRequestHandler<DeleteBusine
 
     public async Task<ApiResponse<DeleteBusinessLocationCommandResponse>> Handle(DeleteBusinessLocationCommandRequest request, CancellationToken cancellationToken)
     {
+        var validator = new DeleteBusinessLocationCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<DeleteBusinessLocationCommandResponse>.FailResult(errors);
+        }
+
         var location = await _unitOfWork.GetReadRepository<BusinessLocation>().GetAsync(x => x.Id == request.Id);
 
         if (location == null)

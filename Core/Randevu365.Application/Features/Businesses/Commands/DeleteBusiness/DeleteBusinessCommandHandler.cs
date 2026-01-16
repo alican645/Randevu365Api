@@ -16,6 +16,13 @@ public class DeleteBusinessCommandHandler : IRequestHandler<DeleteBusinessComman
 
     public async Task<ApiResponse<DeleteBusinessCommandResponse>> Handle(DeleteBusinessCommandRequest request, CancellationToken cancellationToken)
     {
+        var validator = new DeleteBusinessCommandValidator();
+        var result = await validator.ValidateAsync(request);
+        if (!result.IsValid)
+        {
+            var errors = result.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<DeleteBusinessCommandResponse>.FailResult(errors);
+        }
         var business = await _unitOfWork.GetReadRepository<Business>().GetAsync(x => x.Id == request.Id);
 
         if (business == null)

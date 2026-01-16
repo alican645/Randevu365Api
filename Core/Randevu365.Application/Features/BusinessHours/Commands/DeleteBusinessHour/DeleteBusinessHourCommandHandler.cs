@@ -16,6 +16,15 @@ public class DeleteBusinessHourCommandHandler : IRequestHandler<DeleteBusinessHo
 
     public async Task<ApiResponse<DeleteBusinessHourCommandResponse>> Handle(DeleteBusinessHourCommandRequest request, CancellationToken cancellationToken)
     {
+
+        var validator = new DeleteBusinessHourCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<DeleteBusinessHourCommandResponse>.FailResult(errors);
+        }
+
         var businessHour = await _unitOfWork.GetReadRepository<BusinessHour>().GetAsync(x => x.Id == request.Id);
         if (businessHour == null)
         {

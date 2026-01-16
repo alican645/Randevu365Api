@@ -18,16 +18,20 @@ public class UpdateBusinessCommentCommandHandler : IRequestHandler<UpdateBusines
 
     public async Task<ApiResponse<UpdateBusinessCommentCommandResponse>> Handle(UpdateBusinessCommentCommandRequest request, CancellationToken cancellationToken)
     {
+        // Validation
+        var validator = new UpdateBusinessCommentCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<UpdateBusinessCommentCommandResponse>.FailResult(errors);
+        }
+
         var userId = _currentUserService.UserId;
 
         if (userId == null)
         {
             return ApiResponse<UpdateBusinessCommentCommandResponse>.UnauthorizedResult("Kullanıcı kimliği bulunamadı.");
-        }
-
-        if (string.IsNullOrWhiteSpace(request.Comment))
-        {
-            return ApiResponse<UpdateBusinessCommentCommandResponse>.FailResult("Yorum boş olamaz.");
         }
 
         var comment = await _unitOfWork.GetReadRepository<BusinessComment>().GetAsync(x => x.Id == request.CommentId);

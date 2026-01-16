@@ -17,6 +17,15 @@ public class DeleteBusinessRatingCommandHandler : IRequestHandler<DeleteBusiness
 
     public async Task<ApiResponse<DeleteBusinessRatingCommandResponse>> Handle(DeleteBusinessRatingCommandRequest request, CancellationToken cancellationToken)
     {
+
+        var validator = new DeleteBusinessRatingCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<DeleteBusinessRatingCommandResponse>.FailResult(errors);
+        }
+
         var userId = _currentUserService.UserId;
 
         if (userId == null)
@@ -31,7 +40,6 @@ public class DeleteBusinessRatingCommandHandler : IRequestHandler<DeleteBusiness
             return ApiResponse<DeleteBusinessRatingCommandResponse>.NotFoundResult("Puan bulunamadı.");
         }
 
-        // Sadece kendi puanını silebilir
         if (rating.AppUserId != userId.Value)
         {
             return ApiResponse<DeleteBusinessRatingCommandResponse>.ForbiddenResult("Bu puanı silme yetkiniz yok.");

@@ -18,6 +18,15 @@ public class DeleteBusinessCommentCommandHandler : IRequestHandler<DeleteBusines
 
     public async Task<ApiResponse<DeleteBusinessCommentCommandResponse>> Handle(DeleteBusinessCommentCommandRequest request, CancellationToken cancellationToken)
     {
+        // Validation
+        var validator = new DeleteBusinessCommentCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<DeleteBusinessCommentCommandResponse>.FailResult(errors);
+        }
+
         var userId = _currentUserService.UserId;
 
         if (userId == null)

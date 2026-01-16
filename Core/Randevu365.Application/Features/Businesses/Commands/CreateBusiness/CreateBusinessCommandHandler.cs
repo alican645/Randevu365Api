@@ -18,11 +18,19 @@ public class CreateBusinessCommandHandler : IRequestHandler<CreateBusinessComman
 
     public async Task<ApiResponse<CreateBusinessCommandResponse>> Handle(CreateBusinessCommandRequest request, CancellationToken cancellationToken)
     {
+        var validator = new CreateBusinessCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<CreateBusinessCommandResponse>.FailResult(errors);
+        }
+
         if (_currentUserService.UserId is null)
         {
             return ApiResponse<CreateBusinessCommandResponse>.UnauthorizedResult("Kullanıcı oturumu bulunamadı.");
         }
-
         var business = new Business
         {
             BusinessName = request.BusinessName,
@@ -37,6 +45,8 @@ public class CreateBusinessCommandHandler : IRequestHandler<CreateBusinessComman
         await _unitOfWork.GetWriteRepository<Business>().AddAsync(business);
         await _unitOfWork.SaveAsync();
 
-        return ApiResponse<CreateBusinessCommandResponse>.SuccessResult(new CreateBusinessCommandResponse { Id = business.Id }, "Business added successfully.");
+        return ApiResponse<CreateBusinessCommandResponse>.SuccessResult(
+            new CreateBusinessCommandResponse { Id = business.Id },
+            "İşletme başarıyla oluşturuldu.");
     }
 }

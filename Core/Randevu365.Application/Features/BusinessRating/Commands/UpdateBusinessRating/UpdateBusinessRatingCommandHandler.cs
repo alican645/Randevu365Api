@@ -17,16 +17,20 @@ public class UpdateBusinessRatingCommandHandler : IRequestHandler<UpdateBusiness
 
     public async Task<ApiResponse<UpdateBusinessRatingCommandResponse>> Handle(UpdateBusinessRatingCommandRequest request, CancellationToken cancellationToken)
     {
+        // Validation
+        var validator = new UpdateBusinessRatingCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<UpdateBusinessRatingCommandResponse>.FailResult(errors);
+        }
+
         var userId = _currentUserService.UserId;
 
         if (userId == null)
         {
             return ApiResponse<UpdateBusinessRatingCommandResponse>.UnauthorizedResult("Kullanıcı kimliği bulunamadı.");
-        }
-
-        if (request.Rating < 1 || request.Rating > 5)
-        {
-            return ApiResponse<UpdateBusinessRatingCommandResponse>.FailResult("Puan 1 ile 5 arasında olmalıdır.");
         }
 
         var rating = await _unitOfWork.GetReadRepository<Domain.Entities.BusinessRating>().GetAsync(x => x.Id == request.RatingId);

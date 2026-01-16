@@ -16,7 +16,7 @@ using Randevu365.Domain.Enum;
 
 namespace Randevu365.Api.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/customer")]
 [ApiController]
 [Authorize(Roles = Roles.Customer)]
 public class CustomerController : ControllerBase

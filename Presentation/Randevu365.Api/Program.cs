@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Randevu365.Api.Hubs;
+using Randevu365.Api.Middleware;
 using Randevu365.Application;
 using Randevu365.Domain;
 using Randevu365.Infrastructure;
@@ -52,12 +53,11 @@ builder.Services.AddSwaggerGen(c =>
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "JWT token girin. Örnek: Bearer eyJhbGciOiJIUzI1NiIs...",
+        Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
         Name = "Authorization",
         In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer",
-        BearerFormat = "JWT"
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -88,10 +88,13 @@ builder.Services.AddScoped<Randevu365.Application.Interfaces.ICurrentUserService
 var app = builder.Build();
 
 // ÖNEMLİ: Middleware sıralaması kritik!
-// 1. HTTPS Redirection (en başta olmalı)
+// 1. Exception Handling (en başta olmalı - tüm hataları yakalar)
+app.UseExceptionHandling();
+
+// 2. HTTPS Redirection
 app.UseHttpsRedirection();
 
-// 2. Swagger (Development'ta)
+// 3. Swagger (Development'ta)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -102,13 +105,13 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// 3. Authentication (önce kim olduğunu belirle)
+// 4. Authentication (önce kim olduğunu belirle)
 app.UseAuthentication();
 
-// 4. Authorization (sonra yetkisini kontrol et)
+// 5. Authorization (sonra yetkisini kontrol et)
 app.UseAuthorization();
 
-// 5. Routing
+// 6. Routing
 app.MapControllers();
 app.MapHub<ChatHub>("/chatHub");
 

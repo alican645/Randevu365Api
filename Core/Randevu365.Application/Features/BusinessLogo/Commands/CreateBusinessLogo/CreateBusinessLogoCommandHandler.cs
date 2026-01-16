@@ -18,23 +18,20 @@ public class CreateBusinessLogoCommandHandler : IRequestHandler<CreateBusinessLo
 
     public async Task<ApiResponse<CreateBusinessLogoCommandResponse>> Handle(CreateBusinessLogoCommandRequest request, CancellationToken cancellationToken)
     {
+
+        var validator = new CreateBusinessLogoCommandValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<CreateBusinessLogoCommandResponse>.FailResult(errors);
+        }
+
         // Check if logo already exists for this business
         var existingLogo = await _unitOfWork.GetReadRepository<Entities.BusinessLogo>().GetAsync(x => x.BusinessId == request.BusinessId);
         if (existingLogo != null)
         {
             return ApiResponse<CreateBusinessLogoCommandResponse>.ConflictResult("A logo already exists for this business. Please update the existing logo.");
-        }
-
-        if (request.Logo == null || request.Logo.Length == 0)
-        {
-            return ApiResponse<CreateBusinessLogoCommandResponse>.FailResult("Logo file cannot be empty.");
-        }
-
-        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
-        var extension = Path.GetExtension(request.Logo.FileName).ToLowerInvariant();
-        if (!allowedExtensions.Contains(extension))
-        {
-            return ApiResponse<CreateBusinessLogoCommandResponse>.FailResult("Invalid file type. Allowed types: jpg, jpeg, png, gif, webp");
         }
 
         var logoUrl = await _fileService.UploadFileAsync(request.Logo, $"business/{request.BusinessId}/logo");

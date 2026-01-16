@@ -16,6 +16,13 @@ public class UpdateBusinessCommandHandler : IRequestHandler<UpdateBusinessComman
 
     public async Task<ApiResponse<UpdateBusinessCommandResponse>> Handle(UpdateBusinessCommandRequest request, CancellationToken cancellationToken)
     {
+        var validator = new UpdateBusinessCommandValidator();
+        var result = await validator.ValidateAsync(request);
+        if (!result.IsValid)
+        {
+            var errors = result.Errors.Select(error => error.ErrorMessage).ToList();
+            return ApiResponse<UpdateBusinessCommandResponse>.FailResult(errors);
+        }
         var businessResult = await _unitOfWork.GetReadRepository<Business>().GetAsync(x => x.Id == request.Id);
 
         if (businessResult == null)

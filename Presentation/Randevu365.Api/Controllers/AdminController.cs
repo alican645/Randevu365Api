@@ -11,7 +11,7 @@ using Randevu365.Domain.Enum;
 namespace Randevu365.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/admin")]
 [Authorize(Roles = Roles.Administrator)]
 public class AdminController : ControllerBase
 {
