@@ -16,6 +16,14 @@ public class GetBusinessPhotosByBusinessIdQueryHandler : IRequestHandler<GetBusi
 
     public async Task<ApiResponse<IList<GetBusinessPhotosByBusinessIdQueryResponse>>> Handle(GetBusinessPhotosByBusinessIdQueryRequest request, CancellationToken cancellationToken)
     {
+        var validator = new GetBusinessPhotosByBusinessIdQueryValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<IList<GetBusinessPhotosByBusinessIdQueryResponse>>.FailResult(errors);
+        }
+
         var photos = await _unitOfWork.GetReadRepository<BusinessPhoto>().GetAllAsync(x => x.BusinessId == request.BusinessId);
 
         var response = photos.Select(p => new GetBusinessPhotosByBusinessIdQueryResponse { BusinessPhoto = p }).ToList();

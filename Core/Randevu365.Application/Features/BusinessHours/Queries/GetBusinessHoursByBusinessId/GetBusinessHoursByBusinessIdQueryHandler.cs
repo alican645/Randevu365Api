@@ -16,6 +16,15 @@ public class GetBusinessHoursByBusinessIdQueryHandler : IRequestHandler<GetBusin
 
     public async Task<ApiResponse<List<GetBusinessHoursByBusinessIdQueryResponse>>> Handle(GetBusinessHoursByBusinessIdQueryRequest request, CancellationToken cancellationToken)
     {
+        // Validation
+        var validator = new GetBusinessHoursByBusinessIdQueryValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<List<GetBusinessHoursByBusinessIdQueryResponse>>.FailResult(errors);
+        }
+
         var businessHours = await _unitOfWork.GetReadRepository<BusinessHour>().GetAllAsync(x => x.BusinessId == request.BusinessId);
 
         var response = businessHours.Select(x => new GetBusinessHoursByBusinessIdQueryResponse

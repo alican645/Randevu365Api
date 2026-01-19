@@ -17,6 +17,15 @@ public class GetBusinessProfileByIdQueryHandler : IRequestHandler<GetBusinessPro
 
     public async Task<ApiResponse<GetBusinessProfileByIdQueryResponse>> Handle(GetBusinessProfileByIdQueryRequest request, CancellationToken cancellationToken)
     {
+        // Validation
+        var validator = new GetBusinessProfileByIdQueryValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<GetBusinessProfileByIdQueryResponse>.FailResult(errors);
+        }
+
         var business = await _unitOfWork.GetReadRepository<Business>().GetAsync(
             predicate: x => x.Id == request.Id,
             include: q => q.Include(b => b.BusinessLocations).Include(b => b.BusinessPhotos).Include(b => b.BusinessRatings)

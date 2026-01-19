@@ -1,3 +1,4 @@
+using BCrypt.Net;
 using MediatR;
 using Randevu365.Application.Common.Responses;
 using Randevu365.Application.Interfaces;
@@ -28,8 +29,7 @@ public class LoginHandler : IRequestHandler<LoginRequest, ApiResponse<LoginRespo
             return ApiResponse<LoginResponse>.UnauthorizedResult("Geçersiz email veya şifre.");
         }
 
-        // Validate password (TODO: Use password hashing in production!)
-        if (user.Password != request.Password)
+        if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
         {
             return ApiResponse<LoginResponse>.UnauthorizedResult("Geçersiz email veya şifre.");
         }

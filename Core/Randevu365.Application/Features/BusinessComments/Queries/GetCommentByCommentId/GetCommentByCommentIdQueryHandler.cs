@@ -17,6 +17,14 @@ public class GetCommentByCommentIdQueryHandler : IRequestHandler<GetCommentByCom
 
     public async Task<ApiResponse<GetCommentByCommentIdQueryResponse>> Handle(GetCommentByCommentIdQueryRequest request, CancellationToken cancellationToken)
     {
+        var validator = new GetCommentByCommentIdQueryValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<GetCommentByCommentIdQueryResponse>.FailResult(errors);
+        }
+
         var comment = await _unitOfWork.GetReadRepository<BusinessComment>().GetAsync(
             predicate: x => x.Id == request.CommentId,
             include: q => q.Include(c => c.AppUser).ThenInclude(u => u!.AppUserInformation)

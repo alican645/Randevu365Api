@@ -16,6 +16,14 @@ public class GetBusinessLocationByBusinessIdQueryHandler : IRequestHandler<GetBu
 
     public async Task<ApiResponse<IList<GetBusinessLocationByBusinessIdQueryResponse>>> Handle(GetBusinessLocationByBusinessIdQueryRequest request, CancellationToken cancellationToken)
     {
+        var validator = new GetBusinessLocationByBusinessIdQueryValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<IList<GetBusinessLocationByBusinessIdQueryResponse>>.FailResult(errors);
+        }
+
         var locations = await _unitOfWork.GetReadRepository<BusinessLocation>().GetAllAsync(x => x.BusinessId == request.BusinessId);
 
         var response = locations.Select(l => new GetBusinessLocationByBusinessIdQueryResponse { BusinessLocation = l }).ToList();

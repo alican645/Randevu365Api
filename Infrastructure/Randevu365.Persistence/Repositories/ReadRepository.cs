@@ -53,15 +53,17 @@ public class ReadRepository<T> : IReadRepository<T> where T : class
 
     public async Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null)
     {
-        Table.AsNoTracking();
-        if (predicate is not null) Table.Where(predicate);
+        IQueryable<T> queryable = Table.AsNoTracking();
+        if (predicate is not null)
+            queryable = queryable.Where(predicate);
 
-        return await Table.CountAsync();
+        return await queryable.CountAsync();
     }
 
     public IQueryable<T> Find(Expression<Func<T, bool>> predicate, bool enableTracking = false)
     {
-        if (!enableTracking) Table.AsNoTracking();
-        return Table.Where(predicate);
+        IQueryable<T> queryable = Table;
+        if (!enableTracking) queryable = queryable.AsNoTracking();
+        return queryable.Where(predicate);
     }
 }

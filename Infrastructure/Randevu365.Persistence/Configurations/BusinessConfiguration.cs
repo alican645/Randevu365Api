@@ -10,6 +10,7 @@ public class BusinessConfiguration : IEntityTypeConfiguration<Business>
     public void Configure(EntityTypeBuilder<Business> builder)
     {
 
+        #region Temel property tanımlamaları 
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.BusinessName)
@@ -42,7 +43,9 @@ public class BusinessConfiguration : IEntityTypeConfiguration<Business>
         builder.Property(x => x.IsDeleted)
             .IsRequired()
             .HasDefaultValue(false);
+        #endregion
 
+        #region Cascade Silme İlişkileri
         builder.HasMany(x => x.BusinessLocations)
             .WithOne(x => x.Business)
             .HasForeignKey(x => x.BusinessId)
@@ -52,5 +55,26 @@ public class BusinessConfiguration : IEntityTypeConfiguration<Business>
             .WithOne(x => x.Business)
             .HasForeignKey(x => x.BusinessId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(x => x.BusinessHours)
+            .WithOne(x => x.Business)
+            .HasForeignKey(x => x.BusinessId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(x => x.BusinessLogo)
+            .WithOne(x => x.Business)
+            .HasForeignKey<BusinessLogo>(x => x.BusinessId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(x => x.BusinessComments)
+            .WithOne(x => x.Business)
+            .HasForeignKey(x => x.BusinessId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(x => x.BusinessRatings)
+            .WithOne(x => x.Business)
+            .HasForeignKey(x => x.BusinessId)
+            .OnDelete(DeleteBehavior.Cascade);
+        #endregion
     }
 }

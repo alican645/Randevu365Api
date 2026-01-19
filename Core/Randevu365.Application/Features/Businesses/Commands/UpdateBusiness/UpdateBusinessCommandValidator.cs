@@ -8,7 +8,7 @@ public class UpdateBusinessCommandValidator : AbstractValidator<UpdateBusinessCo
     public UpdateBusinessCommandValidator()
     {
         RuleFor(x => x.Id)
-            .NotEmpty().WithMessage("İşletme ID boş olamaz.");
+            .GreaterThan(0).WithMessage("İşletme ID bulunamaı.");
         RuleFor(x => x.BusinessName)
             .NotEmpty().WithMessage("İşletme adı boş olamaz.")
             .MaximumLength(100).WithMessage("İşletme adı en fazla 100 karakter olabilir.");

@@ -1,3 +1,4 @@
+using BCrypt;
 using MediatR;
 using Randevu365.Application.Common.Responses;
 using Randevu365.Application.Interfaces;
@@ -40,7 +41,9 @@ public class RegisterHandler : IRequestHandler<RegisterRequest, ApiResponse<Regi
         await _unitOfWork.SaveAsync();
 
         // Create user with information reference
-        var appUser = new Domain.Entities.AppUser(request.Email, request.Password, request.Role)
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
+        var appUser = new Domain.Entities.AppUser(request.Email, hashedPassword, request.Role)
         {
             AppUserInformationId = userInformation.Id,
             AppUserInformation = userInformation

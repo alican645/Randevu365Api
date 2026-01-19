@@ -16,6 +16,14 @@ public class GetBusinessLogoByBusinessIdQueryHandler : IRequestHandler<GetBusine
 
     public async Task<ApiResponse<GetBusinessLogoByBusinessIdQueryResponse>> Handle(GetBusinessLogoByBusinessIdQueryRequest request, CancellationToken cancellationToken)
     {
+        var validator = new GetBusinessLogoByBusinessIdQueryValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<GetBusinessLogoByBusinessIdQueryResponse>.FailResult(errors);
+        }
+
         var businessLogo = await _unitOfWork.GetReadRepository<Entities.BusinessLogo>().GetAsync(x => x.BusinessId == request.BusinessId);
 
         if (businessLogo == null)

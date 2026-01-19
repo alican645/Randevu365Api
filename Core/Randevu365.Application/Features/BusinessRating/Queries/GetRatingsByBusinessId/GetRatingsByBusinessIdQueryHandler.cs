@@ -16,6 +16,15 @@ public class GetRatingsByBusinessIdQueryHandler : IRequestHandler<GetRatingsByBu
 
     public async Task<ApiResponse<IList<GetRatingsByBusinessIdQueryResponse>>> Handle(GetRatingsByBusinessIdQueryRequest request, CancellationToken cancellationToken)
     {
+        // Validation
+        var validator = new GetRatingsByBusinessIdQueryValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+            return ApiResponse<IList<GetRatingsByBusinessIdQueryResponse>>.FailResult(errors);
+        }
+
         var ratings = await _unitOfWork.GetReadRepository<Domain.Entities.BusinessRating>().GetAllAsync(
             predicate: x => x.BusinessId == request.BusinessId,
             include: q => q.Include(r => r.AppUser).ThenInclude(u => u!.AppUserInformation)
