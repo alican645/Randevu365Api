@@ -18,7 +18,7 @@ public class DeleteBusinessPhotoCommandHandler : IRequestHandler<DeleteBusinessP
     public async Task<ApiResponse<DeleteBusinessPhotoCommandResponse>> Handle(DeleteBusinessPhotoCommandRequest request,
         CancellationToken cancellationToken)
     {
-        // Validation
+       
         var validator = new DeleteBusinessPhotoCommandValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)

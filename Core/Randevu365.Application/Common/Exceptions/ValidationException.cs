@@ -1,8 +1,6 @@
 namespace Randevu365.Application.Common.Exceptions;
 
-/// <summary>
-/// Validation hatası (400 Bad Request)
-/// </summary>
+
 public class ValidationException : Exception
 {
     public IReadOnlyDictionary<string, string[]> Errors { get; }

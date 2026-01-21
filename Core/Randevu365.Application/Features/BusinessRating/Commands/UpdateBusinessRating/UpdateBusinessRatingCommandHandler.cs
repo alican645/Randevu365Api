@@ -17,7 +17,7 @@ public class UpdateBusinessRatingCommandHandler : IRequestHandler<UpdateBusiness
 
     public async Task<ApiResponse<UpdateBusinessRatingCommandResponse>> Handle(UpdateBusinessRatingCommandRequest request, CancellationToken cancellationToken)
     {
-        // Validation
+   
         var validator = new UpdateBusinessRatingCommandValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)

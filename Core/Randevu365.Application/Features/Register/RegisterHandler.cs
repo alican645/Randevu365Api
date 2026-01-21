@@ -18,14 +18,12 @@ public class RegisterHandler : IRequestHandler<RegisterRequest, ApiResponse<Regi
 
     public async Task<ApiResponse<RegisterResponse>> Handle(RegisterRequest request, CancellationToken cancellationToken)
     {
-        // Check if user already exists
         var existingUser = await _unitOfWork.GetReadRepository<Domain.Entities.AppUser>().GetAsync(x => x.Email == request.Email);
         if (existingUser != null)
         {
             return ApiResponse<RegisterResponse>.FailResult("Bu email adresi zaten kayıtlı.");
         }
 
-        // Create user information
         var userInformation = new AppUserInformation
         {
             Name = request.Name,
@@ -40,7 +38,6 @@ public class RegisterHandler : IRequestHandler<RegisterRequest, ApiResponse<Regi
         await _unitOfWork.GetWriteRepository<AppUserInformation>().AddAsync(userInformation);
         await _unitOfWork.SaveAsync();
 
-        // Create user with information reference
         var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
         var appUser = new Domain.Entities.AppUser(request.Email, hashedPassword, request.Role)

@@ -1,8 +1,5 @@
 namespace Randevu365.Application.Common.Exceptions;
 
-/// <summary>
-/// Genel istek hatası (400 Bad Request)
-/// </summary>
 public class BadRequestException : Exception
 {
     public BadRequestException() : base("Geçersiz istek.")

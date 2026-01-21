@@ -17,7 +17,6 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: false)
     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
@@ -76,7 +75,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Onion Architecture Layer Registrations
 builder.Services.AddDomain();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -87,14 +85,10 @@ builder.Services.AddScoped<Randevu365.Application.Interfaces.ICurrentUserService
 
 var app = builder.Build();
 
-// ÖNEMLİ: Middleware sıralaması kritik!
-// 1. Exception Handling (en başta olmalı - tüm hataları yakalar)
 app.UseExceptionHandling();
 
-// 2. HTTPS Redirection
 app.UseHttpsRedirection();
 
-// 3. Swagger (Development'ta)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -105,13 +99,10 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// 4. Authentication (önce kim olduğunu belirle)
 app.UseAuthentication();
 
-// 5. Authorization (sonra yetkisini kontrol et)
 app.UseAuthorization();
 
-// 6. Routing
 app.MapControllers();
 app.MapHub<ChatHub>("/chatHub");
 

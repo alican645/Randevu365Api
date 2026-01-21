@@ -16,7 +16,7 @@ public class GetBusinessHoursByBusinessIdQueryHandler : IRequestHandler<GetBusin
 
     public async Task<ApiResponse<List<GetBusinessHoursByBusinessIdQueryResponse>>> Handle(GetBusinessHoursByBusinessIdQueryRequest request, CancellationToken cancellationToken)
     {
-        // Validation
+      
         var validator = new GetBusinessHoursByBusinessIdQueryValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)

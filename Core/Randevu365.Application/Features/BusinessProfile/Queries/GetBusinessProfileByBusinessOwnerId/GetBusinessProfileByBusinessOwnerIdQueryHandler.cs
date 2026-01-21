@@ -59,11 +59,11 @@ public class GetBusinessProfileByBusinessOwnerIdQueryHandler : IRequestHandler<G
                 : string.Empty,
             BusinessOwnerPhone = business.AppUser?.AppUserInformation?.PhoneNumber ?? string.Empty,
             BusinessOwnerEmail = business.AppUser?.Email ?? string.Empty,
-            BusinessOwnerAddress = string.Empty, // Add if available in AppUserInformation
-            BusinessOwnerCity = string.Empty,    // Add if available in AppUserInformation
-            BusinessOwnerCountry = string.Empty, // Add if available in AppUserInformation
+            BusinessOwnerAddress = string.Empty, 
+            BusinessOwnerCity = string.Empty,    
+            BusinessOwnerCountry = string.Empty, 
 
-            BusinessServices = new List<string>(), // Implement when services are added
+            BusinessServices = new List<string>(), 
             BusinessHours = business.BusinessHours?.Select(h => $"{h.Day}: {h.OpenTime}-{h.CloseTime}").ToList() ?? new List<string>(),
             BusinessPhotos = business.BusinessPhotos?.Where(p => p.IsActive).Select(p => p.PhotoPath).ToList() ?? new List<string>(),
             BusinessComments = business.BusinessComments?.Select(c => c.Comment).ToList() ?? new List<string>(),

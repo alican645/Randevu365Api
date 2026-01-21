@@ -5,7 +5,7 @@ namespace Randevu365.Application.Features.BusinessLogo.Commands.CreateBusinessLo
 public class CreateBusinessLogoCommandValidator : AbstractValidator<CreateBusinessLogoCommandRequest>
 {
     private readonly string[] _allowedExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
-    private const long MaxFileSizeInBytes = 5 * 1024 * 1024; // 5MB
+    private const long MaxFileSizeInBytes = 5 * 1024 * 1024; 
 
     public CreateBusinessLogoCommandValidator()
     {

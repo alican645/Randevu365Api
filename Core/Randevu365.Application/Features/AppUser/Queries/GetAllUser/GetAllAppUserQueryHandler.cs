@@ -22,7 +22,7 @@ public class GetAllAppUserQueryHandler : IRequestHandler<GetAllAppUserQueryReque
              .GetAllAsync(
                  predicate: x => !x.IsDeleted,
                  include: q => q.Include(x => x.AppUserInformation));
-        // Entity'leri DTO'ya dönüştür
+
         var response = users.Select(u => new GetAllAppUserQueryResponse
         {
             Id = u.Id,

@@ -18,7 +18,6 @@ public class DeleteBusinessCommandHandler : IRequestHandler<DeleteBusinessComman
 
     public async Task<ApiResponse<DeleteBusinessCommandResponse>> Handle(DeleteBusinessCommandRequest request, CancellationToken cancellationToken)
     {
-        // Validation
         var validator = new DeleteBusinessCommandValidator();
         var result = await validator.ValidateAsync(request);
         if (!result.IsValid)
@@ -27,14 +26,12 @@ public class DeleteBusinessCommandHandler : IRequestHandler<DeleteBusinessComman
             return ApiResponse<DeleteBusinessCommandResponse>.FailResult(errors);
         }
 
-        // Get current user ID
         var currentUserId = _currentUserService.UserId;
         if (currentUserId == null)
         {
             return ApiResponse<DeleteBusinessCommandResponse>.UnauthorizedResult("Kullanıcı kimliği bulunamadı.");
         }
 
-        // Get business
         var business = await _unitOfWork.GetReadRepository<Business>()
             .GetAsync(x => x.Id == request.Id);
 
@@ -43,13 +40,11 @@ public class DeleteBusinessCommandHandler : IRequestHandler<DeleteBusinessComman
             return ApiResponse<DeleteBusinessCommandResponse>.NotFoundResult("İşyeri bulunamadı.");
         }
 
-        // Resource ownership check
         if (business.AppUserId != currentUserId)
         {
             return ApiResponse<DeleteBusinessCommandResponse>.ForbiddenResult("Bu işyerini silme yetkiniz yok.");
         }
 
-        // Delete business - EF Core will cascade delete all related entities
         await _unitOfWork.GetWriteRepository<Business>().HardDeleteAsync(business);
         await _unitOfWork.SaveAsync();
 

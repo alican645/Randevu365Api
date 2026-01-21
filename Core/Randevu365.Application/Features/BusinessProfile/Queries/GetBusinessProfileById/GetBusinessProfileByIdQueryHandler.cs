@@ -17,7 +17,7 @@ public class GetBusinessProfileByIdQueryHandler : IRequestHandler<GetBusinessPro
 
     public async Task<ApiResponse<GetBusinessProfileByIdQueryResponse>> Handle(GetBusinessProfileByIdQueryRequest request, CancellationToken cancellationToken)
     {
-        // Validation
+        
         var validator = new GetBusinessProfileByIdQueryValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)

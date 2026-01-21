@@ -27,7 +27,7 @@ public class CreateBusinessLogoCommandHandler : IRequestHandler<CreateBusinessLo
             return ApiResponse<CreateBusinessLogoCommandResponse>.FailResult(errors);
         }
 
-        // Check if logo already exists for this business
+        
         var existingLogo = await _unitOfWork.GetReadRepository<Entities.BusinessLogo>().GetAsync(x => x.BusinessId == request.BusinessId);
         if (existingLogo != null)
         {

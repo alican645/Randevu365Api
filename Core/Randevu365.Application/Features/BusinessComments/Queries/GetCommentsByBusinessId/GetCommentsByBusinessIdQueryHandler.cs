@@ -17,7 +17,7 @@ public class GetCommentsByBusinessIdQueryHandler : IRequestHandler<GetCommentsBy
 
     public async Task<ApiResponse<IList<GetCommentsByBusinessIdQueryResponse>>> Handle(GetCommentsByBusinessIdQueryRequest request, CancellationToken cancellationToken)
     {
-        // Validation
+       
         var validator = new GetCommentsByBusinessIdQueryValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)

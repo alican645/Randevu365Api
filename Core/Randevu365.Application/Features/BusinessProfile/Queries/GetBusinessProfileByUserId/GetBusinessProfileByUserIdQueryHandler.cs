@@ -17,7 +17,6 @@ public class GetBusinessProfileByUserIdQueryHandler : IRequestHandler<GetBusines
 
     public async Task<ApiResponse<GetBusinessProfileByUserIdQueryResponse>> Handle(GetBusinessProfileByUserIdQueryRequest request, CancellationToken cancellationToken)
     {
-        // Validation
         var validator = new GetBusinessProfileByUserIdQueryValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)
@@ -55,14 +54,11 @@ public class GetBusinessProfileByUserIdQueryHandler : IRequestHandler<GetBusines
             BusinessOwnerName = business.AppUser?.AppUserInformation?.Name ?? string.Empty,
             BusinessOwnerPhone = business.AppUser?.AppUserInformation?.PhoneNumber ?? string.Empty,
             BusinessOwnerEmail = business.AppUser?.Email ?? string.Empty,
-            // Assuming owner address/city/country might not be in AppUserInformation or need to be mapped.
-            // Based on available fields, I'll use existing data or placeholders if not available.
-            // AppUserInformation usually holds personal info.
-            BusinessOwnerAddress = string.Empty, // Not directly available in AppUserInformation shown previously
-            BusinessOwnerCity = string.Empty,    // Not directly available
-            BusinessOwnerCountry = string.Empty, // Not directly available
+            BusinessOwnerAddress = string.Empty, 
+            BusinessOwnerCity = string.Empty,    
+            BusinessOwnerCountry = string.Empty, 
 
-            BusinessServices = new List<string>(), // Placeholder as BusinessServices entity is missing
+            BusinessServices = new List<string>(), 
             BusinessHours = business.BusinessHours.Select(h => $"{h.Day}: {h.OpenTime} - {h.CloseTime}").ToList(),
             BusinessPhotos = business.BusinessPhotos.Where(p => p.PhotoPath != null).Select(p => p.PhotoPath!).ToList(),
             BusinessComments = business.BusinessComments.Select(c => c.Comment).ToList(),

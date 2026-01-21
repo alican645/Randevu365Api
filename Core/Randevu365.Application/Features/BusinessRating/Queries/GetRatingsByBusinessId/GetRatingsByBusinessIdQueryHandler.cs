@@ -16,7 +16,7 @@ public class GetRatingsByBusinessIdQueryHandler : IRequestHandler<GetRatingsByBu
 
     public async Task<ApiResponse<IList<GetRatingsByBusinessIdQueryResponse>>> Handle(GetRatingsByBusinessIdQueryRequest request, CancellationToken cancellationToken)
     {
-        // Validation
+        
         var validator = new GetRatingsByBusinessIdQueryValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)
