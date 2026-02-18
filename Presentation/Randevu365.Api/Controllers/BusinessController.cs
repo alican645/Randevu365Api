@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Randevu365.Application.Features.Businesses.Commands.CreateBusiness;
+using Randevu365.Application.Features.Businesses.Commands.CreateBusinessDetail;
 using Randevu365.Application.Features.Businesses.Commands.DeleteBusiness;
 using Randevu365.Application.Features.Businesses.Commands.UpdateBusiness;
 using Randevu365.Application.Features.Businesses.Queries.GetBusinessById;
@@ -20,6 +21,8 @@ using Randevu365.Application.Features.BusinessLogo.Queries.GetBusinessLogoByBusi
 using Randevu365.Application.Features.BusinessPhotos.Commands.CreateBusinessPhoto;
 using Randevu365.Application.Features.BusinessPhotos.Commands.DeleteBusinessPhoto;
 using Randevu365.Application.Features.BusinessPhotos.Queries.GetBusinessPhotosByBusinessId;
+using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessBasicInfoByCustomerOwnerId;
+using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessDetailInfoByCustomerOwnerId;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessProfileByBusinessOwnerId;
 using Randevu365.Domain.Enum;
 
@@ -44,6 +47,22 @@ public class BusinessController : ControllerBase
         var response = await _mediator.Send(new GetBusinessProfileByBusinessOwnerIdQueryRequest());
         return StatusCode(response.StatusCode, response);
     }
+    
+
+    [HttpGet("basicinfo")]
+    public async Task<IActionResult> GetBusinessBasicInfo()
+    {
+        var response = await _mediator.Send(new GetBusinessBasicInfoByCustomerOwnerIdQueryRequest());
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet("detailinfo")]
+    public async Task<IActionResult> GetBusinessDetailInfo()
+    {
+        var response = await _mediator.Send(new GetBusinessDetailInfoByCustomerOwnerIdQueryRequest());
+        return StatusCode(response.StatusCode, response);
+    }
+
 
     [HttpGet("getbyid/{id}")]
     public async Task<IActionResult> GetById(int id)
@@ -54,6 +73,13 @@ public class BusinessController : ControllerBase
 
     [HttpPost("create")]
     public async Task<IActionResult> Create(CreateBusinessCommandRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("detail/create")]
+    public async Task<IActionResult> CreateDetail(CreateBusinessDetailCommandRequest request)
     {
         var response = await _mediator.Send(request);
         return StatusCode(response.StatusCode, response);

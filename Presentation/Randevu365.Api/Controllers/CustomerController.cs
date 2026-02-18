@@ -11,6 +11,7 @@ using Randevu365.Application.Features.BusinessRating.Commands.AddBusinessRating;
 using Randevu365.Application.Features.BusinessRating.Commands.DeleteBusinessRating;
 using Randevu365.Application.Features.BusinessRating.Commands.UpdateBusinessRating;
 using Randevu365.Application.Features.BusinessRating.Queries.GetMyRatings;
+using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessBasicInfoByCustomerOwnerId;
 using Randevu365.Application.Features.BusinessRating.Queries.GetRatingsByBusinessId;
 using Randevu365.Domain.Enum;
 
@@ -28,7 +29,9 @@ public class CustomerController : ControllerBase
         _mediator = mediator;
     }
 
-    #region Business Comments       
+
+
+    #region Business Comments
     [HttpGet("comments/{businessId}")]
     public async Task<IActionResult> GetCommentsByBusinessId(int businessId)
     {
