@@ -10,11 +10,13 @@ public class CreateBusinessDetailCommandHandler : IRequestHandler<CreateBusiness
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICurrentUserService _currentUserService;
+    private readonly IFileService _fileService;
 
-    public CreateBusinessDetailCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
+    public CreateBusinessDetailCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService, IFileService fileService)
     {
         _unitOfWork = unitOfWork;
         _currentUserService = currentUserService;
+        _fileService = fileService;
     }
 
     public async Task<ApiResponse<CreateBusinessDetailCommandResponse>> Handle(CreateBusinessDetailCommandRequest request, CancellationToken cancellationToken)
@@ -56,11 +58,12 @@ public class CreateBusinessDetailCommandHandler : IRequestHandler<CreateBusiness
         await _unitOfWork.SaveAsync();
 
         // Business Logo
-        if (!string.IsNullOrWhiteSpace(request.BusinessLogo))
+        if (request.BusinessLogo != null)
         {
+            var logoUrl = await _fileService.UploadFileAsync(request.BusinessLogo, $"business/{business.Id}/logo");
             var logo = new BusinessLogoEntity
             {
-                LogoUrl = request.BusinessLogo,
+                LogoUrl = logoUrl,
                 BusinessId = business.Id
             };
             await _unitOfWork.GetWriteRepository<BusinessLogoEntity>().AddAsync(logo);
@@ -80,15 +83,34 @@ public class CreateBusinessDetailCommandHandler : IRequestHandler<CreateBusiness
             await _unitOfWork.GetWriteRepository<BusinessHour>().AddRangeAsync(hours);
         }
 
+        // Business Services
+        if (request.BusinessServices is { Count: > 0 })
+        {
+            var services = request.BusinessServices.Select(s => new BusinessService
+            {
+                ServiceTitle = s.ServiceTitle!,
+                ServiceContent = s.ServiceContent!,
+                MaxConcurrentCustomers = s.MaxConcurrentCustomers,
+                BusinessId = business.Id
+            }).ToList();
+
+            await _unitOfWork.GetWriteRepository<BusinessService>().AddRangeAsync(services);
+        }
+
         // Business Photos
         if (request.BusinessPhotos is { Count: > 0 })
         {
-            var photos = request.BusinessPhotos.Select(p => new BusinessPhoto
+            var photos = new List<BusinessPhoto>();
+            foreach (var file in request.BusinessPhotos)
             {
-                PhotoPath = p,
-                IsActive = true,
-                BusinessId = business.Id
-            }).ToList();
+                var photoPath = await _fileService.UploadFileAsync(file, $"business/{business.Id}/photos");
+                photos.Add(new BusinessPhoto
+                {
+                    PhotoPath = photoPath,
+                    IsActive = true,
+                    BusinessId = business.Id
+                });
+            }
 
             await _unitOfWork.GetWriteRepository<BusinessPhoto>().AddRangeAsync(photos);
         }

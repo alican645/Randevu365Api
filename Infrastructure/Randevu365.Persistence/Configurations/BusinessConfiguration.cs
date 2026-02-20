@@ -75,6 +75,16 @@ public class BusinessConfiguration : IEntityTypeConfiguration<Business>
             .WithOne(x => x.Business)
             .HasForeignKey(x => x.BusinessId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(x => x.BusinessServices)
+            .WithOne(x => x.Business)
+            .HasForeignKey(x => x.BusinessId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(x => x.Appointments)
+            .WithOne(x => x.Business)
+            .HasForeignKey(x => x.BusinessId)
+            .OnDelete(DeleteBehavior.Cascade);
         #endregion
     }
 }

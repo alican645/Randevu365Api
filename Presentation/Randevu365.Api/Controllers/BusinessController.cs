@@ -1,10 +1,13 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Randevu365.Application.Common.Responses;
 using Randevu365.Application.Features.Businesses.Commands.CreateBusiness;
 using Randevu365.Application.Features.Businesses.Commands.CreateBusinessDetail;
 using Randevu365.Application.Features.Businesses.Commands.DeleteBusiness;
 using Randevu365.Application.Features.Businesses.Commands.UpdateBusiness;
+using Randevu365.Application.Features.Businesses.Commands.UpdateBusinessDetail;
+using Randevu365.Application.Features.Businesses.Commands.UpdateBusinessDetailById;
 using Randevu365.Application.Features.Businesses.Queries.GetBusinessById;
 using Randevu365.Application.Features.BusinessHours.Commands.CreateBusinessHour;
 using Randevu365.Application.Features.BusinessHours.Commands.DeleteBusinessHour;
@@ -22,8 +25,15 @@ using Randevu365.Application.Features.BusinessPhotos.Commands.CreateBusinessPhot
 using Randevu365.Application.Features.BusinessPhotos.Commands.DeleteBusinessPhoto;
 using Randevu365.Application.Features.BusinessPhotos.Queries.GetBusinessPhotosByBusinessId;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessBasicInfoByCustomerOwnerId;
+using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessDetailInfoByBusinessId;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessDetailInfoByCustomerOwnerId;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessProfileByBusinessOwnerId;
+using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessOwnerDashboard;
+using Randevu365.Application.Features.BusinessProfile.Queries.GetRandomBusinessSummaryByOwner;
+using Randevu365.Application.Features.Appointments.Commands.ConfirmAppointment;
+using Randevu365.Application.Features.Appointments.Commands.CompleteAppointment;
+using Randevu365.Application.Features.Appointments.Commands.CancelAppointmentByBusiness;
+using Randevu365.Application.Features.Appointments.Queries.GetBusinessAppointments;
 using Randevu365.Domain.Enum;
 
 namespace Randevu365.Api.Controllers;
@@ -41,6 +51,20 @@ public class BusinessController : ControllerBase
     }
 
     #region Business Configuration
+    [HttpGet("random-business-summary")]
+    public async Task<IActionResult> GetRandomBusinessSummary()
+    {
+        var response = await _mediator.Send(new GetRandomBusinessSummaryByOwnerQueryRequest());
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet("dashboard")]
+    public async Task<IActionResult> GetDashboard()
+    {
+        var response = await _mediator.Send(new GetBusinessOwnerDashboardQueryRequest());
+        return StatusCode(response.StatusCode, response);
+    }
+
     [HttpGet("myprofile")]
     public async Task<IActionResult> GetMyProfile()
     {
@@ -63,6 +87,14 @@ public class BusinessController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
+    [AllowAnonymous]
+    [HttpGet("{id}/detailinfo")]
+    public async Task<IActionResult> GetDetailInfoById(int id)
+    {
+        var response = await _mediator.Send(new GetBusinessDetailInfoByBusinessIdQueryRequest { BusinessId = id });
+        return StatusCode(response.StatusCode, response);
+    }
+
 
     [HttpGet("getbyid/{id}")]
     public async Task<IActionResult> GetById(int id)
@@ -79,8 +111,23 @@ public class BusinessController : ControllerBase
     }
 
     [HttpPost("detail/create")]
-    public async Task<IActionResult> CreateDetail(CreateBusinessDetailCommandRequest request)
+    public async Task<IActionResult> CreateDetail([FromForm] CreateBusinessDetailCommandRequest request)
     {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("detail/update")]
+    public async Task<IActionResult> UpdateDetail([FromForm] UpdateBusinessDetailCommandRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("{id}/detail/update")]
+    public async Task<IActionResult> UpdateDetailById(int id, [FromForm] UpdateBusinessDetailByIdCommandRequest request)
+    {
+        request.BusinessId = id;
         var response = await _mediator.Send(request);
         return StatusCode(response.StatusCode, response);
     }
@@ -208,6 +255,37 @@ public class BusinessController : ControllerBase
     [HttpPost("logo/delete")]
     public async Task<IActionResult> DeleteLogo(DeleteBusinessLogoCommandRequest request)
     {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+    #endregion
+
+    #region Appointments
+    [HttpGet("appointments")]
+    public async Task<IActionResult> GetBusinessAppointments([FromQuery] DateOnly? date, [FromQuery] AppointmentStatus? status)
+    {
+        var response = await _mediator.Send(new GetBusinessAppointmentsQueryRequest { Date = date, Status = status });
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPatch("appointment/{appointmentId}/confirm")]
+    public async Task<IActionResult> ConfirmAppointment(int appointmentId)
+    {
+        var response = await _mediator.Send(new ConfirmAppointmentCommandRequest { AppointmentId = appointmentId });
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPatch("appointment/{appointmentId}/complete")]
+    public async Task<IActionResult> CompleteAppointment(int appointmentId)
+    {
+        var response = await _mediator.Send(new CompleteAppointmentCommandRequest { AppointmentId = appointmentId });
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPatch("appointment/{appointmentId}/cancel")]
+    public async Task<IActionResult> CancelAppointmentByBusiness(int appointmentId, [FromBody] CancelAppointmentByBusinessCommandRequest request)
+    {
+        request.AppointmentId = appointmentId;
         var response = await _mediator.Send(request);
         return StatusCode(response.StatusCode, response);
     }

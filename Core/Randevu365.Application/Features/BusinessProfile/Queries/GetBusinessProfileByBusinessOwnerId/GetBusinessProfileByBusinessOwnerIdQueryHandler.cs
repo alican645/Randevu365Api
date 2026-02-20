@@ -34,6 +34,7 @@ public class GetBusinessProfileByBusinessOwnerIdQueryHandler : IRequestHandler<G
                     .Include(b => b.BusinessHours)
                     .Include(b => b.BusinessLogo)
                     .Include(b => b.BusinessPhotos)
+                    .Include(b => b.BusinessServices)
                     .Include(b => b.BusinessComments)
                     .Include(b => b.BusinessRatings)
             );
@@ -63,7 +64,11 @@ public class GetBusinessProfileByBusinessOwnerIdQueryHandler : IRequestHandler<G
             BusinessOwnerCity = string.Empty,    
             BusinessOwnerCountry = string.Empty, 
 
-            BusinessServices = new List<string>(), 
+            BusinessServices = business.BusinessServices?.Select(s => new BusinessServiceDto
+            {
+                ServiceTitle = s.ServiceTitle,
+                ServiceContent = s.ServiceContent
+            }).ToList() ?? new List<BusinessServiceDto>(),
             BusinessHours = business.BusinessHours?.Select(h => $"{h.Day}: {h.OpenTime}-{h.CloseTime}").ToList() ?? new List<string>(),
             BusinessPhotos = business.BusinessPhotos?.Where(p => p.IsActive).Select(p => p.PhotoPath).ToList() ?? new List<string>(),
             BusinessComments = business.BusinessComments?.Select(c => c.Comment).ToList() ?? new List<string>(),

@@ -32,6 +32,7 @@ public class GetBusinessDetailInfoByCustomerOwnerIdQueryHandler : IRequestHandle
                     .Include(b => b.BusinessLogo)
                     .Include(b => b.BusinessHours)
                     .Include(b => b.BusinessPhotos)
+                    .Include(b => b.BusinessServices)
             );
 
         if (business == null)
@@ -48,7 +49,12 @@ public class GetBusinessDetailInfoByCustomerOwnerIdQueryHandler : IRequestHandle
             BusinessEmail = business.BusinessEmail,
             BusinessCountry = business.BusinessCountry,
             BusinessLogo = business.BusinessLogo?.LogoUrl,
-            BusinessServices = new List<string>(),
+            BusinessServices = business.BusinessServices?.Select(s => new BusinessServiceDetailDto
+            {
+                ServiceTitle = s.ServiceTitle,
+                ServiceContent = s.ServiceContent,
+                MaxConcurrentCustomers = s.MaxConcurrentCustomers
+            }).ToList() ?? new List<BusinessServiceDetailDto>(),
             BusinessHours = business.BusinessHours?.Select(h => new BusinessHourDetailDto
             {
                 Day = h.Day,
@@ -57,8 +63,12 @@ public class GetBusinessDetailInfoByCustomerOwnerIdQueryHandler : IRequestHandle
             }).ToList() ?? new List<BusinessHourDetailDto>(),
             BusinessPhotos = business.BusinessPhotos?
                 .Where(p => p.IsActive)
-                .Select(p => p.PhotoPath ?? string.Empty)
-                .ToList() ?? new List<string>()
+                .Select(p => new BusinessPhotoDto
+                {
+                    Id = p.Id,
+                    PhotoPath = p.PhotoPath ?? string.Empty
+                })
+                .ToList() ?? new List<BusinessPhotoDto>()
         };
 
         return ApiResponse<GetBusinessDetailInfoByCustomerOwnerIdQueryResponse>.SuccessResult(response);

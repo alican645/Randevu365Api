@@ -24,7 +24,8 @@ public class GetBusinessBasicInfoByCustomerOwnerIdQueryHandler : IRequestHandler
         {
             return ApiResponse<GetBusinessBasicInfoByCustomerOwnerIdQueryResponse>.UnauthorizedResult();
         }
-
+        
+        
         var business = await _unitOfWork.GetReadRepository<Business>()
             .GetAsync(
                 predicate: x => x.AppUserId == currentUserId,

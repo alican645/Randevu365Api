@@ -13,6 +13,10 @@ using Randevu365.Application.Features.BusinessRating.Commands.UpdateBusinessRati
 using Randevu365.Application.Features.BusinessRating.Queries.GetMyRatings;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessBasicInfoByCustomerOwnerId;
 using Randevu365.Application.Features.BusinessRating.Queries.GetRatingsByBusinessId;
+using Randevu365.Application.Features.Appointments.Commands.CreateAppointment;
+using Randevu365.Application.Features.Appointments.Commands.CancelAppointmentByCustomer;
+using Randevu365.Application.Features.Appointments.Queries.GetMyAppointments;
+using Randevu365.Application.Features.Appointments.Queries.GetAppointmentById;
 using Randevu365.Domain.Enum;
 
 namespace Randevu365.Api.Controllers;
@@ -110,6 +114,36 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> DeleteRating(DeleteBusinessRatingCommandRequest request)
     {
         var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+    #endregion
+
+    #region Appointments
+    [HttpPost("appointment/create")]
+    public async Task<IActionResult> CreateAppointment([FromBody] CreateAppointmentCommandRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPatch("appointment/{appointmentId}/cancel")]
+    public async Task<IActionResult> CancelAppointment(int appointmentId)
+    {
+        var response = await _mediator.Send(new CancelAppointmentByCustomerCommandRequest { AppointmentId = appointmentId });
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet("appointments")]
+    public async Task<IActionResult> GetMyAppointments()
+    {
+        var response = await _mediator.Send(new GetMyAppointmentsQueryRequest());
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet("appointment/{appointmentId}")]
+    public async Task<IActionResult> GetAppointmentById(int appointmentId)
+    {
+        var response = await _mediator.Send(new GetAppointmentByIdQueryRequest { AppointmentId = appointmentId });
         return StatusCode(response.StatusCode, response);
     }
     #endregion
