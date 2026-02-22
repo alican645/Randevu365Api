@@ -54,6 +54,8 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddSwaggerGen(c =>
 {
+    c.CustomSchemaIds(type => type.FullName!);
+
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "Randevu365 API",

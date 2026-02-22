@@ -12,6 +12,7 @@ public class CreateBusinessDetailCommandRequest : IRequest<ApiResponse<CreateBus
     public string? BusinessPhone { get; set; }
     public string? BusinessEmail { get; set; }
     public string? BusinessCountry { get; set; }
+    public string? BusinessCategory { get; set; }
     public IFormFile? BusinessLogo { get; set; }
     public List<BusinessServiceDto>? BusinessServices { get; set; }
     public List<BusinessHourDto>? BusinessHours { get; set; }

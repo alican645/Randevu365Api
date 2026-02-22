@@ -1,12 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Randevu365.Domain.Entities;
-
+using Randevu365.Domain.Enum;
 
 namespace Randevu365.Persistence.Configurations;
 
 public class BusinessConfiguration : IEntityTypeConfiguration<Business>
 {
+    private static BusinessCategory? ParseCategory(string? v) =>
+        BusinessCategoryExtensions.TryFromJson(v, out var cat) ? cat : (BusinessCategory?)null;
+
     public void Configure(EntityTypeBuilder<Business> builder)
     {
 
@@ -36,6 +40,15 @@ public class BusinessConfiguration : IEntityTypeConfiguration<Business>
         builder.Property(x => x.BusinessCountry)
             .IsRequired()
             .HasMaxLength(100);
+
+        var categoryConverter = new ValueConverter<BusinessCategory?, string?>(
+            v => v.HasValue ? v.Value.ToJson() : null,
+            v => ParseCategory(v));
+
+        builder.Property(x => x.BusinessCategory)
+            .HasConversion(categoryConverter)
+            .HasMaxLength(50)
+            .IsRequired(false);
 
         builder.Property(x => x.CreatedAt)
             .IsRequired();

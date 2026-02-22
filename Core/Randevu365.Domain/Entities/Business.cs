@@ -1,4 +1,5 @@
 using Randevu365.Domain.Base;
+using Randevu365.Domain.Enum;
 
 namespace Randevu365.Domain.Entities;
 
@@ -10,6 +11,7 @@ public class Business : BaseEntity
     public required string BusinessPhone { get; set; }
     public required string BusinessEmail { get; set; }
     public required string BusinessCountry { get; set; }
+    public BusinessCategory? BusinessCategory { get; set; }
 
     public int AppUserId { get; set; }
     public virtual AppUser? AppUser { get; set; }

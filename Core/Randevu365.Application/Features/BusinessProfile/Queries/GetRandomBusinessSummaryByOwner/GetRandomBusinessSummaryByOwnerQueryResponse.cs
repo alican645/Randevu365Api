@@ -9,4 +9,5 @@ public class GetRandomBusinessSummaryByOwnerQueryResponse
     public string? LogoUrl { get; set; }
     public string? FirstPhotoPath { get; set; }
     public int AppointmentCount { get; set; }
+    
 }

@@ -46,6 +46,7 @@ public class GetRandomBusinessSummaryByOwnerQueryHandler : IRequestHandler<GetRa
 
         var response = new GetRandomBusinessSummaryByOwnerQueryResponse
         {
+            
             BusinessId = business.Id,
             BusinessName = business.BusinessName,
             AverageRating = business.BusinessRatings?.Any() == true

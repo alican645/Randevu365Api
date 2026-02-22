@@ -33,6 +33,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<BusinessHour> BusinessHours { get; set; }
     public DbSet<BusinessService> BusinessServices { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
+    public DbSet<BusinessSlot> BusinessSlots { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

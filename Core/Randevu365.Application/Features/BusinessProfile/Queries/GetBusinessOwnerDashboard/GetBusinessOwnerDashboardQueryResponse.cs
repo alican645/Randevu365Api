@@ -6,6 +6,7 @@ public class GetBusinessOwnerDashboardQueryResponse
     public string OwnerSurname { get; set; } = string.Empty;
     public string OwnerEmail { get; set; } = string.Empty;
     public string OwnerPhone { get; set; } = string.Empty;
+    public int BusinessSlotCount { get; set; }
 
     public List<BusinessDashboardItemDto> Businesses { get; set; } = new();
 }

@@ -37,6 +37,13 @@ public class GetBusinessOwnerDashboardQueryHandler : IRequestHandler<GetBusiness
         {
             return ApiResponse<GetBusinessOwnerDashboardQueryResponse>.UnauthorizedResult();
         }
+        
+        var slots = await _unitOfWork.GetReadRepository<BusinessSlot>()
+            .GetAllAsync(predicate: x => x.AppUserId == currentUserId
+                                      && !x.IsDeleted
+                                      && !x.IsUsed
+                                      && x.PaymentStatus == SlotPaymentStatus.Completed);
+
 
         var businesses = await _unitOfWork.GetReadRepository<Business>()
             .GetAllAsync(
@@ -78,7 +85,8 @@ public class GetBusinessOwnerDashboardQueryHandler : IRequestHandler<GetBusiness
             OwnerSurname = appUser.AppUserInformation?.Surname ?? string.Empty,
             OwnerEmail = appUser.Email,
             OwnerPhone = appUser.AppUserInformation?.PhoneNumber ?? string.Empty,
-            Businesses = businessItems
+            Businesses = businessItems,
+            BusinessSlotCount = slots.Count
         };
 
         return ApiResponse<GetBusinessOwnerDashboardQueryResponse>.SuccessResult(response);

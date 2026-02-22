@@ -20,7 +20,7 @@ public class LoginHandler : IRequestHandler<LoginRequest, ApiResponse<LoginRespo
     public async Task<ApiResponse<LoginResponse>> Handle(LoginRequest request, CancellationToken cancellationToken)
     {
         var readRepository = _unitOfWork.GetReadRepository<Domain.Entities.AppUser>();
-        var user = await readRepository.GetAsync(u => u.Email == request.Email && !u.IsDeleted);
+        var user = await readRepository.GetAsync(u => u.Email == request.Email && !u.IsDeleted, enableTracking: true);
 
         if (user == null)
         {
@@ -38,6 +38,11 @@ public class LoginHandler : IRequestHandler<LoginRequest, ApiResponse<LoginRespo
         var refreshToken = _jwtService.GenerateRefreshToken();
 
         var refreshTokenExpiry = DateTime.UtcNow.AddDays(7);
+
+        user.RefreshToken = refreshToken;
+        user.RefreshTokenExpiry = refreshTokenExpiry;
+        await _unitOfWork.GetWriteRepository<Domain.Entities.AppUser>().UpdateAsync(user);
+        await _unitOfWork.SaveAsync();
 
         var loginResponse = new LoginResponse
         {

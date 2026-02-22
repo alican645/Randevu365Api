@@ -2,6 +2,7 @@ using MediatR;
 using Randevu365.Application.Common.Responses;
 using Randevu365.Application.Interfaces;
 using Randevu365.Domain.Entities;
+using Randevu365.Domain.Enum;
 
 namespace Randevu365.Application.Features.Businesses.Commands.CreateBusiness;
 
@@ -31,6 +32,31 @@ public class CreateBusinessCommandHandler : IRequestHandler<CreateBusinessComman
         {
             return ApiResponse<CreateBusinessCommandResponse>.UnauthorizedResult("Kullanıcı oturumu bulunamadı.");
         }
+
+        var currentUserId = _currentUserService.UserId.Value;
+
+        var existingBusinesses = await _unitOfWork.GetReadRepository<Business>()
+            .GetAllAsync(predicate: x => x.AppUserId == currentUserId && !x.IsDeleted);
+
+        BusinessSlot? availableSlot = null;
+
+        if (existingBusinesses.Count >= 1)
+        {
+            availableSlot = await _unitOfWork.GetReadRepository<BusinessSlot>()
+                .GetAsync(predicate: x => x.AppUserId == currentUserId &&
+                                          !x.IsUsed &&
+                                          x.PaymentStatus == SlotPaymentStatus.Completed &&
+                                          !x.IsDeleted);
+
+            if (availableSlot == null)
+                return ApiResponse<CreateBusinessCommandResponse>.PaymentRequiredResult(
+                    "Yeni bir işyeri eklemek için önce işyeri slotu satın almanız gerekiyor.");
+        }
+
+        BusinessCategory? category = null;
+        if (BusinessCategoryExtensions.TryFromJson(request.BusinessCategory, out var cat))
+            category = cat;
+
         var business = new Business
         {
             BusinessName = request.BusinessName,
@@ -39,13 +65,23 @@ public class CreateBusinessCommandHandler : IRequestHandler<CreateBusinessComman
             BusinessPhone = request.BusinessPhone,
             BusinessEmail = request.BusinessEmail,
             BusinessCountry = request.BusinessCountry,
-            AppUserId = _currentUserService.UserId.Value
+            BusinessCategory = category,
+            AppUserId = currentUserId
         };
 
         await _unitOfWork.GetWriteRepository<Business>().AddAsync(business);
         await _unitOfWork.SaveAsync();
 
-        return ApiResponse<CreateBusinessCommandResponse>.SuccessResult(
+        if (availableSlot != null)
+        {
+            availableSlot.IsUsed = true;
+            availableSlot.UsedForBusinessId = business.Id;
+            availableSlot.UsedAt = DateTime.UtcNow;
+            await _unitOfWork.GetWriteRepository<BusinessSlot>().UpdateAsync(availableSlot);
+            await _unitOfWork.SaveAsync();
+        }
+
+        return ApiResponse<CreateBusinessCommandResponse>.CreatedResult(
             new CreateBusinessCommandResponse { Id = business.Id },
             "İşletme başarıyla oluşturuldu.");
     }

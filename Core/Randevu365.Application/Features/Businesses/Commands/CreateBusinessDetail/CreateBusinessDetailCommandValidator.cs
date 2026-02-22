@@ -1,4 +1,5 @@
 using FluentValidation;
+using Randevu365.Domain.Enum;
 
 namespace Randevu365.Application.Features.Businesses.Commands.CreateBusinessDetail;
 
@@ -29,6 +30,10 @@ public class CreateBusinessDetailCommandValidator : AbstractValidator<CreateBusi
         RuleFor(x => x.BusinessCountry)
             .NotEmpty().WithMessage("Ülke boş olamaz.")
             .MaximumLength(50).WithMessage("Ülke adı en fazla 50 karakter olabilir.");
+
+        RuleFor(x => x.BusinessCategory)
+            .Must(cat => cat == null || BusinessCategoryExtensions.TryFromJson(cat, out _))
+            .WithMessage($"Geçerli bir kategori giriniz. Desteklenen kategoriler: {string.Join(", ", BusinessCategoryExtensions.ValidValues)}");
 
         RuleForEach(x => x.BusinessHours).ChildRules(hour =>
         {

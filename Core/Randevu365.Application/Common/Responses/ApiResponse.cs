@@ -86,6 +86,14 @@ public class ApiResponse<T>
             StatusCode = 409,
             Message = message
         };
+
+    public static ApiResponse<T> PaymentRequiredResult(string message = "Ödeme gerekli.")
+        => new()
+        {
+            Success = false,
+            StatusCode = 402,
+            Message = message
+        };
 }
 
 /// Data içermeyen response'lar için kullanılır.
