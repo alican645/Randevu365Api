@@ -9,9 +9,17 @@ public class GetBusinessDetailInfoByBusinessIdQueryResponse
     public required string BusinessEmail { get; set; }
     public required string BusinessCountry { get; set; }
     public string? BusinessLogo { get; set; }
+    public string? BusinessCategory { get; set; }
     public List<BusinessServiceDetailDto> BusinessServices { get; set; } = new();
     public List<BusinessHourDetailDto> BusinessHours { get; set; } = new();
     public List<BusinessPhotoDto> BusinessPhotos { get; set; } = new();
+    public BusinessLocationDto? Location { get; set; }
+}
+
+public class BusinessLocationDto
+{
+    public decimal Latitude { get; set; }
+    public decimal Longitude { get; set; }
 }
 
 public class BusinessPhotoDto

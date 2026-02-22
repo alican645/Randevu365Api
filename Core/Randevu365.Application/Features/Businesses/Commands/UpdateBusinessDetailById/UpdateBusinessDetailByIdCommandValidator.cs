@@ -1,4 +1,5 @@
 using FluentValidation;
+using Randevu365.Domain.Enum;
 
 namespace Randevu365.Application.Features.Businesses.Commands.UpdateBusinessDetailById;
 
@@ -32,11 +33,16 @@ public class UpdateBusinessDetailByIdCommandValidator : AbstractValidator<Update
             .NotEmpty().WithMessage("Ülke boş olamaz.")
             .MaximumLength(50).WithMessage("Ülke adı en fazla 50 karakter olabilir.");
 
+        RuleFor(x => x.BusinessCategory)
+            .Must(v => v == null || BusinessCategoryExtensions.TryFromJson(v, out _))
+            .WithMessage($"Geçersiz kategori. Geçerli değerler: {string.Join(", ", BusinessCategoryExtensions.ValidValues)}");
+
         RuleForEach(x => x.BusinessHours).ChildRules(hour =>
         {
             hour.RuleFor(h => h.Day).NotEmpty().WithMessage("Gün boş olamaz.");
             hour.RuleFor(h => h.OpenTime).NotEmpty().WithMessage("Açılış saati boş olamaz.");
             hour.RuleFor(h => h.CloseTime).NotEmpty().WithMessage("Kapanış saati boş olamaz.");
         });
+        
     }
 }

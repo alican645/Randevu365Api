@@ -17,6 +17,13 @@ public class CreateBusinessDetailCommandRequest : IRequest<ApiResponse<CreateBus
     public List<BusinessServiceDto>? BusinessServices { get; set; }
     public List<BusinessHourDto>? BusinessHours { get; set; }
     public List<IFormFile>? BusinessPhotos { get; set; }
+    public BusinessLocationDto? Location { get; set; }
+}
+
+public class BusinessLocationDto
+{
+    public decimal Latitude { get; set; }
+    public decimal Longitude { get; set; }
 }
 
 public class BusinessHourDto

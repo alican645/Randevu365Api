@@ -13,11 +13,19 @@ public class UpdateBusinessDetailByIdCommandRequest : IRequest<ApiResponse<Updat
     public string? BusinessPhone { get; set; }
     public string? BusinessEmail { get; set; }
     public string? BusinessCountry { get; set; }
+    public string? BusinessCategory { get; set; }
     public IFormFile? BusinessLogo { get; set; }
     public List<BusinessHourUpdateDto>? BusinessHours { get; set; }
     public List<BusinessServiceUpdateDto>? BusinessServices { get; set; }
     public List<IFormFile>? BusinessPhotos { get; set; }
     public List<int>? PhotoIdsToDelete { get; set; }
+    public BusinessLocationDto? Location { get; set; }
+}
+
+public class BusinessLocationDto
+{
+    public decimal Latitude { get; set; }
+    public decimal Longitude { get; set; }
 }
 
 public class BusinessHourUpdateDto

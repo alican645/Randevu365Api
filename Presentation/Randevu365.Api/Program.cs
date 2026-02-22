@@ -1,5 +1,7 @@
+using System.Globalization;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Randevu365.Api.Hubs;
@@ -99,6 +101,13 @@ builder.Services.AddScoped<Randevu365.Application.Interfaces.ICurrentUserService
 var app = builder.Build();
 
 app.UseExceptionHandling();
+
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(CultureInfo.InvariantCulture),
+    SupportedCultures = [CultureInfo.InvariantCulture],
+    SupportedUICultures = [CultureInfo.InvariantCulture]
+});
 
 app.UseHttpsRedirection();
 

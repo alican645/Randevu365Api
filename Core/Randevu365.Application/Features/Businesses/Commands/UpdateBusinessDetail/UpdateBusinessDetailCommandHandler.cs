@@ -43,7 +43,8 @@ public class UpdateBusinessDetailCommandHandler : IRequestHandler<UpdateBusiness
                     .Include(b => b.BusinessLogo)
                     .Include(b => b.BusinessHours)
                     .Include(b => b.BusinessPhotos)
-                    .Include(b => b.BusinessServices),
+                    .Include(b => b.BusinessServices)
+                    .Include(b => b.BusinessLocations),
                 enableTracking: true
             );
 
@@ -160,6 +161,23 @@ public class UpdateBusinessDetailCommandHandler : IRequestHandler<UpdateBusiness
                 });
             }
             await _unitOfWork.GetWriteRepository<BusinessPhoto>().AddRangeAsync(newPhotos);
+        }
+
+        // Business Location — upsert
+        if (request.Location != null)
+        {
+            var existingLocation = business.BusinessLocations.FirstOrDefault();
+            if (existingLocation != null)
+            {
+                existingLocation.Latitude = request.Location.Latitude;
+                existingLocation.Longitude = request.Location.Longitude;
+                await _unitOfWork.GetWriteRepository<BusinessLocation>().UpdateAsync(existingLocation);
+            }
+            else
+            {
+                var location = new BusinessLocation(business.Id, request.Location.Latitude, request.Location.Longitude);
+                await _unitOfWork.GetWriteRepository<BusinessLocation>().AddAsync(location);
+            }
         }
 
         await _unitOfWork.SaveAsync();

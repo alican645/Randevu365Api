@@ -41,5 +41,6 @@ public class CreateBusinessDetailCommandValidator : AbstractValidator<CreateBusi
             hour.RuleFor(h => h.OpenTime).NotEmpty().WithMessage("Açılış saati boş olamaz.");
             hour.RuleFor(h => h.CloseTime).NotEmpty().WithMessage("Kapanış saati boş olamaz.");
         });
+        
     }
 }

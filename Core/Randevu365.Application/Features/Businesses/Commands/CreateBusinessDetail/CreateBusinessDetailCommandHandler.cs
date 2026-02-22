@@ -115,6 +115,13 @@ public class CreateBusinessDetailCommandHandler : IRequestHandler<CreateBusiness
             await _unitOfWork.GetWriteRepository<BusinessService>().AddRangeAsync(services);
         }
 
+        // Business Location
+        if (request.Location != null)
+        {
+            var location = new BusinessLocation(business.Id, request.Location.Latitude, request.Location.Longitude);
+            await _unitOfWork.GetWriteRepository<BusinessLocation>().AddAsync(location);
+        }
+
         // Business Photos
         if (request.BusinessPhotos is { Count: > 0 })
         {

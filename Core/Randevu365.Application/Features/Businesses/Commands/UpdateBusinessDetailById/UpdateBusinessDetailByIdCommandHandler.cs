@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Randevu365.Application.Common.Responses;
 using Randevu365.Application.Interfaces;
 using Randevu365.Domain.Entities;
+using Randevu365.Domain.Enum;
 using BusinessLogoEntity = Randevu365.Domain.Entities.BusinessLogo;
 
 namespace Randevu365.Application.Features.Businesses.Commands.UpdateBusinessDetailById;
@@ -43,7 +44,8 @@ public class UpdateBusinessDetailByIdCommandHandler : IRequestHandler<UpdateBusi
                     .Include(b => b.BusinessLogo)
                     .Include(b => b.BusinessHours)
                     .Include(b => b.BusinessPhotos)
-                    .Include(b => b.BusinessServices),
+                    .Include(b => b.BusinessServices)
+                    .Include(b => b.BusinessLocations),
                 enableTracking: true
             );
 
@@ -58,6 +60,11 @@ public class UpdateBusinessDetailByIdCommandHandler : IRequestHandler<UpdateBusi
         business.BusinessPhone = request.BusinessPhone!;
         business.BusinessEmail = request.BusinessEmail!;
         business.BusinessCountry = request.BusinessCountry!;
+
+        if (request.BusinessCategory != null && BusinessCategoryExtensions.TryFromJson(request.BusinessCategory, out var category))
+        {
+            business.BusinessCategory = category;
+        }
 
         await _unitOfWork.GetWriteRepository<Business>().UpdateAsync(business);
 
@@ -156,6 +163,23 @@ public class UpdateBusinessDetailByIdCommandHandler : IRequestHandler<UpdateBusi
                 });
             }
             await _unitOfWork.GetWriteRepository<BusinessPhoto>().AddRangeAsync(newPhotos);
+        }
+
+        // Business Location — upsert
+        if (request.Location != null)
+        {
+            var existingLocation = business.BusinessLocations.FirstOrDefault();
+            if (existingLocation != null)
+            {
+                existingLocation.Latitude = request.Location.Latitude;
+                existingLocation.Longitude = request.Location.Longitude;
+                await _unitOfWork.GetWriteRepository<BusinessLocation>().UpdateAsync(existingLocation);
+            }
+            else
+            {
+                var location = new BusinessLocation(business.Id, request.Location.Latitude, request.Location.Longitude);
+                await _unitOfWork.GetWriteRepository<BusinessLocation>().AddAsync(location);
+            }
         }
 
         await _unitOfWork.SaveAsync();

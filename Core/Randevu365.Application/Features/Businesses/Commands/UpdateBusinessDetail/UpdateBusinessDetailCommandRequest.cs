@@ -17,6 +17,13 @@ public class UpdateBusinessDetailCommandRequest : IRequest<ApiResponse<UpdateBus
     public List<BusinessHourUpdateDto>? BusinessHours { get; set; }
     public List<IFormFile>? BusinessPhotos { get; set; }
     public List<int>? PhotoIdsToDelete { get; set; }
+    public BusinessLocationDto? Location { get; set; }
+}
+
+public class BusinessLocationDto
+{
+    public decimal Latitude { get; set; }
+    public decimal Longitude { get; set; }
 }
 
 public class BusinessHourUpdateDto
