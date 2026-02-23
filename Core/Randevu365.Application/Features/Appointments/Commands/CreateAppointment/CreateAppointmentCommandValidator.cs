@@ -16,8 +16,8 @@ public class CreateAppointmentCommandValidator : AbstractValidator<CreateAppoint
             .GreaterThanOrEqualTo(DateOnly.FromDateTime(DateTime.UtcNow.Date))
             .WithMessage("Randevu tarihi geçmiş bir tarih olamaz.");
 
-        RuleFor(x => x.StartTime)
-            .LessThan(x => x.EndTime).WithMessage("Başlangıç saati bitiş saatinden önce olmalıdır.");
+        RuleFor(x => x.RequestedStartTime)
+            .LessThan(x => x.RequestedEndTime).WithMessage("Başlangıç saati bitiş saatinden önce olmalıdır.");
 
         RuleFor(x => x.CustomerNotes)
             .MaximumLength(500).WithMessage("Müşteri notları en fazla 500 karakter olabilir.")

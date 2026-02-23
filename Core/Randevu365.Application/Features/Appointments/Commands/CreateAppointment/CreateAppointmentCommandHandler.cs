@@ -43,8 +43,8 @@ public class CreateAppointmentCommandHandler : IRequestHandler<CreateAppointment
         var overlappingCount = await _unitOfWork.GetReadRepository<Appointment>().CountAsync(
             x => x.BusinessServiceId == request.BusinessServiceId
                  && x.AppointmentDate == request.AppointmentDate
-                 && x.StartTime < request.EndTime
-                 && x.EndTime > request.StartTime
+                 && x.RequestedStartTime < request.RequestedEndTime
+                 && x.RequestedEndTime > request.RequestedStartTime
                  && (x.Status == AppointmentStatus.Pending || x.Status == AppointmentStatus.Confirmed)
                  && !x.IsDeleted
         );
@@ -60,8 +60,8 @@ public class CreateAppointmentCommandHandler : IRequestHandler<CreateAppointment
             BusinessId = request.BusinessId,
             BusinessServiceId = request.BusinessServiceId,
             AppointmentDate = request.AppointmentDate,
-            StartTime = request.StartTime,
-            EndTime = request.EndTime,
+            RequestedStartTime = request.RequestedStartTime,
+            RequestedEndTime = request.RequestedEndTime,
             CustomerNotes = request.CustomerNotes,
             Status = AppointmentStatus.Pending
         };

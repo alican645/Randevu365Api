@@ -15,8 +15,10 @@ public class Appointment : BaseEntity
     public virtual BusinessService? BusinessService { get; set; }
 
     public DateOnly AppointmentDate { get; set; }
-    public TimeOnly StartTime { get; set; }
-    public TimeOnly EndTime { get; set; }
+    public TimeOnly? RequestedStartTime { get; set; }
+    public TimeOnly? RequestedEndTime { get; set; }
+    public TimeOnly? ApproveStartTime { get; set; }
+    public TimeOnly? ApproveEndTime { get; set; }
 
     public AppointmentStatus Status { get; set; } = AppointmentStatus.Pending;
     public string? CustomerNotes { get; set; }

@@ -15,9 +15,8 @@ using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessBasicIn
 using Randevu365.Application.Features.BusinessRating.Queries.GetRatingsByBusinessId;
 using Randevu365.Application.Features.Appointments.Commands.CreateAppointment;
 using Randevu365.Application.Features.Appointments.Commands.CancelAppointmentByCustomer;
-using Randevu365.Application.Features.Appointments.Queries.GetMyAppointments;
-using Randevu365.Application.Features.Appointments.Queries.GetAppointmentById;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetNearbyBusinesses;
+using Randevu365.Application.Features.BusinessProfile.Queries.GetCustomerBusinessProfile;
 using Randevu365.Domain.Enum;
 
 namespace Randevu365.Api.Controllers;
@@ -42,6 +41,17 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> GetNearbyBusinesses([FromQuery] GetNearbyBusinessesQueryRequest request)
     {
         var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+    #endregion
+
+    #region Business Profile
+
+    [AllowAnonymous]
+    [HttpGet("business/{businessId}")]
+    public async Task<IActionResult> GetBusinessProfile(int businessId)
+    {
+        var response = await _mediator.Send(new GetCustomerBusinessProfileQueryRequest { BusinessId = businessId });
         return StatusCode(response.StatusCode, response);
     }
     #endregion
@@ -144,18 +154,6 @@ public class CustomerController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
-    [HttpGet("appointments")]
-    public async Task<IActionResult> GetMyAppointments()
-    {
-        var response = await _mediator.Send(new GetMyAppointmentsQueryRequest());
-        return StatusCode(response.StatusCode, response);
-    }
 
-    [HttpGet("appointment/{appointmentId}")]
-    public async Task<IActionResult> GetAppointmentById(int appointmentId)
-    {
-        var response = await _mediator.Send(new GetAppointmentByIdQueryRequest { AppointmentId = appointmentId });
-        return StatusCode(response.StatusCode, response);
-    }
     #endregion
 }

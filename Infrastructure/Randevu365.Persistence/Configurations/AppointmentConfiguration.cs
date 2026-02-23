@@ -27,6 +27,6 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
             .HasForeignKey(x => x.BusinessServiceId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasIndex(x => new { x.BusinessId, x.AppointmentDate, x.StartTime });
+        builder.HasIndex(x => new { x.BusinessId, x.AppointmentDate, x.RequestedStartTime });
     }
 }

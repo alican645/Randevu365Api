@@ -10,12 +10,12 @@ public class NearbyBusinessDto
     public int BusinessId { get; set; }
     public required string BusinessName { get; set; }
     public required string BusinessAddress { get; set; }
-    public required string BusinessCity { get; set; }
-    public required string BusinessPhone { get; set; }
     public string? BusinessLogo { get; set; }
     public string? BusinessCategory { get; set; }
     public NearbyBusinessLocationDto Location { get; set; } = null!;
     public double DistanceKm { get; set; }
+    public decimal AverageRating { get; set; }
+    public int CommentCount { get; set; }
 }
 
 public class NearbyBusinessLocationDto

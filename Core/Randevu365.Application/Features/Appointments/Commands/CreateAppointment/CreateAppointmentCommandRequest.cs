@@ -8,7 +8,7 @@ public class CreateAppointmentCommandRequest : IRequest<ApiResponse<CreateAppoin
     public int BusinessId { get; set; }
     public int BusinessServiceId { get; set; }
     public DateOnly AppointmentDate { get; set; }
-    public TimeOnly StartTime { get; set; }
-    public TimeOnly EndTime { get; set; }
+    public TimeOnly RequestedStartTime { get; set; }
+    public TimeOnly RequestedEndTime { get; set; }
     public string? CustomerNotes { get; set; }
 }

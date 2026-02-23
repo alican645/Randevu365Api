@@ -33,7 +33,7 @@ using Randevu365.Application.Features.BusinessProfile.Queries.GetRandomBusinessS
 using Randevu365.Application.Features.Appointments.Commands.ConfirmAppointment;
 using Randevu365.Application.Features.Appointments.Commands.CompleteAppointment;
 using Randevu365.Application.Features.Appointments.Commands.CancelAppointmentByBusiness;
-using Randevu365.Application.Features.Appointments.Queries.GetBusinessAppointments;
+
 using Randevu365.Domain.Enum;
 
 namespace Randevu365.Api.Controllers;
@@ -261,12 +261,6 @@ public class BusinessController : ControllerBase
     #endregion
 
     #region Appointments
-    [HttpGet("appointments")]
-    public async Task<IActionResult> GetBusinessAppointments([FromQuery] DateOnly? date, [FromQuery] AppointmentStatus? status)
-    {
-        var response = await _mediator.Send(new GetBusinessAppointmentsQueryRequest { Date = date, Status = status });
-        return StatusCode(response.StatusCode, response);
-    }
 
     [HttpPatch("appointment/{appointmentId}/confirm")]
     public async Task<IActionResult> ConfirmAppointment(int appointmentId)

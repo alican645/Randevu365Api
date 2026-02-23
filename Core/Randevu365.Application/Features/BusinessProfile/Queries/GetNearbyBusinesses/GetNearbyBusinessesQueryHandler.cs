@@ -32,6 +32,8 @@ public class GetNearbyBusinessesQueryHandler : IRequestHandler<GetNearbyBusiness
                 include: i => i
                     .Include(b => b.BusinessLocations)
                     .Include(b => b.BusinessLogo)
+                    .Include(b => b.BusinessRatings)
+                    .Include(b => b.BusinessComments)
             );
 
         var searchLat = (double)request.Latitude;
@@ -51,8 +53,6 @@ public class GetNearbyBusinessesQueryHandler : IRequestHandler<GetNearbyBusiness
                 BusinessId = x.Business.Id,
                 BusinessName = x.Business.BusinessName,
                 BusinessAddress = x.Business.BusinessAddress,
-                BusinessCity = x.Business.BusinessCity,
-                BusinessPhone = x.Business.BusinessPhone,
                 BusinessLogo = x.Business.BusinessLogo?.LogoUrl,
                 BusinessCategory = x.Business.BusinessCategory?.ToJson(),
                 Location = new NearbyBusinessLocationDto
@@ -60,7 +60,11 @@ public class GetNearbyBusinessesQueryHandler : IRequestHandler<GetNearbyBusiness
                     Latitude = x.Location.Latitude,
                     Longitude = x.Location.Longitude
                 },
-                DistanceKm = Math.Round(x.Distance, 2)
+                DistanceKm = Math.Round(x.Distance, 2),
+                AverageRating = x.Business.BusinessRatings.Any()
+                    ? Math.Round((decimal)x.Business.BusinessRatings.Average(r => r.Rating), 1)
+                    : 0,
+                CommentCount = x.Business.BusinessComments.Count
             })
             .ToList();
 
