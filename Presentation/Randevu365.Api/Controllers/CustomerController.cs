@@ -17,6 +17,7 @@ using Randevu365.Application.Features.Appointments.Commands.CreateAppointment;
 using Randevu365.Application.Features.Appointments.Commands.CancelAppointmentByCustomer;
 using Randevu365.Application.Features.Appointments.Queries.GetMyAppointments;
 using Randevu365.Application.Features.Appointments.Queries.GetAppointmentById;
+using Randevu365.Application.Features.BusinessProfile.Queries.GetNearbyBusinesses;
 using Randevu365.Domain.Enum;
 
 namespace Randevu365.Api.Controllers;
@@ -34,6 +35,16 @@ public class CustomerController : ControllerBase
     }
 
 
+
+    #region Nearby Businesses
+    [AllowAnonymous]
+    [HttpGet("nearby-businesses")]
+    public async Task<IActionResult> GetNearbyBusinesses([FromQuery] GetNearbyBusinessesQueryRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+    #endregion
 
     #region Business Comments
     [HttpGet("comments/{businessId}")]
