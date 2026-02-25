@@ -1,6 +1,8 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Randevu365.Application.Common.Responses;
+using Randevu365.Application.DTOs;
+using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessProfileByUserId;
 using Randevu365.Application.Interfaces;
 using Randevu365.Domain.Entities;
 
@@ -64,11 +66,14 @@ public class GetBusinessProfileByBusinessOwnerIdQueryHandler : IRequestHandler<G
             BusinessOwnerCity = string.Empty,    
             BusinessOwnerCountry = string.Empty, 
 
-            BusinessServices = business.BusinessServices?.Select(s => new BusinessServiceDto
+            BusinessServices = business.BusinessServices?.Select(s => new BusinessServiceDetailDto
             {
+                Id = s.Id,
+                MaxConcurrentCustomers =  s.MaxConcurrentCustomers,
+                ServicePrice = s.ServicePrice,
                 ServiceTitle = s.ServiceTitle,
                 ServiceContent = s.ServiceContent
-            }).ToList() ?? new List<BusinessServiceDto>(),
+            }).ToList() ?? new List<BusinessServiceDetailDto>(),
             BusinessHours = business.BusinessHours?.Select(h => $"{h.Day}: {h.OpenTime}-{h.CloseTime}").ToList() ?? new List<string>(),
             BusinessPhotos = business.BusinessPhotos?.Where(p => p.IsActive).Select(p => p.PhotoPath).ToList() ?? new List<string>(),
             BusinessComments = business.BusinessComments?.Select(c => c.Comment).ToList() ?? new List<string>(),

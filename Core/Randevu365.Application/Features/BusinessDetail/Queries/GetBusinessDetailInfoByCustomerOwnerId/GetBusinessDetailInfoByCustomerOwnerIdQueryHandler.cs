@@ -1,48 +1,47 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Randevu365.Application.Common.Responses;
+using Randevu365.Application.DTOs;
 using Randevu365.Application.Interfaces;
 using Randevu365.Domain.Entities;
-using Randevu365.Domain.Enum;
 
-namespace Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessDetailInfoByBusinessId;
+namespace Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessDetailInfoByCustomerOwnerId;
 
-public class GetBusinessDetailInfoByBusinessIdQueryHandler : IRequestHandler<GetBusinessDetailInfoByBusinessIdQueryRequest, ApiResponse<GetBusinessDetailInfoByBusinessIdQueryResponse>>
+public class GetBusinessDetailInfoByCustomerOwnerIdQueryHandler : IRequestHandler<GetBusinessDetailInfoByCustomerOwnerIdQueryRequest, ApiResponse<GetBusinessDetailInfoByCustomerOwnerIdQueryResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICurrentUserService _currentUserService;
 
-    public GetBusinessDetailInfoByBusinessIdQueryHandler(IUnitOfWork unitOfWork)
+    public GetBusinessDetailInfoByCustomerOwnerIdQueryHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
     {
         _unitOfWork = unitOfWork;
+        _currentUserService = currentUserService;
     }
 
-    public async Task<ApiResponse<GetBusinessDetailInfoByBusinessIdQueryResponse>> Handle(GetBusinessDetailInfoByBusinessIdQueryRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<GetBusinessDetailInfoByCustomerOwnerIdQueryResponse>> Handle(GetBusinessDetailInfoByCustomerOwnerIdQueryRequest request, CancellationToken cancellationToken)
     {
-        var validator = new GetBusinessDetailInfoByBusinessIdQueryValidator();
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
-        if (!validationResult.IsValid)
+        var currentUserId = _currentUserService.UserId;
+        if (currentUserId == null)
         {
-            var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
-            return ApiResponse<GetBusinessDetailInfoByBusinessIdQueryResponse>.FailResult(errors);
+            return ApiResponse<GetBusinessDetailInfoByCustomerOwnerIdQueryResponse>.UnauthorizedResult();
         }
 
         var business = await _unitOfWork.GetReadRepository<Business>()
             .GetAsync(
-                predicate: x => x.Id == request.BusinessId && !x.IsDeleted,
+                predicate: x => x.AppUserId == currentUserId,
                 include: i => i
                     .Include(b => b.BusinessLogo)
                     .Include(b => b.BusinessHours)
                     .Include(b => b.BusinessPhotos)
                     .Include(b => b.BusinessServices)
-                    .Include(b => b.BusinessLocations)
             );
 
         if (business == null)
         {
-            return ApiResponse<GetBusinessDetailInfoByBusinessIdQueryResponse>.NotFoundResult("İşletme bulunamadı.");
+            return ApiResponse<GetBusinessDetailInfoByCustomerOwnerIdQueryResponse>.NotFoundResult("Kullanıcıya ait işletme bulunamadı.");
         }
 
-        var response = new GetBusinessDetailInfoByBusinessIdQueryResponse
+        var response = new GetBusinessDetailInfoByCustomerOwnerIdQueryResponse
         {
             BusinessName = business.BusinessName,
             BusinessAddress = business.BusinessAddress,
@@ -51,9 +50,10 @@ public class GetBusinessDetailInfoByBusinessIdQueryHandler : IRequestHandler<Get
             BusinessEmail = business.BusinessEmail,
             BusinessCountry = business.BusinessCountry,
             BusinessLogo = business.BusinessLogo?.LogoUrl,
-            BusinessCategory = business.BusinessCategory?.ToJson(),
             BusinessServices = business.BusinessServices?.Select(s => new BusinessServiceDetailDto
             {
+                Id = s.Id,
+                ServicePrice = s.ServicePrice,
                 ServiceTitle = s.ServiceTitle,
                 ServiceContent = s.ServiceContent,
                 MaxConcurrentCustomers = s.MaxConcurrentCustomers
@@ -71,12 +71,9 @@ public class GetBusinessDetailInfoByBusinessIdQueryHandler : IRequestHandler<Get
                     Id = p.Id,
                     PhotoPath = p.PhotoPath ?? string.Empty
                 })
-                .ToList() ?? new List<BusinessPhotoDto>(),
-            Location = business.BusinessLocations.FirstOrDefault() is { } loc
-                ? new BusinessLocationDto { Latitude = loc.Latitude, Longitude = loc.Longitude }
-                : null
+                .ToList() ?? new List<BusinessPhotoDto>()
         };
 
-        return ApiResponse<GetBusinessDetailInfoByBusinessIdQueryResponse>.SuccessResult(response);
+        return ApiResponse<GetBusinessDetailInfoByCustomerOwnerIdQueryResponse>.SuccessResult(response);
     }
 }

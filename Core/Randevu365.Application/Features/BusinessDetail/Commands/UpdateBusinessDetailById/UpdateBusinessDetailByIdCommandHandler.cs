@@ -45,6 +45,7 @@ public class UpdateBusinessDetailByIdCommandHandler : IRequestHandler<UpdateBusi
                     .Include(b => b.BusinessHours)
                     .Include(b => b.BusinessPhotos)
                     .Include(b => b.BusinessServices)
+                        .ThenInclude(s => s.Appointments)
                     .Include(b => b.BusinessLocations),
                 enableTracking: true
             );
@@ -110,26 +111,59 @@ public class UpdateBusinessDetailByIdCommandHandler : IRequestHandler<UpdateBusi
             }
         }
 
-        // Business Services — mevcut hizmetleri sil, yenileri ekle
+        // Business Services — delta güncelleme
         if (request.BusinessServices != null)
         {
-            if (business.BusinessServices.Count > 0)
+            var requestServiceIds = request.BusinessServices
+                .Where(s => s.Id.HasValue)
+                .Select(s => s.Id!.Value)
+                .ToHashSet();
+
+            // DB'de var ama request'te olmayan servisler
+            var servicesToRemove = business.BusinessServices
+                .Where(s => !requestServiceIds.Contains(s.Id))
+                .ToList();
+
+            foreach (var service in servicesToRemove)
             {
-                await _unitOfWork.GetWriteRepository<BusinessService>().HardDeleteRangeAsync(business.BusinessServices.ToList());
+                if (service.Appointments.Count > 0)
+                {
+                    // Randevusu olan servisler soft-delete yapılır
+                    service.IsDeleted = true;
+                    await _unitOfWork.GetWriteRepository<BusinessService>().UpdateAsync(service);
+                }
+                else
+                {
+                    await _unitOfWork.GetWriteRepository<BusinessService>().HardDeleteAsync(service);
+                }
             }
 
-            if (request.BusinessServices.Count > 0)
+            // Request'te Id'si olan mevcut servisler → güncelle
+            foreach (var serviceDto in request.BusinessServices.Where(s => s.Id.HasValue))
             {
-                var services = request.BusinessServices.Select(s => new BusinessService
+                var existing = business.BusinessServices.FirstOrDefault(s => s.Id == serviceDto.Id);
+                if (existing == null) continue;
+                existing.ServiceTitle = serviceDto.ServiceTitle!;
+                existing.ServiceContent = serviceDto.ServiceContent!;
+                existing.MaxConcurrentCustomers = serviceDto.MaxConcurrentCustomers;
+                existing.ServicePrice = serviceDto.ServicePrice;
+                await _unitOfWork.GetWriteRepository<BusinessService>().UpdateAsync(existing);
+            }
+
+            // Request'te Id'si olmayan servisler → yeni ekle
+            var newServices = request.BusinessServices
+                .Where(s => !s.Id.HasValue)
+                .Select(s => new BusinessService
                 {
                     ServiceTitle = s.ServiceTitle!,
                     ServiceContent = s.ServiceContent!,
                     MaxConcurrentCustomers = s.MaxConcurrentCustomers,
+                    ServicePrice = s.ServicePrice,
                     BusinessId = business.Id
                 }).ToList();
 
-                await _unitOfWork.GetWriteRepository<BusinessService>().AddRangeAsync(services);
-            }
+            if (newServices.Count > 0)
+                await _unitOfWork.GetWriteRepository<BusinessService>().AddRangeAsync(newServices);
         }
 
         // Business Photos — delta yaklaşımı: belirtilenler silinir, yeniler eklenir

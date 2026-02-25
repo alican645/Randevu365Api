@@ -1,3 +1,5 @@
+using Randevu365.Application.DTOs;
+
 namespace Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessDetailInfoByCustomerOwnerId;
 
 public class GetBusinessDetailInfoByCustomerOwnerIdQueryResponse
@@ -14,22 +16,6 @@ public class GetBusinessDetailInfoByCustomerOwnerIdQueryResponse
     public List<BusinessPhotoDto> BusinessPhotos { get; set; } = new();
 }
 
-public class BusinessPhotoDto
-{
-    public int Id { get; set; }
-    public string PhotoPath { get; set; } = string.Empty;
-}
 
-public class BusinessHourDetailDto
-{
-    public required string Day { get; set; }
-    public required string OpenTime { get; set; }
-    public required string CloseTime { get; set; }
-}
 
-public class BusinessServiceDetailDto
-{
-    public required string ServiceTitle { get; set; }
-    public required string ServiceContent { get; set; }
-    public int MaxConcurrentCustomers { get; set; }
-}
+

@@ -29,6 +29,7 @@ public class CustomerBusinessServiceDto
     public required int Id { get; set; }
     public required string ServiceTitle { get; set; }
     public required string ServiceContent { get; set; }
+    public decimal ServicePrice { get; set; }
     public int MaxConcurrentCustomers { get; set; }
 }
 

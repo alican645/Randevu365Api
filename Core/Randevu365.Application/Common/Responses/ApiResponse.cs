@@ -94,6 +94,15 @@ public class ApiResponse<T>
             StatusCode = 402,
             Message = message
         };
+
+    public static ApiResponse<T> PaymentRequiredResult(string message, IEnumerable<string> errors)
+        => new()
+        {
+            Success = false,
+            StatusCode = 402,
+            Message = message,
+            Errors = errors.ToList().AsReadOnly()
+        };
 }
 
 /// Data içermeyen response'lar için kullanılır.

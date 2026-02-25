@@ -74,6 +74,7 @@ public class GetCustomerBusinessProfileQueryHandler
                     Id = s.Id,
                     ServiceTitle = s.ServiceTitle,
                     ServiceContent = s.ServiceContent,
+                    ServicePrice =  s.ServicePrice,
                     MaxConcurrentCustomers = s.MaxConcurrentCustomers
                 }).ToList() ?? new(),
 

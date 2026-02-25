@@ -1,3 +1,6 @@
+using Randevu365.Application.DTOs;
+using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessProfileByUserId;
+
 namespace Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessProfileByBusinessOwnerId;
 
 public class GetBusinessProfileByBusinessOwnerIdQueryResponse
@@ -17,15 +20,11 @@ public class GetBusinessProfileByBusinessOwnerIdQueryResponse
     public required string BusinessOwnerCity { get; set; }
     public required string BusinessOwnerCountry { get; set; }
 
-    public required List<BusinessServiceDto> BusinessServices { get; set; }
+    public required List<BusinessServiceDetailDto> BusinessServices { get; set; }
     public required List<string> BusinessHours { get; set; }
     public required List<string> BusinessPhotos { get; set; }
     public required List<string> BusinessComments { get; set; }
     public required decimal BusinessRatings { get; set; }
 }
 
-public class BusinessServiceDto
-{
-    public required string ServiceTitle { get; set; }
-    public required string ServiceContent { get; set; }
-}
+

@@ -7,6 +7,7 @@ public class BusinessService : BaseEntity
     public required string ServiceTitle { get; set; }
     public required string ServiceContent { get; set; }
     public int MaxConcurrentCustomers { get; set; } = 1;
+    public decimal ServicePrice { get; set; }
 
     public int BusinessId { get; set; }
     public virtual Business Business { get; set; } = null!;

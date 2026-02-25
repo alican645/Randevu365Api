@@ -53,7 +53,8 @@ public class CreateBusinessDetailCommandHandler : IRequestHandler<CreateBusiness
 
             if (availableSlot == null)
                 return ApiResponse<CreateBusinessDetailCommandResponse>.PaymentRequiredResult(
-                    "Yeni bir işyeri eklemek için önce işyeri slotu satın almanız gerekiyor.");
+                    "Yeni bir işyeri eklemek için önce işyeri slotu satın almanız gerekiyor.",
+                    new[] { "Yeni bir işyeri eklemek için önce işyeri slotu satın almanız gerekiyor." });
         }
 
         BusinessCategory? category = null;
@@ -109,6 +110,7 @@ public class CreateBusinessDetailCommandHandler : IRequestHandler<CreateBusiness
                 ServiceTitle = s.ServiceTitle!,
                 ServiceContent = s.ServiceContent!,
                 MaxConcurrentCustomers = s.MaxConcurrentCustomers,
+                ServicePrice =  s.ServicePrice,
                 BusinessId = business.Id
             }).ToList();
 

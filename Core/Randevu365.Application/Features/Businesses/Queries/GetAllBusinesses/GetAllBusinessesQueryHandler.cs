@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Randevu365.Application.Common.Responses;
+using Randevu365.Application.DTOs;
 using Randevu365.Application.Interfaces;
 using Randevu365.Domain.Entities;
 
