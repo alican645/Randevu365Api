@@ -21,6 +21,7 @@
 
     <ItemGroup>
       <Folder Include="Bases\" />
+      <Folder Include="Features\AppInıtial\Queries\" />
       <Folder Include="Features\BusinessComments\Commands\GetCommentByCommentId\" />
       <Folder Include="Features\BusinessComments\Commands\GetCommentsByBusinessId\" />
       <Folder Include="Features\BusinessComments\Commands\GetCommentsByUserId\" />

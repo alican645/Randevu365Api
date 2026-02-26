@@ -15,24 +15,24 @@ public static class BusinessCategoryExtensions
 {
     private static readonly Dictionary<string, BusinessCategory> _fromJson = new()
     {
-        { "Kuaför", BusinessCategory.Kuafor },
-        { "Güzellik", BusinessCategory.Guzellik },
-        { "Sağlık", BusinessCategory.Saglik },
-        { "Fitness", BusinessCategory.Fitness },
-        { "Diş", BusinessCategory.Dis },
-        { "Masaj", BusinessCategory.Masaj },
-        { "Veteriner", BusinessCategory.Veteriner }
+        { "kuafor", BusinessCategory.Kuafor },
+        { "guzellik", BusinessCategory.Guzellik },
+        { "saglik", BusinessCategory.Saglik },
+        { "fitness", BusinessCategory.Fitness },
+        { "dis", BusinessCategory.Dis },
+        { "masaj", BusinessCategory.Masaj },
+        { "veteriner", BusinessCategory.Veteriner }
     };
 
     public static string ToJson(this BusinessCategory category) => category switch
     {
-        BusinessCategory.Kuafor => "Kuaför",
-        BusinessCategory.Guzellik => "Güzellik",
-        BusinessCategory.Saglik => "Sağlık",
-        BusinessCategory.Fitness => "Fitness",
-        BusinessCategory.Dis => "Diş",
-        BusinessCategory.Masaj => "Masaj",
-        BusinessCategory.Veteriner => "Veteriner",
+        BusinessCategory.Kuafor => "kuafor",
+        BusinessCategory.Guzellik => "guzellik",
+        BusinessCategory.Saglik => "saglik",
+        BusinessCategory.Fitness => "fitness",
+        BusinessCategory.Dis => "dis",
+        BusinessCategory.Masaj => "masaj",
+        BusinessCategory.Veteriner => "veteriner",
         _ => throw new ArgumentOutOfRangeException(nameof(category))
     };
 

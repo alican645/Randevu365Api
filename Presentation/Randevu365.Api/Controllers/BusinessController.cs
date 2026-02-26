@@ -9,6 +9,8 @@ using Randevu365.Application.Features.Businesses.Commands.UpdateBusiness;
 using Randevu365.Application.Features.Businesses.Commands.UpdateBusinessDetail;
 using Randevu365.Application.Features.Businesses.Commands.UpdateBusinessDetailById;
 using Randevu365.Application.Features.Businesses.Queries.GetBusinessById;
+using Randevu365.Application.Features.Businesses.Queries.GetBusinessesAllCategory;
+using Randevu365.Application.Features.Businesses.Queries.GetBusinessesByBusinessCategory;
 using Randevu365.Application.Features.BusinessHours.Commands.CreateBusinessHour;
 using Randevu365.Application.Features.BusinessHours.Commands.DeleteBusinessHour;
 using Randevu365.Application.Features.BusinessHours.Commands.UpdateBusinessHour;
@@ -51,6 +53,31 @@ public class BusinessController : ControllerBase
     }
 
     #region Business Configuration
+    [AllowAnonymous]
+    [HttpGet("all-category")]
+    public async Task<IActionResult> GetBusinessesAllCategory([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    {
+        var response = await _mediator.Send(new GetBusinessesAllCategoryRequest 
+        { 
+            PageNumber = pageNumber,
+            PageSize = pageSize 
+        });
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("by-category/{categoryName}")]
+    public async Task<IActionResult> GetBusinessesByCategory(string categoryName, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    {
+        var response = await _mediator.Send(new GetBusinessesByBusinessCategoryRequest 
+        { 
+            CategoryName = categoryName,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        });
+        return StatusCode(response.StatusCode, response);
+    }
+
     [HttpGet("random-business-summary")]
     public async Task<IActionResult> GetRandomBusinessSummary()
     {
