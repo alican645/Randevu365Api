@@ -63,6 +63,7 @@ public class GetBusinessDetailInfoByBusinessIdQueryHandler : IRequestHandler<Get
             }).ToList() ?? new List<BusinessServiceDetailDto>(),
             BusinessHours = business.BusinessHours?.Select(h => new BusinessHourDetailDto
             {
+                Id =  h.Id,
                 Day = h.Day,
                 OpenTime = h.OpenTime,
                 CloseTime = h.CloseTime

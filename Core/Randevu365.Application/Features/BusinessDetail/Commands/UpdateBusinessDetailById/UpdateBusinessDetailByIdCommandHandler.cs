@@ -89,100 +89,106 @@ public class UpdateBusinessDetailByIdCommandHandler : IRequestHandler<UpdateBusi
             }
         }
 
-        // Business Hours — mevcut saatleri sil, yenileri ekle
+        // Business Hours — Id=0 → ekle, IsDeleted=true → sil, IsDeleted=false → güncelle
         if (request.BusinessHours != null)
         {
-            if (business.BusinessHours.Count > 0)
+            foreach (var hourDto in request.BusinessHours)
             {
-                await _unitOfWork.GetWriteRepository<BusinessHour>().HardDeleteRangeAsync(business.BusinessHours.ToList());
-            }
-
-            if (request.BusinessHours.Count > 0)
-            {
-                var hours = request.BusinessHours.Select(h => new BusinessHour
+                if (hourDto.Id == 0)
                 {
-                    Day = h.Day!,
-                    OpenTime = h.OpenTime!,
-                    CloseTime = h.CloseTime!,
-                    BusinessId = business.Id
-                }).ToList();
-
-                await _unitOfWork.GetWriteRepository<BusinessHour>().AddRangeAsync(hours);
-            }
-        }
-
-        // Business Services — delta güncelleme
-        if (request.BusinessServices != null)
-        {
-            var requestServiceIds = request.BusinessServices
-                .Where(s => s.Id.HasValue)
-                .Select(s => s.Id!.Value)
-                .ToHashSet();
-
-            // DB'de var ama request'te olmayan servisler
-            var servicesToRemove = business.BusinessServices
-                .Where(s => !requestServiceIds.Contains(s.Id))
-                .ToList();
-
-            foreach (var service in servicesToRemove)
-            {
-                if (service.Appointments.Count > 0)
-                {
-                    // Randevusu olan servisler soft-delete yapılır
-                    service.IsDeleted = true;
-                    await _unitOfWork.GetWriteRepository<BusinessService>().UpdateAsync(service);
+                    await _unitOfWork.GetWriteRepository<BusinessHour>().AddAsync(new BusinessHour
+                    {
+                        Day = hourDto.Day,
+                        OpenTime = hourDto.OpenTime,
+                        CloseTime = hourDto.CloseTime,
+                        BusinessId = business.Id
+                    });
                 }
                 else
                 {
-                    await _unitOfWork.GetWriteRepository<BusinessService>().HardDeleteAsync(service);
+                    var existing = business.BusinessHours.FirstOrDefault(h => h.Id == hourDto.Id);
+                    if (existing == null) continue;
+
+                    if (hourDto.IsDeleted)
+                    {
+                        await _unitOfWork.GetWriteRepository<BusinessHour>().HardDeleteAsync(existing);
+                    }
+                    else
+                    {
+                        existing.Day = hourDto.Day;
+                        existing.OpenTime = hourDto.OpenTime;
+                        existing.CloseTime = hourDto.CloseTime;
+                        await _unitOfWork.GetWriteRepository<BusinessHour>().UpdateAsync(existing);
+                    }
                 }
             }
-
-            // Request'te Id'si olan mevcut servisler → güncelle
-            foreach (var serviceDto in request.BusinessServices.Where(s => s.Id.HasValue))
-            {
-                var existing = business.BusinessServices.FirstOrDefault(s => s.Id == serviceDto.Id);
-                if (existing == null) continue;
-                existing.ServiceTitle = serviceDto.ServiceTitle!;
-                existing.ServiceContent = serviceDto.ServiceContent!;
-                existing.MaxConcurrentCustomers = serviceDto.MaxConcurrentCustomers;
-                existing.ServicePrice = serviceDto.ServicePrice;
-                await _unitOfWork.GetWriteRepository<BusinessService>().UpdateAsync(existing);
-            }
-
-            // Request'te Id'si olmayan servisler → yeni ekle
-            var newServices = request.BusinessServices
-                .Where(s => !s.Id.HasValue)
-                .Select(s => new BusinessService
-                {
-                    ServiceTitle = s.ServiceTitle!,
-                    ServiceContent = s.ServiceContent!,
-                    MaxConcurrentCustomers = s.MaxConcurrentCustomers,
-                    ServicePrice = s.ServicePrice,
-                    BusinessId = business.Id
-                }).ToList();
-
-            if (newServices.Count > 0)
-                await _unitOfWork.GetWriteRepository<BusinessService>().AddRangeAsync(newServices);
         }
 
-        // Business Photos — delta yaklaşımı: belirtilenler silinir, yeniler eklenir
-        if (request.PhotoIdsToDelete != null && request.PhotoIdsToDelete.Count > 0)
+        // Business Services — Id=null → ekle, IsDeleted=true → sil (randevusu varsa SoftDelete), IsDeleted=false → güncelle
+        if (request.BusinessServices != null)
         {
-            var photosToDelete = business.BusinessPhotos
-                .Where(p => request.PhotoIdsToDelete.Contains(p.Id))
-                .ToList();
-
-            foreach (var photo in photosToDelete)
+            foreach (var serviceDto in request.BusinessServices)
             {
-                if (!string.IsNullOrEmpty(photo.PhotoPath))
-                    await _fileService.DeleteFileAsync(photo.PhotoPath);
-            }
+                if (!serviceDto.Id.HasValue)
+                {
+                    await _unitOfWork.GetWriteRepository<BusinessService>().AddAsync(new BusinessService
+                    {
+                        ServiceTitle = serviceDto.ServiceTitle,
+                        ServiceContent = serviceDto.ServiceContent,
+                        MaxConcurrentCustomers = serviceDto.MaxConcurrentCustomers,
+                        ServicePrice = serviceDto.ServicePrice,
+                        BusinessId = business.Id
+                    });
+                }
+                else
+                {
+                    var existing = business.BusinessServices.FirstOrDefault(s => s.Id == serviceDto.Id);
+                    if (existing == null) continue;
 
-            if (photosToDelete.Count > 0)
-                await _unitOfWork.GetWriteRepository<BusinessPhoto>().HardDeleteRangeAsync(photosToDelete);
+                    if (serviceDto.IsDeleted)
+                    {
+                        if (existing.Appointments.Count > 0)
+                        {
+                            existing.IsDeleted = true;
+                            await _unitOfWork.GetWriteRepository<BusinessService>().UpdateAsync(existing);
+                        }
+                        else
+                        {
+                            await _unitOfWork.GetWriteRepository<BusinessService>().HardDeleteAsync(existing);
+                        }
+                    }
+                    else
+                    {
+                        existing.ServiceTitle = serviceDto.ServiceTitle;
+                        existing.ServiceContent = serviceDto.ServiceContent;
+                        existing.MaxConcurrentCustomers = serviceDto.MaxConcurrentCustomers;
+                        existing.ServicePrice = serviceDto.ServicePrice;
+                        await _unitOfWork.GetWriteRepository<BusinessService>().UpdateAsync(existing);
+                    }
+                }
+            }
         }
 
+        // Business Photos — ExistingPhotos üzerinden IsDeleted=true olanları sil
+        if (request.ExistingPhotos != null)
+        {
+            foreach (var photoDto in request.ExistingPhotos)
+            {
+                if (photoDto.Id == 0) continue;
+
+                var existing = business.BusinessPhotos.FirstOrDefault(p => p.Id == photoDto.Id);
+                if (existing == null) continue;
+
+                if (photoDto.IsDeleted)
+                {
+                    if (!string.IsNullOrEmpty(existing.PhotoPath))
+                        await _fileService.DeleteFileAsync(existing.PhotoPath);
+                    await _unitOfWork.GetWriteRepository<BusinessPhoto>().HardDeleteAsync(existing);
+                }
+            }
+        }
+
+        // Yeni fotoğraflar — IFormFile olarak gelir
         if (request.BusinessPhotos != null && request.BusinessPhotos.Count > 0)
         {
             var newPhotos = new List<BusinessPhoto>();
