@@ -4,6 +4,7 @@ using Randevu365.Application.Interfaces;
 using Randevu365.Domain.Base;
 using Randevu365.Domain.Entities;
 using Randevu365.Persistence.Audit;
+using Randevu365.Persistence.Seeds;
 
 namespace Randevu365.Persistence.Context;
 
@@ -39,6 +40,7 @@ public class AppDbContext : DbContext, IAppDbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        SeedData.Seed(modelBuilder);
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
