@@ -1,6 +1,5 @@
 using MediatR;
 using Randevu365.Application.Common.Responses;
-using Randevu365.Application.Features.Businesses.Queries.GetBusinessesAllCategory;
 
 namespace Randevu365.Application.Features.Businesses.Queries.GetBusinessesByBusinessCategory;
 

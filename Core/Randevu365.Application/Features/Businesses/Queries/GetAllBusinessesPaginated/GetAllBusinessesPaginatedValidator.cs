@@ -1,10 +1,10 @@
 using FluentValidation;
 
-namespace Randevu365.Application.Features.Businesses.Queries.GetBusinessesAllCategory;
+namespace Randevu365.Application.Features.Businesses.Queries.GetAllBusinessesPaginated;
 
-public class GetBusinessesAllCategoryValidator : AbstractValidator<GetBusinessesAllCategoryRequest>
+public class GetAllBusinessesPaginatedValidator : AbstractValidator<GetAllBusinessesPaginatedRequest>
 {
-    public GetBusinessesAllCategoryValidator()
+    public GetAllBusinessesPaginatedValidator()
     {
         RuleFor(x => x.PageNumber)
             .GreaterThan(0).WithMessage("Sayfa numarası 0'dan büyük olmalıdır.");

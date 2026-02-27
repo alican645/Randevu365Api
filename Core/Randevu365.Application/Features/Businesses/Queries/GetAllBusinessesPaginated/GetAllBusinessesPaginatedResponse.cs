@@ -1,6 +1,6 @@
-namespace Randevu365.Application.Features.Businesses.Queries.GetBusinessesAllCategory;
+namespace Randevu365.Application.Features.Businesses.Queries.GetAllBusinessesPaginated;
 
-public class GetBusinessesAllCategoryResponse
+public class GetAllBusinessesPaginatedResponse
 {
     public int Id { get; set; }
     public string BusinessName { get; set; } = string.Empty;

@@ -1,6 +1,6 @@
-namespace Randevu365.Application.Features.Businesses.Queries.GetBusinessesByBusinessCategory;
+namespace Randevu365.Application.Features.Businesses.Queries.GetBusinessByFilter;
 
-public class GetBusinessesByBusinessCategoryResponse
+public class GetBusinessByFilterResponse
 {
     public int Id { get; set; }
     public string BusinessName { get; set; } = string.Empty;

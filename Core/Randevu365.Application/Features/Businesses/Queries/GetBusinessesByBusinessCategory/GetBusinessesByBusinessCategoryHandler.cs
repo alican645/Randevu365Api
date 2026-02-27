@@ -1,7 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Randevu365.Application.Common.Responses;
-using Randevu365.Application.Features.Businesses.Queries.GetBusinessesAllCategory;
 using Randevu365.Application.Interfaces;
 using Randevu365.Domain.Entities;
 using Randevu365.Domain.Enum;
@@ -28,14 +27,18 @@ public class GetBusinessesByBusinessCategoryHandler : IRequestHandler<GetBusines
                 validationResult.Errors.Select(e => e.ErrorMessage).ToList());
         }
 
-        
-        BusinessCategoryExtensions.TryFromJson(request.CategoryName, out var category);
+        if (!BusinessCategoryExtensions.TryFromJson(request.CategoryName, out var category))
+        {
+            return ApiResponse<PaginatedListDto<GetBusinessesByBusinessCategoryResponse>>.FailResult("Geçersiz kategori adı.");
+        }
 
         var totalCount = await _unitOfWork.GetReadRepository<Business>().CountAsync(b => b.BusinessCategory == category);
 
         var businesses = await _unitOfWork.GetReadRepository<Business>().GetAllByPagingAsync(
             predicate: b => b.BusinessCategory == category,
-            include: q => q.Include(b => b.BusinessLogo),
+            include: q => q.Include(b => b.BusinessLogo)
+                          .Include(b => b.BusinessRatings)
+                          .Include(b => b.BusinessComments),
             currentPage: request.PageNumber,
             pageSize: request.PageSize
         );
@@ -46,7 +49,9 @@ public class GetBusinessesByBusinessCategoryHandler : IRequestHandler<GetBusines
             BusinessName = b.BusinessName,
             BusinessAddress = b.BusinessAddress,
             BusinessCategory = b.BusinessCategory?.ToJson() ?? string.Empty,
-            LogoUrl = b.BusinessLogo?.LogoUrl
+            LogoUrl = b.BusinessLogo?.LogoUrl,
+            AverageRating = b.BusinessRatings.Any() ? Math.Round(b.BusinessRatings.Average(r => r.Rating), 1) : 0,
+            TotalCommentCount = b.BusinessComments.Count
         }).ToList();
 
         var paginatedResult = new PaginatedListDto<GetBusinessesByBusinessCategoryResponse>(
