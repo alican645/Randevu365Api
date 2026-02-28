@@ -12,6 +12,7 @@ using Randevu365.Application.Features.Businesses.Queries.GetBusinessById;
 using Randevu365.Application.Features.Businesses.Queries.GetAllBusinessesPaginated;
 using Randevu365.Application.Features.Businesses.Queries.GetBusinessByFilter;
 using Randevu365.Application.Features.Businesses.Queries.GetBusinessesByBusinessCategory;
+using Randevu365.Application.Features.Businesses.Queries.GetTopRatedBusinesses;
 using Randevu365.Application.Features.BusinessHours.Commands.CreateBusinessHour;
 using Randevu365.Application.Features.BusinessHours.Commands.DeleteBusinessHour;
 using Randevu365.Application.Features.BusinessHours.Commands.UpdateBusinessHour;
@@ -85,6 +86,14 @@ public class BusinessController : ControllerBase
             PageNumber = pageNumber,
             PageSize = pageSize
         });
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("top-rated")]
+    public async Task<IActionResult> GetTopRatedBusinesses([FromQuery] int count = 10)
+    {
+        var response = await _mediator.Send(new GetTopRatedBusinessesQueryRequest { Count = count });
         return StatusCode(response.StatusCode, response);
     }
 
