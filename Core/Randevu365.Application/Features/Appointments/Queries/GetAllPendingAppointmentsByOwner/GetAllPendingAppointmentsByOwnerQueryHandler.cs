@@ -5,51 +5,39 @@ using Randevu365.Application.Interfaces;
 using Randevu365.Domain.Entities;
 using Randevu365.Domain.Enum;
 
-namespace Randevu365.Application.Features.Appointments.Queries.GetPendingAppointmentsByBusiness;
+namespace Randevu365.Application.Features.Appointments.Queries.GetAllPendingAppointmentsByOwner;
 
-public class GetPendingAppointmentsByBusinessQueryHandler : IRequestHandler<GetPendingAppointmentsByBusinessQueryRequest, ApiResponse<GetPendingAppointmentsByBusinessQueryResponse>>
+public class GetAllPendingAppointmentsByOwnerQueryHandler : IRequestHandler<GetAllPendingAppointmentsByOwnerQueryRequest, ApiResponse<GetAllPendingAppointmentsByOwnerQueryResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICurrentUserService _currentUserService;
 
-    public GetPendingAppointmentsByBusinessQueryHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
+    public GetAllPendingAppointmentsByOwnerQueryHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
     {
         _unitOfWork = unitOfWork;
         _currentUserService = currentUserService;
     }
 
-    public async Task<ApiResponse<GetPendingAppointmentsByBusinessQueryResponse>> Handle(GetPendingAppointmentsByBusinessQueryRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<GetAllPendingAppointmentsByOwnerQueryResponse>> Handle(GetAllPendingAppointmentsByOwnerQueryRequest request, CancellationToken cancellationToken)
     {
         if (_currentUserService.UserId is null)
         {
-            return ApiResponse<GetPendingAppointmentsByBusinessQueryResponse>.UnauthorizedResult("Kullanıcı kimliği bulunamadı.");
+            return ApiResponse<GetAllPendingAppointmentsByOwnerQueryResponse>.UnauthorizedResult("Kullanıcı kimliği bulunamadı.");
         }
 
         var userId = _currentUserService.UserId.Value;
 
-        var business = await _unitOfWork.GetReadRepository<Business>().GetAsync(
-            predicate: b => b.Id == request.BusinessId && !b.IsDeleted
-        );
+        var businessIds = (await _unitOfWork.GetReadRepository<Business>().GetAllAsync(
+            predicate: b => b.AppUserId == userId && !b.IsDeleted
+        )).Select(b => b.Id).ToList();
 
-        if (business is null)
+        if (!businessIds.Any())
         {
-            return ApiResponse<GetPendingAppointmentsByBusinessQueryResponse>.NotFoundResult("İşletme bulunamadı.");
+            return ApiResponse<GetAllPendingAppointmentsByOwnerQueryResponse>.NotFoundResult("Size ait işletme bulunamadı.");
         }
-
-        if (business.AppUserId != userId)
-        {
-            return ApiResponse<GetPendingAppointmentsByBusinessQueryResponse>.ForbiddenResult("Bu işletme size ait değil.");
-        }
-
-        var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        var endDate = today.AddDays(14);
 
         var appointments = await _unitOfWork.GetReadRepository<Appointment>().GetAllAsync(
-            predicate: a => a.BusinessId == request.BusinessId
-                         && a.Status == AppointmentStatus.Pending
-                         && !a.IsDeleted
-                         && a.AppointmentDate >= today
-                         && a.AppointmentDate <= endDate,
+            predicate: a => businessIds.Contains(a.BusinessId) && a.Status == AppointmentStatus.Pending && !a.IsDeleted,
             include: q => q
                 .Include(a => a.AppUser).ThenInclude(u => u!.AppUserInformation)
                 .Include(a => a.BusinessService)
@@ -57,7 +45,7 @@ public class GetPendingAppointmentsByBusinessQueryHandler : IRequestHandler<GetP
             orderBy: q => q.OrderBy(a => a.AppointmentDate).ThenBy(a => a.RequestedStartTime)
         );
 
-        var responseItems = appointments.Select(a => new GetPendingAppointmentsByBusinessQueryResponseItem
+        var responseItems = appointments.Select(a => new GetAllPendingAppointmentsByOwnerQueryResponseItem
         {
             AppointmentId = a.Id,
             AppointmentDate = a.AppointmentDate,
@@ -77,11 +65,11 @@ public class GetPendingAppointmentsByBusinessQueryHandler : IRequestHandler<GetP
             CreatedAt = a.CreatedAt
         }).ToList();
 
-        var response = new GetPendingAppointmentsByBusinessQueryResponse
+        var response = new GetAllPendingAppointmentsByOwnerQueryResponse
         {
             Items = responseItems
         };
 
-        return ApiResponse<GetPendingAppointmentsByBusinessQueryResponse>.SuccessResult(response);
+        return ApiResponse<GetAllPendingAppointmentsByOwnerQueryResponse>.SuccessResult(response);
     }
 }

@@ -5,24 +5,24 @@ using Randevu365.Application.Interfaces;
 using Randevu365.Domain.Entities;
 using Randevu365.Domain.Enum;
 
-namespace Randevu365.Application.Features.Appointments.Queries.GetPendingAppointmentsByBusiness;
+namespace Randevu365.Application.Features.Appointments.Queries.GetConfirmedAppointmentsByBusiness;
 
-public class GetPendingAppointmentsByBusinessQueryHandler : IRequestHandler<GetPendingAppointmentsByBusinessQueryRequest, ApiResponse<GetPendingAppointmentsByBusinessQueryResponse>>
+public class GetConfirmedAppointmentsByBusinessQueryHandler : IRequestHandler<GetConfirmedAppointmentsByBusinessQueryRequest, ApiResponse<GetConfirmedAppointmentsByBusinessQueryResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICurrentUserService _currentUserService;
 
-    public GetPendingAppointmentsByBusinessQueryHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
+    public GetConfirmedAppointmentsByBusinessQueryHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
     {
         _unitOfWork = unitOfWork;
         _currentUserService = currentUserService;
     }
 
-    public async Task<ApiResponse<GetPendingAppointmentsByBusinessQueryResponse>> Handle(GetPendingAppointmentsByBusinessQueryRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<GetConfirmedAppointmentsByBusinessQueryResponse>> Handle(GetConfirmedAppointmentsByBusinessQueryRequest request, CancellationToken cancellationToken)
     {
         if (_currentUserService.UserId is null)
         {
-            return ApiResponse<GetPendingAppointmentsByBusinessQueryResponse>.UnauthorizedResult("Kullanıcı kimliği bulunamadı.");
+            return ApiResponse<GetConfirmedAppointmentsByBusinessQueryResponse>.UnauthorizedResult("Kullanıcı kimliği bulunamadı.");
         }
 
         var userId = _currentUserService.UserId.Value;
@@ -33,12 +33,12 @@ public class GetPendingAppointmentsByBusinessQueryHandler : IRequestHandler<GetP
 
         if (business is null)
         {
-            return ApiResponse<GetPendingAppointmentsByBusinessQueryResponse>.NotFoundResult("İşletme bulunamadı.");
+            return ApiResponse<GetConfirmedAppointmentsByBusinessQueryResponse>.NotFoundResult("İşletme bulunamadı.");
         }
 
         if (business.AppUserId != userId)
         {
-            return ApiResponse<GetPendingAppointmentsByBusinessQueryResponse>.ForbiddenResult("Bu işletme size ait değil.");
+            return ApiResponse<GetConfirmedAppointmentsByBusinessQueryResponse>.ForbiddenResult("Bu işletme size ait değil.");
         }
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
@@ -46,7 +46,7 @@ public class GetPendingAppointmentsByBusinessQueryHandler : IRequestHandler<GetP
 
         var appointments = await _unitOfWork.GetReadRepository<Appointment>().GetAllAsync(
             predicate: a => a.BusinessId == request.BusinessId
-                         && a.Status == AppointmentStatus.Pending
+                         && a.Status == AppointmentStatus.Confirmed
                          && !a.IsDeleted
                          && a.AppointmentDate >= today
                          && a.AppointmentDate <= endDate,
@@ -57,12 +57,14 @@ public class GetPendingAppointmentsByBusinessQueryHandler : IRequestHandler<GetP
             orderBy: q => q.OrderBy(a => a.AppointmentDate).ThenBy(a => a.RequestedStartTime)
         );
 
-        var responseItems = appointments.Select(a => new GetPendingAppointmentsByBusinessQueryResponseItem
+        var responseItems = appointments.Select(a => new GetConfirmedAppointmentsByBusinessQueryResponseItem
         {
             AppointmentId = a.Id,
             AppointmentDate = a.AppointmentDate,
             RequestedStartTime = a.RequestedStartTime,
             RequestedEndTime = a.RequestedEndTime,
+            ApproveStartTime = a.ApproveStartTime,
+            ApproveEndTime = a.ApproveEndTime,
             Status = a.Status.ToString(),
             CustomerNotes = a.CustomerNotes,
             CustomerName = a.AppUser?.AppUserInformation?.Name,
@@ -77,11 +79,11 @@ public class GetPendingAppointmentsByBusinessQueryHandler : IRequestHandler<GetP
             CreatedAt = a.CreatedAt
         }).ToList();
 
-        var response = new GetPendingAppointmentsByBusinessQueryResponse
+        var response = new GetConfirmedAppointmentsByBusinessQueryResponse
         {
             Items = responseItems
         };
 
-        return ApiResponse<GetPendingAppointmentsByBusinessQueryResponse>.SuccessResult(response);
+        return ApiResponse<GetConfirmedAppointmentsByBusinessQueryResponse>.SuccessResult(response);
     }
 }

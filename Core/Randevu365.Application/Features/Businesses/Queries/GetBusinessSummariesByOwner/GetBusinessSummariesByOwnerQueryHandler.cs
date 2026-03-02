@@ -31,10 +31,13 @@ public class GetBusinessSummariesByOwnerQueryHandler : IRequestHandler<GetBusine
                 predicate: x => x.AppUserId == currentUserId && !x.IsDeleted,
                 include: i => i
                     .Include(b => b.BusinessLogo)
-                    .Include(b => b.Appointments)
+                    .Include(b => b.Appointments),
+                enableTracking:true
+                
             );
-
+      
         var today = DateOnly.FromDateTime(DateTime.Now);
+        var fourteenDaysLater = today.AddDays(14);
 
         var responseItems = businesses.Select(b => new GetBusinessSummariesByOwnerQueryResponseItem
         {
@@ -44,14 +47,18 @@ public class GetBusinessSummariesByOwnerQueryHandler : IRequestHandler<GetBusine
             BusinessCategory = b.BusinessCategory?.ToJson(),
             LogoUrl = b.BusinessLogo?.LogoUrl,
             TodayPendingCount = b.Appointments?.Count(a =>
-                a.AppointmentDate == today &&
+                a.AppointmentDate >= today &&
+                a.AppointmentDate <= fourteenDaysLater &&
                 a.Status == AppointmentStatus.Pending &&
                 !a.IsDeleted) ?? 0,
             TodayConfirmedCount = b.Appointments?.Count(a =>
-                a.AppointmentDate == today &&
+                a.AppointmentDate >= today &&
+                a.AppointmentDate <= fourteenDaysLater &&
                 a.Status == AppointmentStatus.Confirmed &&
                 !a.IsDeleted) ?? 0,
             TotalPendingCount = b.Appointments?.Count(a =>
+                a.AppointmentDate >= today &&
+                a.AppointmentDate <= fourteenDaysLater &&
                 a.Status == AppointmentStatus.Pending &&
                 !a.IsDeleted) ?? 0
         }).ToList();

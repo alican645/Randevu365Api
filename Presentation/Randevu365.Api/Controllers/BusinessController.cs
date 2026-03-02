@@ -40,6 +40,8 @@ using Randevu365.Application.Features.Appointments.Commands.CompleteAppointment;
 using Randevu365.Application.Features.Appointments.Commands.ApproveAppointment;
 using Randevu365.Application.Features.Appointments.Commands.CancelAppointmentByBusiness;
 using Randevu365.Application.Features.Appointments.Queries.GetPendingAppointmentsByBusiness;
+using Randevu365.Application.Features.Appointments.Queries.GetAllPendingAppointmentsByOwner;
+using Randevu365.Application.Features.Appointments.Queries.GetConfirmedAppointmentsByBusiness;
 
 using Randevu365.Domain.Enum;
 
@@ -331,6 +333,19 @@ public class BusinessController : ControllerBase
 
     #region Appointments
 
+    [HttpGet("appointments/pending")]
+    public async Task<IActionResult> GetAllPendingAppointments()
+    {
+        var response = await _mediator.Send(new GetAllPendingAppointmentsByOwnerQueryRequest());
+        return StatusCode(response.StatusCode, response);
+    }
+    [HttpGet("appointments/confirmed")]
+    public async Task<IActionResult> GetAllConfirmedAppointments()
+    {
+        var response = await _mediator.Send(new GetAllConfirmedAppointmentsByOwnerQueryRequest());
+        return StatusCode(response.StatusCode, response);
+    }
+
     [HttpGet("appointments/{businessId}/pending")]
     public async Task<IActionResult> GetPendingAppointments(int businessId)
     {
@@ -338,21 +353,28 @@ public class BusinessController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
-    [HttpPatch("appointment/{appointmentId}/confirm")]
+    [HttpGet("appointments/{businessId}/confirmed")]
+    public async Task<IActionResult> GetConfirmedAppointments(int businessId)
+    {
+        var response = await _mediator.Send(new GetConfirmedAppointmentsByBusinessQueryRequest { BusinessId = businessId });
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("appointment/{appointmentId}/confirm")]
     public async Task<IActionResult> ConfirmAppointment(int appointmentId)
     {
         var response = await _mediator.Send(new ConfirmAppointmentCommandRequest { AppointmentId = appointmentId });
         return StatusCode(response.StatusCode, response);
     }
 
-    [HttpPatch("appointment/{appointmentId}/complete")]
+    [HttpPost("appointment/{appointmentId}/complete")]
     public async Task<IActionResult> CompleteAppointment(int appointmentId)
     {
         var response = await _mediator.Send(new CompleteAppointmentCommandRequest { AppointmentId = appointmentId });
         return StatusCode(response.StatusCode, response);
     }
 
-    [HttpPatch("appointment/{appointmentId}/approve")]
+    [HttpPost("appointment/{appointmentId}/approve")]
     public async Task<IActionResult> ApproveAppointment(int appointmentId, [FromBody] ApproveAppointmentCommandRequest request)
     {
         request.AppointmentId = appointmentId;
@@ -360,7 +382,7 @@ public class BusinessController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
-    [HttpPatch("appointment/{appointmentId}/cancel")]
+    [HttpPost("appointment/{appointmentId}/cancel")]
     public async Task<IActionResult> CancelAppointmentByBusiness(int appointmentId, [FromBody] CancelAppointmentByBusinessCommandRequest request)
     {
         request.AppointmentId = appointmentId;
