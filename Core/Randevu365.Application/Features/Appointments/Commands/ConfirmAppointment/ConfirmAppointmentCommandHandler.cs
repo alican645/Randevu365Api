@@ -28,7 +28,7 @@ public class ConfirmAppointmentCommandHandler : IRequestHandler<ConfirmAppointme
         var appointment = await _unitOfWork.GetReadRepository<Appointment>()
             .GetAsync(
                 x => x.Id == request.AppointmentId && !x.IsDeleted,
-                include: q => q.Include(a => a.Business)
+                include: q => q.Include(a => a.Business).Include(a => a.BusinessService)
             );
 
         if (appointment == null)
@@ -47,6 +47,40 @@ public class ConfirmAppointmentCommandHandler : IRequestHandler<ConfirmAppointme
         }
 
         appointment.Status = AppointmentStatus.Confirmed;
+
+        var confirmedStart = appointment.RequestedStartTime;
+        var confirmedEnd = appointment.RequestedEndTime;
+
+        if (confirmedStart != null && confirmedEnd != null && appointment.BusinessService != null)
+        {
+            var confirmedCount = await _unitOfWork.GetReadRepository<Appointment>()
+                .CountAsync(x => x.BusinessServiceId == appointment.BusinessServiceId
+                    && x.AppointmentDate == appointment.AppointmentDate
+                    && x.Status == AppointmentStatus.Confirmed
+                    && !x.IsDeleted
+                    && x.RequestedStartTime < confirmedEnd
+                    && x.RequestedEndTime > confirmedStart);
+
+            if (confirmedCount >= appointment.BusinessService.MaxConcurrentCustomers)
+            {
+                var overlappingPending = await _unitOfWork.GetReadRepository<Appointment>()
+                    .GetAllAsync(
+                        x => x.BusinessServiceId == appointment.BusinessServiceId
+                            && x.AppointmentDate == appointment.AppointmentDate
+                            && x.Status == AppointmentStatus.Pending
+                            && !x.IsDeleted
+                            && x.Id != appointment.Id
+                            && x.RequestedStartTime < confirmedEnd
+                            && x.RequestedEndTime > confirmedStart,
+                        enableTracking: true);
+
+                foreach (var pending in overlappingPending)
+                {
+                    pending.Status = AppointmentStatus.Displaced;
+                    await _unitOfWork.GetWriteRepository<Appointment>().UpdateAsync(pending);
+                }
+            }
+        }
 
         await _unitOfWork.GetWriteRepository<Appointment>().UpdateAsync(appointment);
         await _unitOfWork.SaveAsync();
