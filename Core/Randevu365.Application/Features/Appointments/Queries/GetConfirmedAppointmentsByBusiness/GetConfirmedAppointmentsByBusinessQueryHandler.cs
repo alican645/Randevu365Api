@@ -46,7 +46,9 @@ public class GetConfirmedAppointmentsByBusinessQueryHandler : IRequestHandler<Ge
 
         var appointments = await _unitOfWork.GetReadRepository<Appointment>().GetAllAsync(
             predicate: a => a.BusinessId == request.BusinessId
-                         && (a.Status == AppointmentStatus.Confirmed || a.Status == AppointmentStatus.Completed)
+                         && (request.OnlyConfirmed
+                             ? a.Status == AppointmentStatus.Confirmed
+                             : (a.Status == AppointmentStatus.Confirmed || a.Status == AppointmentStatus.Completed))
                          && !a.IsDeleted
                          && a.AppointmentDate >= today
                          && a.AppointmentDate <= endDate,

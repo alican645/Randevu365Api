@@ -46,6 +46,11 @@ public class CompleteAppointmentCommandHandler : IRequestHandler<CompleteAppoint
             return ApiResponse<CompleteAppointmentCommandResponse>.FailResult("Yalnızca onaylanmış randevular tamamlanabilir.");
         }
 
+        if (appointment.AppointmentDate > DateOnly.FromDateTime(DateTime.Today))
+        {
+            return ApiResponse<CompleteAppointmentCommandResponse>.FailResult("Sonraki tarihlerdeki randevuları tamamlayamazsınız.");
+        }
+
         appointment.Status = AppointmentStatus.Completed;
 
         await _unitOfWork.GetWriteRepository<Appointment>().UpdateAsync(appointment);

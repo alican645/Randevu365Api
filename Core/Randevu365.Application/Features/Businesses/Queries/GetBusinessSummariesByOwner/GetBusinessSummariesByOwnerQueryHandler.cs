@@ -59,7 +59,7 @@ public class GetBusinessSummariesByOwnerQueryHandler : IRequestHandler<GetBusine
             TotalPendingCount = b.Appointments?.Count(a =>
                 a.AppointmentDate >= today &&
                 a.AppointmentDate <= fourteenDaysLater &&
-                a.Status == AppointmentStatus.Pending &&
+                (a.Status == AppointmentStatus.Pending || AppointmentStatus.Confirmed == a.Status) &&
                 !a.IsDeleted) ?? 0
         }).ToList();
 

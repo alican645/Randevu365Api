@@ -6,4 +6,5 @@ namespace Randevu365.Application.Features.Appointments.Queries.GetConfirmedAppoi
 public class GetConfirmedAppointmentsByBusinessQueryRequest : IRequest<ApiResponse<GetConfirmedAppointmentsByBusinessQueryResponse>>
 {
     public int BusinessId { get; set; }
+    public bool OnlyConfirmed { get; set; }
 }

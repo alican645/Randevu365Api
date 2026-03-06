@@ -1,47 +1,28 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Randevu365.Application.Common.Responses;
+using Randevu365.Application.Features.Appointments.Commands.CompleteAppointment;
 using Randevu365.Application.Features.Businesses.Commands.CreateBusiness;
 using Randevu365.Application.Features.Businesses.Commands.CreateBusinessDetail;
-using Randevu365.Application.Features.Businesses.Commands.DeleteBusiness;
-using Randevu365.Application.Features.Businesses.Commands.UpdateBusiness;
 using Randevu365.Application.Features.Businesses.Commands.UpdateBusinessDetail;
 using Randevu365.Application.Features.Businesses.Commands.UpdateBusinessDetailById;
-using Randevu365.Application.Features.Businesses.Queries.GetBusinessById;
-using Randevu365.Application.Features.Businesses.Queries.GetAllBusinessesPaginated;
 using Randevu365.Application.Features.Businesses.Queries.GetBusinessByFilter;
 using Randevu365.Application.Features.Businesses.Queries.GetBusinessesByBusinessCategory;
 using Randevu365.Application.Features.Businesses.Queries.GetBusinessSummariesByOwner;
 using Randevu365.Application.Features.Businesses.Queries.GetTopRatedBusinesses;
-using Randevu365.Application.Features.BusinessHours.Commands.CreateBusinessHour;
-using Randevu365.Application.Features.BusinessHours.Commands.DeleteBusinessHour;
-using Randevu365.Application.Features.BusinessHours.Commands.UpdateBusinessHour;
-using Randevu365.Application.Features.BusinessHours.Queries.GetBusinessHoursByBusinessId;
-using Randevu365.Application.Features.BusinessLocations.Commands.CreateBusinessLocation;
-using Randevu365.Application.Features.BusinessLocations.Commands.DeleteBusinessLocation;
-using Randevu365.Application.Features.BusinessLocations.Commands.UpdateBusinessLocation;
-using Randevu365.Application.Features.BusinessLocations.Queries.GetBusinessLocationByBusinessId;
-using Randevu365.Application.Features.BusinessLogo.Commands.CreateBusinessLogo;
-using Randevu365.Application.Features.BusinessLogo.Commands.DeleteBusinessLogo;
-using Randevu365.Application.Features.BusinessLogo.Commands.UpdateBusinessLogo;
-using Randevu365.Application.Features.BusinessLogo.Queries.GetBusinessLogoByBusinessId;
-using Randevu365.Application.Features.BusinessPhotos.Commands.CreateBusinessPhoto;
-using Randevu365.Application.Features.BusinessPhotos.Commands.DeleteBusinessPhoto;
-using Randevu365.Application.Features.BusinessPhotos.Queries.GetBusinessPhotosByBusinessId;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessBasicInfoByCustomerOwnerId;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessDetailInfoByBusinessId;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessDetailInfoByCustomerOwnerId;
-using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessProfileByBusinessOwnerId;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessOwnerDashboard;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetRandomBusinessSummaryByOwner;
 using Randevu365.Application.Features.Appointments.Commands.ConfirmAppointment;
-using Randevu365.Application.Features.Appointments.Commands.CompleteAppointment;
-using Randevu365.Application.Features.Appointments.Commands.ApproveAppointment;
-using Randevu365.Application.Features.Appointments.Commands.CancelAppointmentByBusiness;
+using Randevu365.Application.Features.Appointments.Commands.RejectAppointment;
+using Randevu365.Application.Features.Appointments.Commands.RevertConfirmedAppointment;
 using Randevu365.Application.Features.Appointments.Queries.GetPendingAppointmentsByBusiness;
 using Randevu365.Application.Features.Appointments.Queries.GetAllPendingAppointmentsByOwner;
 using Randevu365.Application.Features.Appointments.Queries.GetConfirmedAppointmentsByBusiness;
+using Randevu365.Application.Features.Appointments.Queries.GetBusinessBusySlotsByOwner;
+using Randevu365.Application.Features.Appointments.Commands.CreateAppointmentByOwner;
 
 using Randevu365.Domain.Enum;
 
@@ -60,17 +41,6 @@ public class BusinessController : ControllerBase
     }
 
     #region Business Configuration
-    [AllowAnonymous]
-    [HttpGet("all-category")]
-    public async Task<IActionResult> GetAllBusinessesPaginated([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
-    {
-        var response = await _mediator.Send(new GetAllBusinessesPaginatedRequest 
-        { 
-            PageNumber = pageNumber,
-            PageSize = pageSize 
-        });
-        return StatusCode(response.StatusCode, response);
-    }
 
     [AllowAnonymous]
     [HttpGet("filter")]
@@ -106,8 +76,8 @@ public class BusinessController : ControllerBase
     [HttpGet("by-category/{categoryName}")]
     public async Task<IActionResult> GetBusinessesByCategory(string categoryName, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
-        var response = await _mediator.Send(new GetBusinessesByBusinessCategoryRequest 
-        { 
+        var response = await _mediator.Send(new GetBusinessesByBusinessCategoryRequest
+        {
             CategoryName = categoryName,
             PageNumber = pageNumber,
             PageSize = pageSize
@@ -136,14 +106,6 @@ public class BusinessController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
-    [HttpGet("myprofile")]
-    public async Task<IActionResult> GetMyProfile()
-    {
-        var response = await _mediator.Send(new GetBusinessProfileByBusinessOwnerIdQueryRequest());
-        return StatusCode(response.StatusCode, response);
-    }
-    
-
     [HttpGet("basicinfo")]
     public async Task<IActionResult> GetBusinessBasicInfo()
     {
@@ -163,14 +125,6 @@ public class BusinessController : ControllerBase
     public async Task<IActionResult> GetDetailInfoById(int id)
     {
         var response = await _mediator.Send(new GetBusinessDetailInfoByBusinessIdQueryRequest { BusinessId = id });
-        return StatusCode(response.StatusCode, response);
-    }
-
-
-    [HttpGet("getbyid/{id}")]
-    public async Task<IActionResult> GetById(int id)
-    {
-        var response = await _mediator.Send(new GetBusinessByIdQueryRequest { Id = id });
         return StatusCode(response.StatusCode, response);
     }
 
@@ -202,133 +156,6 @@ public class BusinessController : ControllerBase
         var response = await _mediator.Send(request);
         return StatusCode(response.StatusCode, response);
     }
-
-    [HttpPost("update")]
-    public async Task<IActionResult> Update(UpdateBusinessCommandRequest request)
-    {
-        var response = await _mediator.Send(request);
-        return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpPost("delete")]
-    public async Task<IActionResult> Delete(DeleteBusinessCommandRequest request)
-    {
-        var response = await _mediator.Send(request);
-        return StatusCode(response.StatusCode, response);
-    }
-    #endregion
-
-    #region Business Photos
-    [HttpGet("getphotos/{businessId}")]
-    public async Task<IActionResult> GetPhotos(int businessId)
-    {
-        var response = await _mediator.Send(new GetBusinessPhotosByBusinessIdQueryRequest { BusinessId = businessId });
-        return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpPost("photo/create")]
-    public async Task<IActionResult> CreatePhoto([FromForm] CreateBusinessPhotoCommandRequest request)
-    {
-        var response = await _mediator.Send(request);
-        return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpPost("photo/delete")]
-    public async Task<IActionResult> DeletePhoto(DeleteBusinessPhotoCommandRequest request)
-    {
-        var response = await _mediator.Send(request);
-        return StatusCode(response.StatusCode, response);
-    }
-    #endregion
-
-    #region Business Locations
-    [HttpGet("getlocations/{businessId}")]
-    public async Task<IActionResult> GetLocations(int businessId)
-    {
-        var response = await _mediator.Send(new GetBusinessLocationByBusinessIdQueryRequest { BusinessId = businessId });
-        return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpPost("location/create")]
-    public async Task<IActionResult> CreateLocation(CreateBusinessLocationCommandRequest request)
-    {
-        var response = await _mediator.Send(request);
-        return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpPost("location/update")]
-    public async Task<IActionResult> UpdateLocation(UpdateBusinessLocationCommandRequest request)
-    {
-        var response = await _mediator.Send(request);
-        return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpPost("location/delete")]
-    public async Task<IActionResult> DeleteLocation(DeleteBusinessLocationCommandRequest request)
-    {
-        var response = await _mediator.Send(request);
-        return StatusCode(response.StatusCode, response);
-    }
-    #endregion
-
-    #region Business Hours
-    [HttpGet("gethours/{businessId}")]
-    public async Task<IActionResult> GetHours(int businessId)
-    {
-        var response = await _mediator.Send(new GetBusinessHoursByBusinessIdQueryRequest { BusinessId = businessId });
-        return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpPost("hour/create")]
-    public async Task<IActionResult> CreateHour(CreateBusinessHourCommandRequest request)
-    {
-        var response = await _mediator.Send(request);
-        return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpPost("hour/update")]
-    public async Task<IActionResult> UpdateHour(UpdateBusinessHourCommandRequest request)
-    {
-        var response = await _mediator.Send(request);
-        return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpPost("hour/delete")]
-    public async Task<IActionResult> DeleteHour(DeleteBusinessHourCommandRequest request)
-    {
-        var response = await _mediator.Send(request);
-        return StatusCode(response.StatusCode, response);
-    }
-    #endregion
-
-    #region Business Logo
-    [HttpGet("getlogo/{businessId}")]
-    public async Task<IActionResult> GetLogo(int businessId)
-    {
-        var response = await _mediator.Send(new GetBusinessLogoByBusinessIdQueryRequest { BusinessId = businessId });
-        return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpPost("logo/create")]
-    public async Task<IActionResult> CreateLogo([FromForm] CreateBusinessLogoCommandRequest request)
-    {
-        var response = await _mediator.Send(request);
-        return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpPost("logo/update")]
-    public async Task<IActionResult> UpdateLogo(UpdateBusinessLogoCommandRequest request)
-    {
-        var response = await _mediator.Send(request);
-        return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpPost("logo/delete")]
-    public async Task<IActionResult> DeleteLogo(DeleteBusinessLogoCommandRequest request)
-    {
-        var response = await _mediator.Send(request);
-        return StatusCode(response.StatusCode, response);
-    }
     #endregion
 
     #region Appointments
@@ -340,9 +167,9 @@ public class BusinessController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
     [HttpGet("appointments/confirmed")]
-    public async Task<IActionResult> GetAllConfirmedAppointments()
+    public async Task<IActionResult> GetAllConfirmedAppointments([FromQuery] bool onlyConfirmed)
     {
-        var response = await _mediator.Send(new GetAllConfirmedAppointmentsByOwnerQueryRequest());
+        var response = await _mediator.Send(new GetAllConfirmedAppointmentsByOwnerQueryRequest { OnlyConfirmed = onlyConfirmed });
         return StatusCode(response.StatusCode, response);
     }
 
@@ -353,10 +180,24 @@ public class BusinessController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
-    [HttpGet("appointments/{businessId}/confirmed")]
-    public async Task<IActionResult> GetConfirmedAppointments(int businessId)
+    [HttpGet("appointments/{businessId}/{onlyConfirmed}/confirmed")]
+    public async Task<IActionResult> GetConfirmedAppointments(int businessId,bool onlyConfirmed = false)
     {
-        var response = await _mediator.Send(new GetConfirmedAppointmentsByBusinessQueryRequest { BusinessId = businessId });
+        var response = await _mediator.Send(new GetConfirmedAppointmentsByBusinessQueryRequest { BusinessId = businessId, OnlyConfirmed = onlyConfirmed });
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet("appointments/{businessId}/busy-slots")]
+    public async Task<IActionResult> GetBusinessBusySlots(int businessId)
+    {
+        var response = await _mediator.Send(new GetBusinessBusySlotsByOwnerQueryRequest { BusinessId = businessId });
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("appointment/create-by-owner")]
+    public async Task<IActionResult> CreateAppointmentByOwner([FromBody] CreateAppointmentByOwnerCommandRequest request)
+    {
+        var response = await _mediator.Send(request);
         return StatusCode(response.StatusCode, response);
     }
 
@@ -367,6 +208,14 @@ public class BusinessController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
+    [HttpPost("appointment/{appointmentId}/reject")]
+    public async Task<IActionResult> RejectAppointment(int appointmentId, [FromBody] RejectAppointmentCommandRequest request)
+    {
+        request.AppointmentId = appointmentId;
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+    
     [HttpPost("appointment/{appointmentId}/complete")]
     public async Task<IActionResult> CompleteAppointment(int appointmentId)
     {
@@ -374,19 +223,10 @@ public class BusinessController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
-    [HttpPost("appointment/{appointmentId}/approve")]
-    public async Task<IActionResult> ApproveAppointment(int appointmentId, [FromBody] ApproveAppointmentCommandRequest request)
+    [HttpPost("appointment/{appointmentId}/revert-confirm")]
+    public async Task<IActionResult> RevertConfirmedAppointment(int appointmentId)
     {
-        request.AppointmentId = appointmentId;
-        var response = await _mediator.Send(request);
-        return StatusCode(response.StatusCode, response);
-    }
-
-    [HttpPost("appointment/{appointmentId}/cancel")]
-    public async Task<IActionResult> CancelAppointmentByBusiness(int appointmentId, [FromBody] CancelAppointmentByBusinessCommandRequest request)
-    {
-        request.AppointmentId = appointmentId;
-        var response = await _mediator.Send(request);
+        var response = await _mediator.Send(new RevertConfirmedAppointmentCommandRequest { AppointmentId = appointmentId });
         return StatusCode(response.StatusCode, response);
     }
     #endregion

@@ -14,7 +14,6 @@ using Randevu365.Application.Features.BusinessRating.Queries.GetMyRatings;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessBasicInfoByCustomerOwnerId;
 using Randevu365.Application.Features.BusinessRating.Queries.GetRatingsByBusinessId;
 using Randevu365.Application.Features.Appointments.Commands.CreateAppointment;
-using Randevu365.Application.Features.Appointments.Commands.CancelAppointmentByCustomer;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetNearbyBusinesses;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetCustomerBusinessProfile;
 using Randevu365.Domain.Enum;
@@ -146,14 +145,6 @@ public class CustomerController : ControllerBase
         var response = await _mediator.Send(request);
         return StatusCode(response.StatusCode, response);
     }
-
-    [HttpPatch("appointment/{appointmentId}/cancel")]
-    public async Task<IActionResult> CancelAppointment(int appointmentId)
-    {
-        var response = await _mediator.Send(new CancelAppointmentByCustomerCommandRequest { AppointmentId = appointmentId });
-        return StatusCode(response.StatusCode, response);
-    }
-
 
     #endregion
 }

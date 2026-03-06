@@ -37,7 +37,11 @@ public class GetAllConfirmedAppointmentsByOwnerQueryHandler : IRequestHandler<Ge
         }
 
         var appointments = await _unitOfWork.GetReadRepository<Appointment>().GetAllAsync(
-            predicate: a => businessIds.Contains(a.BusinessId) && (a.Status == AppointmentStatus.Confirmed || a.Status == AppointmentStatus.Completed) && !a.IsDeleted,
+            predicate: a => businessIds.Contains(a.BusinessId)
+                         && (request.OnlyConfirmed
+                             ? a.Status == AppointmentStatus.Confirmed
+                             : (a.Status == AppointmentStatus.Confirmed || a.Status == AppointmentStatus.Completed))
+                         && !a.IsDeleted,
             include: q => q
                 .Include(a => a.AppUser).ThenInclude(u => u!.AppUserInformation)
                 .Include(a => a.BusinessService)

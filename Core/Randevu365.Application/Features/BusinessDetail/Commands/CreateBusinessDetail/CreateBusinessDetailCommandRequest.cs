@@ -2,7 +2,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Randevu365.Application.Common.Responses;
 using Randevu365.Application.DTOs;
-using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessProfileByBusinessOwnerId;
 
 namespace Randevu365.Application.Features.Businesses.Commands.CreateBusinessDetail;
 

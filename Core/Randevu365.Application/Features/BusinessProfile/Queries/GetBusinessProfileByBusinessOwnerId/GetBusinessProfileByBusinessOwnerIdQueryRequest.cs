@@ -1,9 +1,0 @@
-using MediatR;
-using Randevu365.Application.Common.Responses;
-
-namespace Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessProfileByBusinessOwnerId;
-
-public class GetBusinessProfileByBusinessOwnerIdQueryRequest : IRequest<ApiResponse<GetBusinessProfileByBusinessOwnerIdQueryResponse>>
-{
-    // Token'dan alınacak
-}

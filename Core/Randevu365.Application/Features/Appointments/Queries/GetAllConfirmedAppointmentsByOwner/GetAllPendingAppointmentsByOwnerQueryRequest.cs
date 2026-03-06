@@ -5,4 +5,5 @@ namespace Randevu365.Application.Features.Appointments.Queries.GetAllPendingAppo
 
 public class GetAllConfirmedAppointmentsByOwnerQueryRequest : IRequest<ApiResponse<GetAllConfirmedAppointmentsByOwnerQueryResponse>>
 {
+    public bool OnlyConfirmed { get; set; }
 }
