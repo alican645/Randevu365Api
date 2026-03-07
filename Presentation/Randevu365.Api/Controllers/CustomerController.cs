@@ -14,6 +14,11 @@ using Randevu365.Application.Features.BusinessRating.Queries.GetMyRatings;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetBusinessBasicInfoByCustomerOwnerId;
 using Randevu365.Application.Features.BusinessRating.Queries.GetRatingsByBusinessId;
 using Randevu365.Application.Features.Appointments.Commands.CreateAppointment;
+using Randevu365.Application.Features.Appointments.Commands.CancelAppointment;
+using Randevu365.Application.Features.Appointments.Queries.GetMyAppointments;
+using Randevu365.Application.Features.Favorites.Commands.AddFavorite;
+using Randevu365.Application.Features.Favorites.Commands.RemoveFavorite;
+using Randevu365.Application.Features.Favorites.Queries.GetMyFavorites;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetNearbyBusinesses;
 using Randevu365.Application.Features.BusinessProfile.Queries.GetCustomerBusinessProfile;
 using Randevu365.Domain.Enum;
@@ -146,5 +151,42 @@ public class CustomerController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
+    [HttpGet("my-appointments")]
+    public async Task<IActionResult> GetMyAppointments([FromQuery] bool? onlyActive)
+    {
+        var response = await _mediator.Send(new GetMyAppointmentsQueryRequest { OnlyActive = onlyActive });
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("appointment/{appointmentId}/cancel")]
+    public async Task<IActionResult> CancelAppointment(int appointmentId, [FromBody] CancelAppointmentCommandRequest request)
+    {
+        request.AppointmentId = appointmentId;
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+    #endregion
+
+    #region Favorites
+    [HttpGet("favorites")]
+    public async Task<IActionResult> GetMyFavorites()
+    {
+        var response = await _mediator.Send(new GetMyFavoritesQueryRequest());
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("favorite/add")]
+    public async Task<IActionResult> AddFavorite([FromBody] AddFavoriteCommandRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpDelete("favorite/{businessId}")]
+    public async Task<IActionResult> RemoveFavorite(int businessId)
+    {
+        var response = await _mediator.Send(new RemoveFavoriteCommandRequest { BusinessId = businessId });
+        return StatusCode(response.StatusCode, response);
+    }
     #endregion
 }

@@ -15,6 +15,9 @@ public static class Registration
         // File Service
         services.AddScoped<IFileService, FileService>();
 
+        // Email Service
+        services.AddScoped<IEmailService, SmtpEmailService>();
+
         return services;
     }
 }

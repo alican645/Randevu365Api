@@ -11,17 +11,19 @@ namespace Randevu365.Infrastructure.Services;
 public class JwtService : IJwtService
 {
     private readonly IConfiguration _configuration;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public JwtService(IConfiguration configuration)
+    public JwtService(IConfiguration configuration, IUnitOfWork unitOfWork)
     {
         _configuration = configuration;
+        _unitOfWork = unitOfWork;
     }
 
     public string GenerateAccessToken(int userId, string email, string role)
     {
         var securityKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey not configured")));
-        
+
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         var claims = new[]
@@ -34,7 +36,7 @@ public class JwtService : IJwtService
         };
 
         var expirationMinutes = int.Parse(_configuration["Jwt:ExpirationMinutes"] ?? "60");
-        
+
         var token = new JwtSecurityToken(
             issuer: _configuration["Jwt:Issuer"],
             audience: _configuration["Jwt:Audience"],
@@ -56,9 +58,13 @@ public class JwtService : IJwtService
 
     public int? ValidateRefreshToken(string refreshToken)
     {
-        // TODO: Implement refresh token validation from database
-        // This would typically check if the refresh token exists in the database
-        // and return the associated user ID
-        return null;
+        var user = _unitOfWork.GetReadRepository<Domain.Entities.AppUser>()
+            .GetAsync(u => u.RefreshToken == refreshToken && !u.IsDeleted)
+            .GetAwaiter().GetResult();
+
+        if (user == null || user.RefreshTokenExpiry < DateTime.UtcNow)
+            return null;
+
+        return user.Id;
     }
 }

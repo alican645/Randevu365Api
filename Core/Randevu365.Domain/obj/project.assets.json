@@ -64,11 +64,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Domain/Randevu365.Domain.csproj",
+      "projectUniqueName": "/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/Randevu365.Domain.csproj",
       "projectName": "Randevu365.Domain",
-      "projectPath": "/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Domain/Randevu365.Domain.csproj",
+      "projectPath": "/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/Randevu365.Domain.csproj",
       "packagesPath": "/Users/alicanaydin/.nuget/packages/",
-      "outputPath": "/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Domain/obj/",
+      "outputPath": "/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/alicanaydin/.nuget/NuGet/NuGet.Config"
@@ -77,7 +77,8 @@
         "net10.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://nuget.devexpress.com/DsKcHclwBTNKQSNyWIl6T2hHPOChkJw4HlRIhNG1COAeuKosYz/api/v3/index.json": {}
       },
       "frameworks": {
         "net10.0": {
@@ -122,7 +123,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.101/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

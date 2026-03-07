@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "wv4Kb7HmSZ8=",
+  "dgSpecHash": "UwAn1jdsACk=",
   "success": true,
-  "projectFilePath": "/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Infrastructure/Randevu365.Infrastructure.csproj",
+  "projectFilePath": "/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Infrastructure/Randevu365.Infrastructure/Randevu365.Infrastructure.csproj",
   "expectedPackageFiles": [
+    "/Users/alicanaydin/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
+    "/Users/alicanaydin/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
+    "/Users/alicanaydin/.nuget/packages/fluentvalidation.dependencyinjectionextensions/12.1.1/fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
     "/Users/alicanaydin/.nuget/packages/mediatr/14.0.0/mediatr.14.0.0.nupkg.sha512",
     "/Users/alicanaydin/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
     "/Users/alicanaydin/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/10.0.0/microsoft.aspnetcore.authentication.jwtbearer.10.0.0.nupkg.sha512",

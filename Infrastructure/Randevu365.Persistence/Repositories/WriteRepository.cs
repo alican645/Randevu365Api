@@ -41,8 +41,11 @@ public class WriteRepository<T> : IWriteRepository<T> where T : class
 
     public async Task SoftDeleteAsync(T entity)
     {
+        if (entity is BaseEntity baseEntity)
+        {
+            baseEntity.IsDeleted = true;
+            baseEntity.UpdatedAt = DateTime.UtcNow;
+        }
         await Task.Run(() => Table.Update(entity));
     }
-
-
 }

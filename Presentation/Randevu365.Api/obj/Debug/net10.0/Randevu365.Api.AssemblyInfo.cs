@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("5ceb6478-9c03-49e6-9aef-7161784c3f97")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("Randevu365.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3bd88761eeaa1c8d54a43dd1584c2e65b7649f9e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Randevu365.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Randevu365.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

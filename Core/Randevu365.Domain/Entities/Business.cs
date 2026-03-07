@@ -23,4 +23,5 @@ public class Business : BaseEntity
     public virtual ICollection<BusinessHour> BusinessHours { get; set; } = new List<BusinessHour>();
     public virtual ICollection<BusinessService> BusinessServices { get; set; } = new List<BusinessService>();
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
+    public virtual ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
 }

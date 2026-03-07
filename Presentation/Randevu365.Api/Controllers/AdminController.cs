@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Extensions;
 using Randevu365.Application.Common.Responses;
+using Randevu365.Application.Features.Admin.Queries.GetDashboardStats;
 using Randevu365.Application.Features.AppUser.Queries.GetAllUser;
 using Randevu365.Application.Features.BusinessComments.Queries.GetCommentsByBusinessId;
 using Randevu365.Application.Features.Businesses.Queries.GetAllBusinesses;
@@ -43,6 +44,15 @@ public class AdminController : ControllerBase
     public async Task<IActionResult> GetCommentsByBusinessId(int businessId)
     {
         var response = await _mediator.Send(new GetCommentsByBusinessIdQueryRequest { BusinessId = businessId });
+        return StatusCode(response.StatusCode, response);
+    }
+    #endregion
+
+    #region Dashboard
+    [HttpGet("dashboard")]
+    public async Task<IActionResult> GetDashboardStats()
+    {
+        var response = await _mediator.Send(new GetDashboardStatsQueryRequest());
         return StatusCode(response.StatusCode, response);
     }
     #endregion

@@ -1,0 +1,43 @@
+## .NET
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.user
+*.suo
+*.cache
+*.userosscache
+*.sln.docstates
+
+## IDE
+.idea/
+.vs/
+*.swp
+*~
+.vscode/
+
+## Rider
+*.sln.iml
+
+## User secrets
+appsettings.Development.json
+appsettings.Production.json
+secrets.json
+
+## Uploads
+uploads/
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Logs
+logs/
+*.log
+
+## Docker
+docker-compose.override.yml
+
+## Agent files
+.agent/

@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "2Hi51Ja+nQM=",
+  "dgSpecHash": "f/qnsaGgonM=",
   "success": true,
-  "projectFilePath": "/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Persistence/Randevu365.Persistence.csproj",
+  "projectFilePath": "/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Infrastructure/Randevu365.Persistence/Randevu365.Persistence.csproj",
   "expectedPackageFiles": [
+    "/Users/alicanaydin/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
+    "/Users/alicanaydin/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
+    "/Users/alicanaydin/.nuget/packages/fluentvalidation.dependencyinjectionextensions/12.1.1/fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
     "/Users/alicanaydin/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/alicanaydin/.nuget/packages/mediatr/14.0.0/mediatr.14.0.0.nupkg.sha512",
     "/Users/alicanaydin/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",

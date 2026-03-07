@@ -2,6 +2,49 @@
   "version": 3,
   "targets": {
     "net10.0": {
+      "BCrypt.Net-Next/4.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/BCrypt.Net-Next.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/BCrypt.Net-Next.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "FluentValidation/12.1.1": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "FluentValidation.DependencyInjectionExtensions/12.1.1": {
+        "type": "package",
+        "dependencies": {
+          "FluentValidation": "12.1.1",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.1.0"
+        },
+        "compile": {
+          "lib/net8.0/FluentValidation.DependencyInjectionExtensions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/FluentValidation.DependencyInjectionExtensions.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Humanizer.Core/2.14.1": {
         "type": "package",
         "compile": {
@@ -1294,6 +1337,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
+          "BCrypt.Net-Next": "4.0.3",
+          "FluentValidation.DependencyInjectionExtensions": "12.1.1",
           "MediatR": "14.0.0",
           "Microsoft.AspNetCore.Http": "2.3.0",
           "Microsoft.EntityFrameworkCore": "10.0.0",
@@ -1323,6 +1368,67 @@
     }
   },
   "libraries": {
+    "BCrypt.Net-Next/4.0.3": {
+      "sha512": "W+U9WvmZQgi5cX6FS5GDtDoPzUCV4LkBLkywq/kRZhuDwcbavOzcDAr3LXJFqHUi952Yj3LEYoWW0jbEUQChsA==",
+      "type": "package",
+      "path": "bcrypt.net-next/4.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "bcrypt.net-next.4.0.3.nupkg.sha512",
+        "bcrypt.net-next.nuspec",
+        "ico.png",
+        "lib/net20/BCrypt.Net-Next.dll",
+        "lib/net20/BCrypt.Net-Next.xml",
+        "lib/net35/BCrypt.Net-Next.dll",
+        "lib/net35/BCrypt.Net-Next.xml",
+        "lib/net462/BCrypt.Net-Next.dll",
+        "lib/net462/BCrypt.Net-Next.xml",
+        "lib/net472/BCrypt.Net-Next.dll",
+        "lib/net472/BCrypt.Net-Next.xml",
+        "lib/net48/BCrypt.Net-Next.dll",
+        "lib/net48/BCrypt.Net-Next.xml",
+        "lib/net5.0/BCrypt.Net-Next.dll",
+        "lib/net5.0/BCrypt.Net-Next.xml",
+        "lib/net6.0/BCrypt.Net-Next.dll",
+        "lib/net6.0/BCrypt.Net-Next.xml",
+        "lib/netstandard2.0/BCrypt.Net-Next.dll",
+        "lib/netstandard2.0/BCrypt.Net-Next.xml",
+        "lib/netstandard2.1/BCrypt.Net-Next.dll",
+        "lib/netstandard2.1/BCrypt.Net-Next.xml",
+        "readme.md"
+      ]
+    },
+    "FluentValidation/12.1.1": {
+      "sha512": "EPpkIe1yh1a0OXyC100oOA8WMbZvqUu5plwhvYcb7oSELfyUZzfxV48BLhvs3kKo4NwG7MGLNgy1RJiYtT8Dpw==",
+      "type": "package",
+      "path": "fluentvalidation/12.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "fluent-validation-icon.png",
+        "fluentvalidation.12.1.1.nupkg.sha512",
+        "fluentvalidation.nuspec",
+        "lib/net8.0/FluentValidation.dll",
+        "lib/net8.0/FluentValidation.xml"
+      ]
+    },
+    "FluentValidation.DependencyInjectionExtensions/12.1.1": {
+      "sha512": "D0VXh4dtjjX2aQizuaa0g6R8X3U1JaVqJPfGCvLwZX9t/O2h7tkpbitbadQMfwcgSPdDbI2vDxuwRMv/Uf9dHA==",
+      "type": "package",
+      "path": "fluentvalidation.dependencyinjectionextensions/12.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "fluent-validation-icon.png",
+        "fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
+        "fluentvalidation.dependencyinjectionextensions.nuspec",
+        "lib/net8.0/FluentValidation.DependencyInjectionExtensions.dll",
+        "lib/net8.0/FluentValidation.DependencyInjectionExtensions.xml"
+      ]
+    },
     "Humanizer.Core/2.14.1": {
       "sha512": "lQKvtaTDOXnoVJ20ibTuSIOf2i0uO0MPbDhd1jm238I+U/2ZnRENj0cktKZhtchBMtCUSRQ5v4xBCUbKNmyVMw==",
       "type": "package",
@@ -3792,11 +3898,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Persistence/Randevu365.Persistence.csproj",
+      "projectUniqueName": "/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Infrastructure/Randevu365.Persistence/Randevu365.Persistence.csproj",
       "projectName": "Randevu365.Persistence",
-      "projectPath": "/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Persistence/Randevu365.Persistence.csproj",
+      "projectPath": "/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Infrastructure/Randevu365.Persistence/Randevu365.Persistence.csproj",
       "packagesPath": "/Users/alicanaydin/.nuget/packages/",
-      "outputPath": "/Users/alicanaydin/RiderProjects/Randevu365/Infrastructure/Randevu365.Persistence/obj/",
+      "outputPath": "/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Infrastructure/Randevu365.Persistence/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/alicanaydin/.nuget/NuGet/NuGet.Config"
@@ -3805,17 +3911,18 @@
         "net10.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://nuget.devexpress.com/DsKcHclwBTNKQSNyWIl6T2hHPOChkJw4HlRIhNG1COAeuKosYz/api/v3/index.json": {}
       },
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/Randevu365.Application.csproj": {
-              "projectPath": "/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Application/Randevu365.Application.csproj"
+            "/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Application/Randevu365.Application.csproj": {
+              "projectPath": "/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Application/Randevu365.Application.csproj"
             },
-            "/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Domain/Randevu365.Domain.csproj": {
-              "projectPath": "/Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Domain/Randevu365.Domain.csproj"
+            "/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/Randevu365.Domain.csproj": {
+              "projectPath": "/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/Randevu365.Domain.csproj"
             }
           }
         }
@@ -3871,7 +3978,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.101/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

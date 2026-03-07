@@ -1,0 +1,16 @@
+**/.git
+**/.gitignore
+**/.vs
+**/.vscode
+**/.idea
+**/bin
+**/obj
+**/node_modules
+**/.DS_Store
+**/Thumbs.db
+**/uploads
+**/*.user
+**/*.suo
+docker-compose.override.yml
+.agent/
+ROADMAP.md

@@ -10,3 +10,16 @@
 /Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.pdb
 /Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Domain/obj/Debug/net10.0/ref/Randevu365.Domain.dll
 /Users/alicanaydin/RiderProjects/Randevu365/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.csproj.AssemblyReference.cache
+/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/bin/Debug/net10.0/Randevu365.Domain.deps.json
+/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/bin/Debug/net10.0/Randevu365.Domain.dll
+/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/bin/Debug/net10.0/Randevu365.Domain.pdb
+/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.csproj.AssemblyReference.cache
+/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.AssemblyInfoInputs.cache
+/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.AssemblyInfo.cs
+/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.csproj.CoreCompileInputs.cache
+/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.sourcelink.json
+/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.dll
+/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/obj/Debug/net10.0/refint/Randevu365.Domain.dll
+/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.pdb
+/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Core/Randevu365.Domain/obj/Debug/net10.0/ref/Randevu365.Domain.dll

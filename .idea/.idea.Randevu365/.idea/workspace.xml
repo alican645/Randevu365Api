@@ -21,7 +21,156 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddea2289-15f8-4e8a-a027-4d98117367d4" name="Changes" comment="" />
+    <list default="true" id="ddea2289-15f8-4e8a-a027-4d98117367d4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Randevu365/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Randevu365/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/Interfaces/IAppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/Interfaces/IAppDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/Registration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/Registration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Application.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Application.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Application.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Application.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Domain.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Domain.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Domain.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/bin/Debug/net10.0/Randevu365.Domain.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/Randevu365.Application.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/ref/Randevu365.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/ref/Randevu365.Application.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/refint/Randevu365.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Debug/net10.0/refint/Randevu365.Application.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Randevu365.Application.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/Randevu365.Application.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Application/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Application/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/Entities/AppUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/Entities/AppUser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/Entities/Business.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/Entities/Business.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/Entities/EntityBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/bin/Debug/net10.0/Randevu365.Domain.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/bin/Debug/net10.0/Randevu365.Domain.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/bin/Debug/net10.0/Randevu365.Domain.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/bin/Debug/net10.0/Randevu365.Domain.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/Randevu365.Domain.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/ref/Randevu365.Domain.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/ref/Randevu365.Domain.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/refint/Randevu365.Domain.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Debug/net10.0/refint/Randevu365.Domain.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Randevu365.Domain.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/Randevu365.Domain.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Randevu365.Domain/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/Registration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/Registration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/Services/JwtService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/Services/JwtService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Application.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Application.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Domain.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Domain.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Domain.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Domain.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Infrastructure.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Infrastructure.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Infrastructure.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Infrastructure.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/bin/Debug/net10.0/Randevu365.Infrastructure.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/Randevu365.Infrastructure.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/ref/Randevu365.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/ref/Randevu365.Infrastructure.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/refint/Randevu365.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Debug/net10.0/refint/Randevu365.Infrastructure.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Randevu365.Infrastructure.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/Randevu365.Infrastructure.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Infrastructure/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/Context/AppDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/Context/AppDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/Registration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/Registration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/Repositories/WriteRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/Repositories/WriteRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/bin/Debug/net10.0/Randevu365.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/bin/Debug/net10.0/Randevu365.Application.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/bin/Debug/net10.0/Randevu365.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/bin/Debug/net10.0/Randevu365.Application.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/bin/Debug/net10.0/Randevu365.Domain.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/bin/Debug/net10.0/Randevu365.Domain.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/bin/Debug/net10.0/Randevu365.Domain.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/bin/Debug/net10.0/Randevu365.Domain.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/bin/Debug/net10.0/Randevu365.Persistence.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/bin/Debug/net10.0/Randevu365.Persistence.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/bin/Debug/net10.0/Randevu365.Persistence.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/bin/Debug/net10.0/Randevu365.Persistence.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/bin/Debug/net10.0/Randevu365.Persistence.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/bin/Debug/net10.0/Randevu365.Persistence.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.genruntimeconfig.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/Randevu365.Persistence.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/ref/Randevu365.Persistence.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/ref/Randevu365.Persistence.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/refint/Randevu365.Persistence.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Debug/net10.0/refint/Randevu365.Persistence.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Randevu365.Persistence.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/Randevu365.Persistence.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/Controllers/AdminController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/Controllers/AuthController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/Controllers/CustomerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/Controllers/CustomerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/Randevu365.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/Randevu365.Api.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Microsoft.OpenApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Microsoft.OpenApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Api" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Api" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Api.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Api.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Api.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Api.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Api.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Api.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Application.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Application.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Domain.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Domain.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Domain.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Domain.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Infrastructure.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Infrastructure.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Infrastructure.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Persistence.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Persistence.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Persistence.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Randevu365.Persistence.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Swashbuckle.AspNetCore.Swagger.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Swashbuckle.AspNetCore.Swagger.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerGen.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerGen.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerUI.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerUI.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/bin/Debug/net10.0/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.MvcApplicationPartsAssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.MvcApplicationPartsAssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.genruntimeconfig.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/Randevu365.Api.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/apphost" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/apphost" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/ref/Randevu365.Api.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/ref/Randevu365.Api.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/refint/Randevu365.Api.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/refint/Randevu365.Api.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/rpswa.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Debug/net10.0/rpswa.dswa.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Randevu365.Api.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Randevu365.Api.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Randevu365.Api.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Randevu365.Api.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Randevu365.Api.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/Randevu365.Api.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Randevu365.Api/obj/rider.project.restore.info" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,10 +179,31 @@
   <component name="DpaMonitoringSettings">
     <option name="firstShow" value="false" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;alican645&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/alican645/Randevu365Api.git&quot;,
+    &quot;accountId&quot;: &quot;2301f27a-6558-4bf7-a755-268ab48fa30a&quot;
+  }
+}</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bab0b25e45524151bc2741843bd8894a19108/c5/2d90f575/ClaimsPrincipal.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bab0b25e45524151bc2741843bd8894a19108/ea/303c6206/ClaimTypes.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/28c17d7aca69351fa93b7b19dd93f38ad16378c23924aa659ed4ca6542ab894/RegisterRequest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/.nuget/packages/microsoft.codeanalysis.workspaces.msbuild/4.14.0/contentFiles/any/any/BuildHost-netcore/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.deps.json" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Core/Randevu365.Application/DTOs/BusinessLocationDto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Core/Randevu365.Application/DTOs/BusinessPhotoDto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Core/Randevu365.Application/Features/Businesses/Queries/GetBusinessByFilter/GetBusinessByFilterHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Core/Randevu365.Application/Features/Businesses/Queries/GetBusinessByFilter/GetBusinessByFilterRequest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Core/Randevu365.Application/Features/Businesses/Queries/GetBusinessByFilter/GetBusinessByFilterResponse.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Core/Randevu365.Application/Features/Businesses/Queries/GetBusinessByFilter/GetBusinessByFilterValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Core/Randevu365.Application/Features/Businesses/Queries/GetBusinessesByBusinessCategory/GetBusinessesByBusinessCategoryResponse.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Core/Randevu365.Application/Features/Businesses/Queries/GetBusinessesByBusinessCategory/GetBusinessesByBusinessCategoryValidator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Core/Randevu365.Application/Features/Login/LoginHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Core/Randevu365.Application/Interfaces/IReadRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Core/Randevu365.Application/Interfaces/IUnitOfWork.cs" root0="FORCE_HIGHLIGHTING" />
@@ -51,7 +221,13 @@
     <setting file="file://$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/Repositories/WriteRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Infrastructure/Randevu365.Persistence/UnitOfWork/UnitOfWork.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Presentation/Randevu365.Api/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1346574be64b578f97aaa196ad474a63ff52f6d977d7ae18c366a60766f036/List.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc69852c736be69a33ab75e0444246ffeb2f8cd671d12b36b764ba5fa18f61ba/Monitor.CoreCLR.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bf9021a960b74107a7e141aa06bc9d8a0a53c929178c2fb95b1597be8af8dc/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/db7395f4add94e6d10e515b3e55373f2821f8323de7dc8e314d78feefacf5584/ActionMethodExecutor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e5ace92664429b8b34b68b587316fb211811b58aeb53422b43cecca2ad2bdaf3/AsyncTaskMethodBuilderT.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -63,27 +239,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.Randevu365.Api: IIS Express.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.Randevu365.Api: Randevu365.Development.http.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.Randevu365.Api: http.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.Randevu365.Presentation: http.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.Randevu365.Presentation: https.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.Randevu365: http.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.Randevu365.Api: IIS Express.executor": "Run",
+    ".NET Launch Settings Profile.Randevu365.Api: Randevu365.Development.http.executor": "Run",
+    ".NET Launch Settings Profile.Randevu365.Api: http.executor": "Run",
+    ".NET Launch Settings Profile.Randevu365.Presentation: http.executor": "Run",
+    ".NET Launch Settings Profile.Randevu365.Presentation: https.executor": "Run",
+    ".NET Launch Settings Profile.Randevu365: http.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Shell Script.multi_planner_agent.sh.executor": "Run",
+    "XThreadsFramesViewSplitterKey": "0.66322315",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/alicanaydin/Downloads/SoftwareProjects/RiderProjects/Randevu365Api/Randevu365.sln",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
-}</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.Randevu365.Api: IIS Express">
+}]]></component>
+  <component name="RunManager" selected=".NET Launch Settings Profile.Randevu365.Api: Randevu365.Development.http">
     <configuration name="Randevu365.Api" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -317,6 +503,26 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="multi_planner_agent.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/Presentation/Randevu365.Api/agents/multi_planner_agent.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/Presentation/Randevu365.Api/agents" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Shell Script.multi_planner_agent.sh" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -338,13 +544,55 @@
       <workItem from="1766930061648" duration="2248000" />
       <workItem from="1766934311549" duration="502000" />
       <workItem from="1766934954173" duration="10339000" />
+      <workItem from="1768079856695" duration="457000" />
+      <workItem from="1768080336980" duration="13944000" />
+      <workItem from="1768276540189" duration="785000" />
+      <workItem from="1768340606926" duration="1202000" />
+      <workItem from="1768405136503" duration="2109000" />
+      <workItem from="1768460446605" duration="23269000" />
+      <workItem from="1768849850777" duration="24241000" />
+      <workItem from="1769805684311" duration="621000" />
+      <workItem from="1769898029825" duration="3445000" />
+      <workItem from="1769959498979" duration="1207000" />
+      <workItem from="1770060209705" duration="8786000" />
+      <workItem from="1770393087394" duration="2169000" />
+      <workItem from="1771178149970" duration="10909000" />
+      <workItem from="1771222559012" duration="311000" />
+      <workItem from="1771257240588" duration="2424000" />
+      <workItem from="1771346920728" duration="11795000" />
+      <workItem from="1771398712543" duration="113000" />
+      <workItem from="1771424860750" duration="99839000" />
+      <workItem from="1771910674258" duration="5665000" />
+      <workItem from="1772014497791" duration="824000" />
+      <workItem from="1772052929781" duration="12974000" />
+      <workItem from="1772101645324" duration="105000" />
+      <workItem from="1772101946432" duration="428000" />
+      <workItem from="1772128337731" duration="15974000" />
+      <workItem from="1772187111293" duration="22376000" />
+      <workItem from="1772359931211" duration="20488000" />
+      <workItem from="1772533319187" duration="17490000" />
+      <workItem from="1772644313927" duration="3666000" />
+      <workItem from="1772729387700" duration="10116000" />
+      <workItem from="1772791894265" duration="14246000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
@@ -363,6 +611,38 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Presentation/Randevu365.Api/Middleware/ExceptionHandlingMiddleware.cs</url>
+          <line>66</line>
+          <properties documentPath="$PROJECT_DIR$/Presentation/Randevu365.Api/Middleware/ExceptionHandlingMiddleware.cs" containingFunctionPresentation="Method 'HandleValidationException'">
+            <startOffsets>
+              <option value="2202" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2392" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Core/Randevu365.Application/Features/BusinessProfile/Queries/GetBusinessProfileByUserId/GetBusinessProfileByUserIdQueryHandler.cs</url>
+          <line>76</line>
+          <properties documentPath="$PROJECT_DIR$/Core/Randevu365.Application/Features/BusinessProfile/Queries/GetBusinessProfileByUserId/GetBusinessProfileByUserIdQueryHandler.cs" containingFunctionPresentation="Method 'Handle'" />
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Core/Randevu365.Application/Features/Appointments/Commands/CreateAppointmentByOwner/CreateAppointmentByOwnerCommandHandler.cs</url>
+          <line>22</line>
+          <properties documentPath="$PROJECT_DIR$/Core/Randevu365.Application/Features/Appointments/Commands/CreateAppointmentByOwner/CreateAppointmentByOwnerCommandHandler.cs" containingFunctionPresentation="Method 'Handle'">
+            <startOffsets>
+              <option value="952" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1015" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

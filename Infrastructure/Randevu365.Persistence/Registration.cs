@@ -17,6 +17,7 @@ public static class Registration
         {
             options.UseNpgsql(configuration.GetConnectionString("PostgreSql"));
         });
+        services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
 
         // Repository Registrations
         services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
