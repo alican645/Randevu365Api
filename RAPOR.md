@@ -318,6 +318,26 @@ Bu rapor, projenin mevcut durumunu derinlemesine analiz ederek tum eksikleri, ha
   - Dosya: `Core/Randevu365.Application/Registration.cs:17`
   - Cozum: Lisans anahtarini environment variable veya User Secrets'a tasi.
 
+- [ ] **TODO-086** | **KRITIK: `appsettings.json` icinde `Include Error Detail=true` aktif.** Connection string'de hata detayi acik. Production ortaminda PostgreSQL hata mesajlari istemciye sizarak veritabani yapisi hakkinda bilgi ifsa eder.
+  - Dosya: `Presentation/Randevu365.Api/appsettings.json:9`
+  - Cozum: Production appsettings'ten `Include Error Detail=true` kaldirilmali.
+
+- [ ] **TODO-087** | **KRITIK: JWT SecretKey appsettings.json'da placeholder olarak duruyor.** `"CHANGE_THIS_TO_A_SECURE_SECRET_KEY_AT_LEAST_32_CHARS_LONG!"` degeri herkesin gorebilecegi sekilde repository'de yer aliyor. Production'da bu deger degistirilmezse tum JWT tokenlar sahtelenebilir.
+  - Dosya: `Presentation/Randevu365.Api/appsettings.json:15`
+  - Cozum: SecretKey'i appsettings'ten tamamen kaldir, yalnizca environment variable veya User Secrets ile yonet.
+
+- [ ] **TODO-088** | **KRITIK: `SmtpEmailService` icinde `MailMessage` nesnesi dispose edilmiyor.** `using` olmadan `new MailMessage(...)` olusturuluyor. Yuksek email trafiginde bellek sizintisi (memory leak) riski var.
+  - Dosya: `Infrastructure/Randevu365.Infrastructure/Services/SmtpEmailService.cs:40`
+  - Cozum: `using var mailMessage = new MailMessage(...)` olarak degistir.
+
+- [ ] **TODO-089** | **KRITIK: Coklu `SaveAsync()` cagrilari transaction olmadan yapiliyor.** `CreateBusinessCommandHandler` ve `RegisterHandler` gibi handler'larda birden fazla `SaveAsync()` cagirisi var. Ikinci kayit basarisiz olursa birinci kayit geri alinmaz, veri tutarsizligi olusur.
+  - Dosyalar: `Features/Businesses/Commands/CreateBusiness/CreateBusinessCommandHandler.cs`, `Features/Register/RegisterHandler.cs:39-50`
+  - Cozum: `using var transaction = await dbContext.Database.BeginTransactionAsync()` ile sarmala.
+
+- [ ] **TODO-090** | **KRITIK: `pageSize` parametresinde ust sinir kontrolu yok.** Kullanici `pageSize=999999` gondererek tum veritabanini tek istekte cekebilir. DoS saldirisi ve bellek tasma riski.
+  - Dosyalar: `BusinessController.cs:52-53`, `MessageController.cs:30`
+  - Cozum: `pageSize` icin `[Range(1, 100)]` validasyonu ekle veya handler'da clamp yap.
+
 ---
 
 ## OZET TABLOSU
@@ -332,8 +352,8 @@ Bu rapor, projenin mevcut durumunu derinlemesine analiz ederek tum eksikleri, ha
 | 6 - Yuksek | 7 | Altyapi & Performans |
 | 7 - Yuksek | 5 | Test & CI/CD |
 | 8 - Yuksek | 10 | Production Hazirlik |
-| 9 - Kritik | 5 | Acil Duzeltilmesi Gerekenler |
-| **TOPLAM** | **85** | |
+| 9 - Kritik | 10 | Acil Duzeltilmesi Gerekenler |
+| **TOPLAM** | **90** | |
 
 ---
 
@@ -344,7 +364,12 @@ Bu rapor, projenin mevcut durumunu derinlemesine analiz ederek tum eksikleri, ha
 2. TODO-082: File upload path traversal duzelt
 3. TODO-083: ChatHub'a Authorize ekle
 4. TODO-084: IWriteRepository'ye SoftDeleteAsync ekle
-5. TODO-085: MediatR lisans anahtarini koddancikar
+5. TODO-085: MediatR lisans anahtarini koddan cikar
+6. TODO-086: Connection string'den Include Error Detail kaldir
+7. TODO-087: JWT SecretKey'i appsettings'ten cikar
+8. TODO-088: MailMessage dispose eksikligi
+9. TODO-089: Transaction eksik handler'lar
+10. TODO-090: pageSize ust sinir kontrolu ekle
 
 ### Kisa Vadede Yapilmali (1-2 Hafta)
 1. TODO-044-058: Diger guvenlik sorunlari
