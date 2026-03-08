@@ -6,4 +6,5 @@ public interface IEmailService
     Task SendPasswordResetEmailAsync(string to, string resetToken);
     Task SendAppointmentConfirmationEmailAsync(string to, string businessName, string date, string time);
     Task SendAppointmentCancellationEmailAsync(string to, string businessName, string date, string reason);
+    Task SendVerificationEmailAsync(string to, string verificationCode);
 }

@@ -25,19 +25,19 @@ public static class SeedData
     {
         modelBuilder.Entity<AppUserInformation>().HasData(
             // Admin
-            new AppUserInformation { Id = 1, Name = "Admin", Surname = "Randevu365", Age = 30, Gender = "E", PhoneNumber = "05001234567", Height = 175, Weight = 75, CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
+            new AppUserInformation { Id = 1, Name = "Admin", Surname = "Randevu365",      PhoneNumber = "05001234567",   CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
             // Business Owners (ID 2-6)
-            new AppUserInformation { Id = 2, Name = "Ahmet", Surname = "Yılmaz", Age = 35, Gender = "E", PhoneNumber = "05321234567", Height = 180, Weight = 80, CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
-            new AppUserInformation { Id = 3, Name = "Elif", Surname = "Kaya", Age = 28, Gender = "K", PhoneNumber = "05331234567", Height = 165, Weight = 55, CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
-            new AppUserInformation { Id = 4, Name = "Mehmet", Surname = "Demir", Age = 42, Gender = "E", PhoneNumber = "05341234567", Height = 178, Weight = 85, CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
-            new AppUserInformation { Id = 5, Name = "Ayşe", Surname = "Çelik", Age = 25, Gender = "K", PhoneNumber = "05351234567", Height = 160, Weight = 52, CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
-            new AppUserInformation { Id = 6, Name = "Ali", Surname = "Öztürk", Age = 30, Gender = "E", PhoneNumber = "05361234567", Height = 182, Weight = 78, CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
+            new AppUserInformation { Id = 2, Name = "Ahmet", Surname = "Yılmaz",      PhoneNumber = "05321234567",   CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
+            new AppUserInformation { Id = 3, Name = "Elif", Surname = "Kaya",      PhoneNumber = "05331234567",   CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
+            new AppUserInformation { Id = 4, Name = "Mehmet", Surname = "Demir",      PhoneNumber = "05341234567",   CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
+            new AppUserInformation { Id = 5, Name = "Ayşe", Surname = "Çelik",     PhoneNumber = "05351234567",   CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
+            new AppUserInformation { Id = 6, Name = "Ali", Surname = "Öztürk",      PhoneNumber = "05361234567",   CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
             // Customers (ID 7-11)
-            new AppUserInformation { Id = 7, Name = "Zeynep", Surname = "Arslan", Age = 22, Gender = "K", PhoneNumber = "05371234567", Height = 168, Weight = 58, CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
-            new AppUserInformation { Id = 8, Name = "Burak", Surname = "Doğan", Age = 27, Gender = "E", PhoneNumber = "05381234567", Height = 176, Weight = 74, CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
-            new AppUserInformation { Id = 9, Name = "Seda", Surname = "Kılıç", Age = 24, Gender = "K", PhoneNumber = "05391234567", Height = 163, Weight = 56, CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
-            new AppUserInformation { Id = 10, Name = "Emre", Surname = "Aslan", Age = 31, Gender = "E", PhoneNumber = "05401234567", Height = 179, Weight = 77, CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
-            new AppUserInformation { Id = 11, Name = "Merve", Surname = "Çetin", Age = 26, Gender = "K", PhoneNumber = "05411234567", Height = 166, Weight = 54, CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false }
+            new AppUserInformation { Id = 7, Name = "Zeynep", Surname = "Arslan",      PhoneNumber = "05371234567",   CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
+            new AppUserInformation { Id = 8, Name = "Burak", Surname = "Doğan",     PhoneNumber = "05381234567",   CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
+            new AppUserInformation { Id = 9, Name = "Seda", Surname = "Kılıç",    PhoneNumber = "05391234567",   CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
+            new AppUserInformation { Id = 10, Name = "Emre", Surname = "Aslan",   PhoneNumber = "05401234567",   CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false },
+            new AppUserInformation { Id = 11, Name = "Merve", Surname = "Çetin",     PhoneNumber = "05411234567",   CreatedAt = SeedDate, UpdatedAt = SeedDate, IsDeleted = false }
         );
     }
 

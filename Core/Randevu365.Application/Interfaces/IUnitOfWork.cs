@@ -8,4 +8,7 @@ public interface IUnitOfWork : IAsyncDisposable
     IWriteRepository<T> GetWriteRepository<T>() where T : class;
     Task<int> SaveAsync();
     int Save();
+    Task BeginTransactionAsync(CancellationToken ct = default);
+    Task CommitTransactionAsync(CancellationToken ct = default);
+    Task RollbackTransactionAsync(CancellationToken ct = default);
 }

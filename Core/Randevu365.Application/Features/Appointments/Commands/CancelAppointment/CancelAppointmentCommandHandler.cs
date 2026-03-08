@@ -31,6 +31,11 @@ public class CancelAppointmentCommandHandler : IRequestHandler<CancelAppointment
         if (appointment.AppUserId != _currentUserService.UserId.Value)
             return ApiResponse<CancelAppointmentCommandResponse>.ForbiddenResult("Bu randevuyu iptal etme yetkiniz yok.");
 
+        var now = DateTime.UtcNow;
+        if (appointment.AppointmentDate < DateOnly.FromDateTime(now)
+            || (appointment.AppointmentDate == DateOnly.FromDateTime(now) && appointment.RequestedStartTime <= TimeOnly.FromDateTime(now)))
+            return ApiResponse<CancelAppointmentCommandResponse>.FailResult("Gecmis tarihli bir randevu iptal edilemez.");
+
         if (appointment.Status == AppointmentStatus.Completed)
             return ApiResponse<CancelAppointmentCommandResponse>.FailResult("Tamamlanmis bir randevu iptal edilemez.");
 

@@ -7,7 +7,7 @@ using Randevu365.Domain.Enum;
 
 namespace Randevu365.Application.Features.Appointments.Queries.GetMyAppointments;
 
-public class GetMyAppointmentsQueryHandler : IRequestHandler<GetMyAppointmentsQueryRequest, ApiResponse<List<GetMyAppointmentsQueryResponse>>>
+public class GetMyAppointmentsQueryHandler : IRequestHandler<GetMyAppointmentsQueryRequest, ApiResponse<GetMyAppointmentsQueryResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICurrentUserService _currentUserService;
@@ -18,10 +18,10 @@ public class GetMyAppointmentsQueryHandler : IRequestHandler<GetMyAppointmentsQu
         _currentUserService = currentUserService;
     }
 
-    public async Task<ApiResponse<List<GetMyAppointmentsQueryResponse>>> Handle(GetMyAppointmentsQueryRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<GetMyAppointmentsQueryResponse>> Handle(GetMyAppointmentsQueryRequest request, CancellationToken cancellationToken)
     {
         if (_currentUserService.UserId is null)
-            return ApiResponse<List<GetMyAppointmentsQueryResponse>>.UnauthorizedResult("Kullanici kimliği bulunamadi.");
+            return ApiResponse<GetMyAppointmentsQueryResponse>.UnauthorizedResult("Kullanici kimliği bulunamadi.");
 
         var userId = _currentUserService.UserId.Value;
 
@@ -33,7 +33,7 @@ public class GetMyAppointmentsQueryHandler : IRequestHandler<GetMyAppointmentsQu
                 include: q => q.Include(a => a.Business!).Include(a => a.BusinessService!),
                 orderBy: q => q.OrderByDescending(a => a.AppointmentDate).ThenByDescending(a => a.RequestedStartTime));
 
-        var response = appointments.Select(a => new GetMyAppointmentsQueryResponse
+        var responseItems = appointments.Select(a => new GetMyAppointmentsQueryResponseItem
         {
             Id = a.Id,
             BusinessName = a.Business?.BusinessName ?? string.Empty,
@@ -49,6 +49,11 @@ public class GetMyAppointmentsQueryHandler : IRequestHandler<GetMyAppointmentsQu
             CreatedAt = a.CreatedAt
         }).ToList();
 
-        return ApiResponse<List<GetMyAppointmentsQueryResponse>>.SuccessResult(response);
+        var response = new GetMyAppointmentsQueryResponse()
+        {
+            Items = responseItems,
+        };
+        
+        return ApiResponse<GetMyAppointmentsQueryResponse>.SuccessResult(response);
     }
 }

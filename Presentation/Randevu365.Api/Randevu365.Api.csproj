@@ -23,8 +23,4 @@
         <ProjectReference Include="..\..\Infrastructure\Randevu365.Infrastructure\Randevu365.Infrastructure.csproj" />
         <ProjectReference Include="..\..\Infrastructure\Randevu365.Persistence\Randevu365.Persistence.csproj" />
     </ItemGroup>
-    <ItemGroup>
-      <Folder Include="FeaturePlans\FeatureChanges\" />
-      <Folder Include="plans\" />
-    </ItemGroup>
 </Project>

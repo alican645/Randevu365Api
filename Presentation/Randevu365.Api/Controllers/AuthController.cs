@@ -7,6 +7,7 @@ using Randevu365.Application.Features.ForgotPassword;
 using Randevu365.Application.Features.Login;
 using Randevu365.Application.Features.RefreshToken;
 using Randevu365.Application.Features.Register;
+using Randevu365.Application.Features.Register.SendVerificationCode;
 using Randevu365.Application.Features.ResetPassword;
 using Randevu365.Application.Features.UserProfile.Commands.ChangePassword;
 using Randevu365.Application.Features.UserProfile.Commands.UpdateUserProfile;
@@ -34,8 +35,23 @@ public class AuthController : ControllerBase
         return StatusCode(response.StatusCode, response);
     }
 
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+    [HttpPost("send-verification-code")]
+    [AllowAnonymous]
+    public async Task<IActionResult> SendVerificationCode([FromBody] SendVerificationCodeRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("register/customer")]
+    public async Task<IActionResult> RegisterCustomer([FromBody] RegisterCustomerRequest request)
+    {
+        var response = await _mediator.Send(request);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpPost("register/business-owner")]
+    public async Task<IActionResult> RegisterBusinessOwner([FromBody] RegisterBusinessOwnerRequest request)
     {
         var response = await _mediator.Send(request);
         return StatusCode(response.StatusCode, response);

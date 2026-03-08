@@ -34,11 +34,7 @@ public class GetMyProfileQueryHandler : IRequestHandler<GetMyProfileQueryRequest
             Role = user.Role,
             Name = user.AppUserInformation?.Name,
             Surname = user.AppUserInformation?.Surname,
-            Age = user.AppUserInformation?.Age,
-            Gender = user.AppUserInformation?.Gender,
             PhoneNumber = user.AppUserInformation?.PhoneNumber,
-            Height = user.AppUserInformation?.Height,
-            Weight = user.AppUserInformation?.Weight,
             CreatedAt = user.CreatedAt
         });
     }

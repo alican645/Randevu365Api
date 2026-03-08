@@ -33,11 +33,7 @@ public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfile
 
         if (request.Name != null) user.AppUserInformation.Name = request.Name;
         if (request.Surname != null) user.AppUserInformation.Surname = request.Surname;
-        if (request.Age.HasValue) user.AppUserInformation.Age = request.Age.Value;
-        if (request.Gender != null) user.AppUserInformation.Gender = request.Gender;
         if (request.PhoneNumber != null) user.AppUserInformation.PhoneNumber = request.PhoneNumber;
-        if (request.Height.HasValue) user.AppUserInformation.Height = request.Height.Value;
-        if (request.Weight.HasValue) user.AppUserInformation.Weight = request.Weight.Value;
 
         await _unitOfWork.GetWriteRepository<Domain.Entities.AppUserInformation>().UpdateAsync(user.AppUserInformation);
         await _unitOfWork.SaveAsync();

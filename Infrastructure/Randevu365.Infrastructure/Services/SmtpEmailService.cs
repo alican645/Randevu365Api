@@ -1,7 +1,8 @@
-using System.Net;
-using System.Net.Mail;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using MimeKit;
 using Randevu365.Application.Interfaces;
 
 namespace Randevu365.Infrastructure.Services;
@@ -31,18 +32,18 @@ public class SmtpEmailService : IEmailService
             return;
         }
 
-        using var client = new SmtpClient(smtpHost, smtpPort)
-        {
-            Credentials = new NetworkCredential(smtpUser, smtpPass),
-            EnableSsl = true
-        };
+        var message = new MimeMessage();
+        message.From.Add(new MailboxAddress("Randevu365", fromEmail));
+        message.To.Add(new MailboxAddress("", to));
+        message.Subject = subject;
+        message.Body = new TextPart("html") { Text = body };
 
-        var mailMessage = new MailMessage(fromEmail!, to, subject, body)
-        {
-            IsBodyHtml = true
-        };
+        using var client = new SmtpClient();
+        await client.ConnectAsync(smtpHost, smtpPort, SecureSocketOptions.StartTls);
+        await client.AuthenticateAsync(smtpUser, smtpPass);
+        await client.SendAsync(message);
+        await client.DisconnectAsync(true);
 
-        await client.SendMailAsync(mailMessage);
         _logger.LogInformation("Email sent to {To} with subject: {Subject}", to, subject);
     }
 
@@ -64,6 +65,13 @@ public class SmtpEmailService : IEmailService
     {
         var subject = "Randevu365 - Randevu Iptal Edildi";
         var body = $"<h3>Randevunuz Iptal Edildi</h3><p><strong>{businessName}</strong> isletmesindeki {date} tarihli randevunuz iptal edildi.</p><p>Neden: {reason}</p>";
+        await SendEmailAsync(to, subject, body);
+    }
+
+    public async Task SendVerificationEmailAsync(string to, string verificationCode)
+    {
+        var subject = "Randevu365 - E-posta Doğrulama";
+        var body = $"<h3>E-posta Doğrulama</h3><p>Kayıt işleminizi tamamlamak için aşağıdaki doğrulama kodunu kullanın:</p><p><strong>{verificationCode}</strong></p><p>Bu kod 5 dakika geçerlidir.</p>";
         await SendEmailAsync(to, subject, body);
     }
 }

@@ -2,6 +2,7 @@ using MediatR;
 using Randevu365.Application.Common.Responses;
 using Randevu365.Application.Interfaces;
 using Randevu365.Domain.Entities;
+using Randevu365.Domain.Enum;
 
 namespace Randevu365.Application.Features.BusinessComments.Commands.AddBusinessComment;
 
@@ -38,6 +39,17 @@ public class AddBusinessCommentCommandHandler : IRequestHandler<AddBusinessComme
         if (business == null)
         {
             return ApiResponse<AddBusinessCommentCommandResponse>.NotFoundResult("İşletme bulunamadı.");
+        }
+
+        var hasCompletedAppointment = await _unitOfWork.GetReadRepository<Appointment>()
+            .GetAsync(x => x.AppUserId == userId.Value
+                          && x.BusinessId == request.BusinessId
+                          && x.Status == AppointmentStatus.Completed);
+
+        if (hasCompletedAppointment == null)
+        {
+            return ApiResponse<AddBusinessCommentCommandResponse>.FailResult(
+                "Yorum yapabilmek için bu işletmeden tamamlanmış bir randevunuz olmalıdır.");
         }
 
         var comment = new BusinessComment

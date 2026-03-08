@@ -19,22 +19,10 @@ public class AppUserInformationConfiguration : IEntityTypeConfiguration<AppUserI
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(x => x.Age)
-            .IsRequired();
-
-        builder.Property(x => x.Gender)
-            .IsRequired()
-            .HasMaxLength(1);
 
         builder.Property(x => x.PhoneNumber)
             .IsRequired()
             .HasMaxLength(20);
-
-        builder.Property(x => x.Height)
-            .IsRequired();
-
-        builder.Property(x => x.Weight)
-            .IsRequired();
 
         builder.Property(x => x.CreatedAt)
             .IsRequired();

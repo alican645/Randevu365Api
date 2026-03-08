@@ -6,7 +6,7 @@ using Randevu365.Domain.Entities;
 
 namespace Randevu365.Application.Features.BusinessComments.Queries.GetCommentsByBusinessId;
 
-public class GetCommentsByBusinessIdQueryHandler : IRequestHandler<GetCommentsByBusinessIdQueryRequest, ApiResponse<IList<GetCommentsByBusinessIdQueryResponse>>>
+public class GetCommentsByBusinessIdQueryHandler : IRequestHandler<GetCommentsByBusinessIdQueryRequest, ApiResponse<GetCommentsByBusinessIdQueryResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -15,7 +15,7 @@ public class GetCommentsByBusinessIdQueryHandler : IRequestHandler<GetCommentsBy
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<ApiResponse<IList<GetCommentsByBusinessIdQueryResponse>>> Handle(GetCommentsByBusinessIdQueryRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<GetCommentsByBusinessIdQueryResponse>> Handle(GetCommentsByBusinessIdQueryRequest request, CancellationToken cancellationToken)
     {
        
         var validator = new GetCommentsByBusinessIdQueryValidator();
@@ -23,7 +23,7 @@ public class GetCommentsByBusinessIdQueryHandler : IRequestHandler<GetCommentsBy
         if (!validationResult.IsValid)
         {
             var errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
-            return ApiResponse<IList<GetCommentsByBusinessIdQueryResponse>>.FailResult(errors);
+            return ApiResponse<GetCommentsByBusinessIdQueryResponse>.FailResult(errors);
         }
 
         var comments = await _unitOfWork.GetReadRepository<BusinessComment>().GetAllAsync(
@@ -31,7 +31,7 @@ public class GetCommentsByBusinessIdQueryHandler : IRequestHandler<GetCommentsBy
             include: q => q.Include(c => c.AppUser).ThenInclude(u => u!.AppUserInformation)
         );
 
-        var response = comments.Select(c => new GetCommentsByBusinessIdQueryResponse
+        var responseItems = comments.Select(c => new GetCommentsByBusinessIdQueryResponseItem
         {
             Id = c.Id,
             BusinessId = c.BusinessId,
@@ -41,6 +41,11 @@ public class GetCommentsByBusinessIdQueryHandler : IRequestHandler<GetCommentsBy
             CreatedAt = c.CreatedAt
         }).ToList();
 
-        return ApiResponse<IList<GetCommentsByBusinessIdQueryResponse>>.SuccessResult(response);
+        var response = new GetCommentsByBusinessIdQueryResponse
+        {
+            Items = responseItems
+        };
+
+        return ApiResponse<GetCommentsByBusinessIdQueryResponse>.SuccessResult(response);
     }
 }

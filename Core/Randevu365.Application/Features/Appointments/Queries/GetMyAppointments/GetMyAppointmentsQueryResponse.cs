@@ -2,7 +2,7 @@ using Randevu365.Domain.Enum;
 
 namespace Randevu365.Application.Features.Appointments.Queries.GetMyAppointments;
 
-public class GetMyAppointmentsQueryResponse
+public class GetMyAppointmentsQueryResponseItem
 {
     public int Id { get; set; }
     public string BusinessName { get; set; } = string.Empty;
@@ -16,4 +16,9 @@ public class GetMyAppointmentsQueryResponse
     public string? CustomerNotes { get; set; }
     public string? BusinessNotes { get; set; }
     public DateTime CreatedAt { get; set; }
+}
+
+public class GetMyAppointmentsQueryResponse
+{
+    public List<GetMyAppointmentsQueryResponseItem> Items { get; set; }
 }

@@ -40,6 +40,57 @@ public class CreateAppointmentCommandHandler : IRequestHandler<CreateAppointment
             return ApiResponse<CreateAppointmentCommandResponse>.NotFoundResult("Hizmet bulunamadı.");
         }
 
+        var dayOfWeek = request.AppointmentDate.DayOfWeek;
+        var dayNameEn = dayOfWeek.ToString();
+        var dayNameTr = dayOfWeek switch
+        {
+            DayOfWeek.Monday => "Pazartesi",
+            DayOfWeek.Tuesday => "Salı",
+            DayOfWeek.Wednesday => "Çarşamba",
+            DayOfWeek.Thursday => "Perşembe",
+            DayOfWeek.Friday => "Cuma",
+            DayOfWeek.Saturday => "Cumartesi",
+            DayOfWeek.Sunday => "Pazar",
+            _ => dayNameEn
+        };
+
+        var businessHour = await _unitOfWork.GetReadRepository<BusinessHour>()
+            .GetAsync(x => x.BusinessId == request.BusinessId
+                          && (x.Day == dayNameEn || x.Day == dayNameTr)
+                          && !x.IsDeleted);
+
+        if (businessHour == null)
+        {
+            return ApiResponse<CreateAppointmentCommandResponse>.FailResult(
+                "İşletme seçilen günde hizmet vermemektedir.");
+        }
+
+        var openTime = TimeOnly.Parse(businessHour.OpenTime);
+        var closeTime = TimeOnly.Parse(businessHour.CloseTime);
+
+        if (request.RequestedStartTime < openTime || request.RequestedEndTime > closeTime)
+        {
+            return ApiResponse<CreateAppointmentCommandResponse>.FailResult(
+                $"Randevu saatleri işletmenin çalışma saatleri ({businessHour.OpenTime} - {businessHour.CloseTime}) dışındadır.");
+        }
+
+        var userId = _currentUserService.UserId.Value;
+
+        var userDuplicateAppointment = await _unitOfWork.GetReadRepository<Appointment>()
+            .GetAsync(x => x.AppUserId == userId
+                          && x.BusinessId == request.BusinessId
+                          && x.AppointmentDate == request.AppointmentDate
+                          && x.RequestedStartTime < request.RequestedEndTime
+                          && x.RequestedEndTime > request.RequestedStartTime
+                          && (x.Status == AppointmentStatus.Pending || x.Status == AppointmentStatus.Confirmed)
+                          && !x.IsDeleted);
+
+        if (userDuplicateAppointment != null)
+        {
+            return ApiResponse<CreateAppointmentCommandResponse>.ConflictResult(
+                "Bu işletmede seçilen zaman diliminde zaten bir randevunuz bulunmaktadır.");
+        }
+
         var overlappingCount = await _unitOfWork.GetReadRepository<Appointment>().CountAsync(
             x => x.BusinessServiceId == request.BusinessServiceId
                  && x.AppointmentDate == request.AppointmentDate
@@ -56,7 +107,7 @@ public class CreateAppointmentCommandHandler : IRequestHandler<CreateAppointment
 
         var appointment = new Appointment
         {
-            AppUserId = _currentUserService.UserId.Value,
+            AppUserId = userId,
             BusinessId = request.BusinessId,
             BusinessServiceId = request.BusinessServiceId,
             AppointmentDate = request.AppointmentDate,

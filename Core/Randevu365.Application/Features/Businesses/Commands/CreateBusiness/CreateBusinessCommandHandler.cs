@@ -57,32 +57,43 @@ public class CreateBusinessCommandHandler : IRequestHandler<CreateBusinessComman
         if (BusinessCategoryExtensions.TryFromJson(request.BusinessCategory, out var cat))
             category = cat;
 
-        var business = new Business
+        await _unitOfWork.BeginTransactionAsync(cancellationToken);
+        try
         {
-            BusinessName = request.BusinessName,
-            BusinessAddress = request.BusinessAddress,
-            BusinessCity = request.BusinessCity,
-            BusinessPhone = request.BusinessPhone,
-            BusinessEmail = request.BusinessEmail,
-            BusinessCountry = request.BusinessCountry,
-            BusinessCategory = category,
-            AppUserId = currentUserId
-        };
+            var business = new Business
+            {
+                BusinessName = request.BusinessName,
+                BusinessAddress = request.BusinessAddress,
+                BusinessCity = request.BusinessCity,
+                BusinessPhone = request.BusinessPhone,
+                BusinessEmail = request.BusinessEmail,
+                BusinessCountry = request.BusinessCountry,
+                BusinessCategory = category,
+                AppUserId = currentUserId
+            };
 
-        await _unitOfWork.GetWriteRepository<Business>().AddAsync(business);
-        await _unitOfWork.SaveAsync();
-
-        if (availableSlot != null)
-        {
-            availableSlot.IsUsed = true;
-            availableSlot.UsedForBusinessId = business.Id;
-            availableSlot.UsedAt = DateTime.UtcNow;
-            await _unitOfWork.GetWriteRepository<BusinessSlot>().UpdateAsync(availableSlot);
+            await _unitOfWork.GetWriteRepository<Business>().AddAsync(business);
             await _unitOfWork.SaveAsync();
-        }
 
-        return ApiResponse<CreateBusinessCommandResponse>.CreatedResult(
-            new CreateBusinessCommandResponse { Id = business.Id },
-            "İşletme başarıyla oluşturuldu.");
+            if (availableSlot != null)
+            {
+                availableSlot.IsUsed = true;
+                availableSlot.UsedForBusinessId = business.Id;
+                availableSlot.UsedAt = DateTime.UtcNow;
+                await _unitOfWork.GetWriteRepository<BusinessSlot>().UpdateAsync(availableSlot);
+                await _unitOfWork.SaveAsync();
+            }
+
+            await _unitOfWork.CommitTransactionAsync(cancellationToken);
+
+            return ApiResponse<CreateBusinessCommandResponse>.CreatedResult(
+                new CreateBusinessCommandResponse { Id = business.Id },
+                "İşletme başarıyla oluşturuldu.");
+        }
+        catch
+        {
+            await _unitOfWork.RollbackTransactionAsync(cancellationToken);
+            throw;
+        }
     }
 }

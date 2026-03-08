@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Randevu365.Application.Interfaces;
+using Randevu365.Infrastructure.BackgroundJobs;
 using Randevu365.Infrastructure.Services;
 
 namespace Randevu365.Infrastructure;
@@ -17,6 +18,9 @@ public static class Registration
 
         // Email Service
         services.AddScoped<IEmailService, SmtpEmailService>();
+
+        // Background Jobs
+        services.AddHostedService<AppointmentCompletionJob>();
 
         return services;
     }
