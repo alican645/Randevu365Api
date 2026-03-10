@@ -8,13 +8,13 @@ public class ChatHub : Hub
 {
     private readonly IHubService _hubService;
     private readonly ICurrentUserService _currentUserService;
-    private readonly IConversationIdHelper _conversationIdHelper;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public ChatHub(IHubService hubService, ICurrentUserService currentUserService, IConversationIdHelper conversationIdHelper)
+    public ChatHub(IHubService hubService, ICurrentUserService currentUserService, IUnitOfWork unitOfWork)
     {
         _hubService = hubService;
         _currentUserService = currentUserService;
-        _conversationIdHelper = conversationIdHelper;
+        _unitOfWork = unitOfWork;
     }
 
     public override async Task OnConnectedAsync()
@@ -27,18 +27,39 @@ public class ChatHub : Hub
         await base.OnDisconnectedAsync(exception);
     }
 
-    public async Task SendMessage(int receiverId, string message)
+    public async Task SendMessage(int appointmentId, string message)
     {
-        var conversationId = await _conversationIdHelper.GenerateConversationId(_currentUserService.UserId ?? 0, receiverId);
+        var senderId = _currentUserService.UserId ?? 0;
+        if (senderId == 0)
+        {
+            await Clients.Caller.SendAsync("Error", "Kullanıcı kimliği bulunamadı.");
+            return;
+        }
 
-        await _hubService.SaveMessage(
-            _currentUserService.UserId ?? 0,
-            receiverId,
-            message,
-            conversationId
-        );
+        var conversation = await _unitOfWork.GetReadRepository<Conversation>()
+            .GetAsync(c => c.AppointmentId == appointmentId && !c.IsDeleted);
 
+        if (conversation == null)
+        {
+            await Clients.Caller.SendAsync("Error", "Konuşma bulunamadı.");
+            return;
+        }
+
+        if (conversation.IsClosed)
+        {
+            await Clients.Caller.SendAsync("Error", "Bu konuşma kapatılmıştır.");
+            return;
+        }
+
+        if (conversation.UserId != senderId && conversation.OtherUserId != senderId)
+        {
+            await Clients.Caller.SendAsync("Error", "Bu konuşmaya erişiminiz yok.");
+            return;
+        }
+
+        var receiverId = conversation.UserId == senderId ? conversation.OtherUserId : conversation.UserId;
+
+        await _hubService.SaveMessage(senderId, receiverId, message, conversation.ConversationId);
         await Clients.User(receiverId.ToString()).SendAsync("ReceiveMessage", message);
     }
 }
-

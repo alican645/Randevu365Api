@@ -26,7 +26,6 @@ public static class Registration
         // UnitOfWork Registration
         services.AddScoped<IUnitOfWork,UnitOfWork.UnitOfWork>();
         services.AddScoped<IHubService, HubService>();
-        services.AddScoped<IConversationIdHelper, ConversationIdHelper>();
 
         return services;
     }

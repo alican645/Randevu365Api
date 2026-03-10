@@ -19,6 +19,10 @@ public static class Registration
         // Email Service
         services.AddScoped<IEmailService, SmtpEmailService>();
 
+        // In-App Purchase Verification
+        services.AddHttpClient("AppleIAP");
+        services.AddScoped<IIapVerificationService, IapVerificationService>();
+
         // Background Jobs
         services.AddHostedService<AppointmentCompletionJob>();
 
