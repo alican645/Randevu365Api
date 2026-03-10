@@ -5,7 +5,7 @@ using Randevu365.Domain.Entities;
 
 namespace Randevu365.Application.Features.Messaging.Queries.GetMessagesByConversation;
 
-public class GetMessagesByConversationQueryHandler : IRequestHandler<GetMessagesByConversationQueryRequest, ApiResponse<List<GetMessagesByConversationQueryResponse>>>
+public class GetMessagesByConversationQueryHandler : IRequestHandler<GetMessagesByConversationQueryRequest, ApiResponse<GetMessagesByConversationQueryResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICurrentUserService _currentUserService;
@@ -16,10 +16,10 @@ public class GetMessagesByConversationQueryHandler : IRequestHandler<GetMessages
         _currentUserService = currentUserService;
     }
 
-    public async Task<ApiResponse<List<GetMessagesByConversationQueryResponse>>> Handle(GetMessagesByConversationQueryRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<GetMessagesByConversationQueryResponse>> Handle(GetMessagesByConversationQueryRequest request, CancellationToken cancellationToken)
     {
         if (_currentUserService.UserId is null)
-            return ApiResponse<List<GetMessagesByConversationQueryResponse>>.UnauthorizedResult("Kullanici kimliği bulunamadi.");
+            return ApiResponse<GetMessagesByConversationQueryResponse>.UnauthorizedResult("Kullanici kimliği bulunamadi.");
 
         var userId = _currentUserService.UserId.Value;
 
@@ -30,7 +30,10 @@ public class GetMessagesByConversationQueryHandler : IRequestHandler<GetMessages
                 && !c.IsDeleted);
 
         if (conversation == null)
-            return ApiResponse<List<GetMessagesByConversationQueryResponse>>.NotFoundResult("Konusma bulunamadi.");
+            return ApiResponse<GetMessagesByConversationQueryResponse>.NotFoundResult("Konusma bulunamadi.");
+
+        if (conversation.IsClosed)
+            return ApiResponse<GetMessagesByConversationQueryResponse>.FailResult("Bu konuşma kapatılmıştır. Mesajlara erişilemiyor.");
 
         var messages = await _unitOfWork.GetReadRepository<Message>()
             .GetAllByPagingAsync(
@@ -39,7 +42,7 @@ public class GetMessagesByConversationQueryHandler : IRequestHandler<GetMessages
                 currentPage: request.PageNumber,
                 pageSize: request.PageSize);
 
-        var response = messages.Select(m => new GetMessagesByConversationQueryResponse
+        var responseItems = messages.Select(m => new GetMessagesByConversationQueryResponseItem
         {
             Id = m.Id,
             Content = m.Content,
@@ -48,6 +51,11 @@ public class GetMessagesByConversationQueryHandler : IRequestHandler<GetMessages
             SentAt = m.CreatedAt
         }).ToList();
 
-        return ApiResponse<List<GetMessagesByConversationQueryResponse>>.SuccessResult(response);
+        var response = new GetMessagesByConversationQueryResponse
+        {
+            Items = responseItems,
+        };
+
+        return ApiResponse<GetMessagesByConversationQueryResponse>.SuccessResult(response);
     }
 }

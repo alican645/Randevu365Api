@@ -5,7 +5,7 @@ using Randevu365.Domain.Entities;
 
 namespace Randevu365.Application.Features.Messaging.Queries.GetConversations;
 
-public class GetConversationsQueryHandler : IRequestHandler<GetConversationsQueryRequest, ApiResponse<List<GetConversationsQueryResponse>>>
+public class GetConversationsQueryHandler : IRequestHandler<GetConversationsQueryRequest, ApiResponse<GetConversationsQueryResponse>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICurrentUserService _currentUserService;
@@ -16,19 +16,19 @@ public class GetConversationsQueryHandler : IRequestHandler<GetConversationsQuer
         _currentUserService = currentUserService;
     }
 
-    public async Task<ApiResponse<List<GetConversationsQueryResponse>>> Handle(GetConversationsQueryRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<GetConversationsQueryResponse>> Handle(GetConversationsQueryRequest request, CancellationToken cancellationToken)
     {
         if (_currentUserService.UserId is null)
-            return ApiResponse<List<GetConversationsQueryResponse>>.UnauthorizedResult("Kullanici kimliği bulunamadi.");
+            return ApiResponse<GetConversationsQueryResponse>.UnauthorizedResult("Kullanici kimliği bulunamadi.");
 
         var userId = _currentUserService.UserId.Value;
 
         var conversations = await _unitOfWork.GetReadRepository<Conversation>()
             .GetAllAsync(
-                predicate: c => (c.UserId == userId || c.OtherUserId == userId) && !c.IsDeleted,
+                predicate: c => (c.UserId == userId || c.OtherUserId == userId) && !c.IsDeleted && !c.IsClosed,
                 orderBy: q => q.OrderByDescending(c => c.UpdatedAt));
 
-        var response = new List<GetConversationsQueryResponse>();
+        var responseItems = new List<GetConversationsQueryResponseItem>();
 
         foreach (var conv in conversations)
         {
@@ -41,15 +41,20 @@ public class GetConversationsQueryHandler : IRequestHandler<GetConversationsQuer
 
             var lastMessage = messages.FirstOrDefault();
 
-            response.Add(new GetConversationsQueryResponse
+            responseItems.Add(new GetConversationsQueryResponseItem
             {
                 ConversationId = conv.ConversationId,
                 OtherUserId = otherUserId,
+                AppointmentId = conv.AppointmentId,
                 LastMessage = lastMessage?.Content,
                 LastMessageDate = lastMessage?.CreatedAt
             });
         }
 
-        return ApiResponse<List<GetConversationsQueryResponse>>.SuccessResult(response);
+        var response = new GetConversationsQueryResponse
+        {
+            Items = responseItems
+        };
+        return ApiResponse<GetConversationsQueryResponse>.SuccessResult(response);
     }
 }

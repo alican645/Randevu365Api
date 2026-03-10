@@ -56,6 +56,16 @@ public class CompleteAppointmentCommandHandler : IRequestHandler<CompleteAppoint
         await _unitOfWork.GetWriteRepository<Appointment>().UpdateAsync(appointment);
         await _unitOfWork.SaveAsync();
 
+        // Conversation'ı kapat
+        var conversation = await _unitOfWork.GetReadRepository<Conversation>()
+            .GetAsync(c => c.AppointmentId == appointment.Id && !c.IsDeleted && !c.IsClosed, enableTracking: true);
+        if (conversation != null)
+        {
+            conversation.IsClosed = true;
+            await _unitOfWork.GetWriteRepository<Conversation>().UpdateAsync(conversation);
+            await _unitOfWork.SaveAsync();
+        }
+
         return ApiResponse<CompleteAppointmentCommandResponse>.SuccessResult(
             new CompleteAppointmentCommandResponse { Id = appointment.Id, Status = appointment.Status },
             "Randevu başarıyla tamamlandı.");

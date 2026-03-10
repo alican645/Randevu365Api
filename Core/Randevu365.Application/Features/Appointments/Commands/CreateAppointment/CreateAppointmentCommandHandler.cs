@@ -120,6 +120,24 @@ public class CreateAppointmentCommandHandler : IRequestHandler<CreateAppointment
         await _unitOfWork.GetWriteRepository<Appointment>().AddAsync(appointment);
         await _unitOfWork.SaveAsync();
 
+        // Randevu için otomatik conversation oluştur
+        var business = await _unitOfWork.GetReadRepository<Business>()
+            .GetAsync(b => b.Id == request.BusinessId && !b.IsDeleted);
+
+        if (business != null)
+        {
+            var conversation = new Conversation
+            {
+                UserId = userId,
+                OtherUserId = business.AppUserId,
+                AppointmentId = appointment.Id,
+                ConversationId = $"apt_{appointment.Id}",
+                IsClosed = false
+            };
+            await _unitOfWork.GetWriteRepository<Conversation>().AddAsync(conversation);
+            await _unitOfWork.SaveAsync();
+        }
+
         return ApiResponse<CreateAppointmentCommandResponse>.CreatedResult(
             new CreateAppointmentCommandResponse { Id = appointment.Id, Status = appointment.Status },
             "Randevu başarıyla oluşturuldu.");

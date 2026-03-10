@@ -6,8 +6,8 @@ public class SendMessageCommandValidator : AbstractValidator<SendMessageCommandR
 {
     public SendMessageCommandValidator()
     {
-        RuleFor(x => x.ReceiverId)
-            .GreaterThan(0).WithMessage("Gecerli bir alici ID'si giriniz.");
+        RuleFor(x => x.AppointmentId)
+            .GreaterThan(0).WithMessage("Gecerli bir randevu ID'si giriniz.");
 
         RuleFor(x => x.Content)
             .NotEmpty().WithMessage("Mesaj icerigi bos olamaz.")

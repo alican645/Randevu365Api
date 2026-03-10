@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Randevu365.Application.Common.Responses;
 using Randevu365.Application.Interfaces;
 using Randevu365.Domain.Entities;
@@ -9,13 +10,11 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommandReque
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICurrentUserService _currentUserService;
-    private readonly IConversationIdHelper _conversationIdHelper;
 
-    public SendMessageCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService, IConversationIdHelper conversationIdHelper)
+    public SendMessageCommandHandler(IUnitOfWork unitOfWork, ICurrentUserService currentUserService)
     {
         _unitOfWork = unitOfWork;
         _currentUserService = currentUserService;
-        _conversationIdHelper = conversationIdHelper;
     }
 
     public async Task<ApiResponse<SendMessageCommandResponse>> Handle(SendMessageCommandRequest request, CancellationToken cancellationToken)
@@ -24,36 +23,36 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommandReque
             return ApiResponse<SendMessageCommandResponse>.UnauthorizedResult("Kullanici kimliği bulunamadi.");
 
         var senderId = _currentUserService.UserId.Value;
-        var conversationId = await _conversationIdHelper.GenerateConversationId(senderId, request.ReceiverId);
 
-        // Ensure conversation exists
+        // Conversation'ı AppointmentId ile bul
         var conversation = await _unitOfWork.GetReadRepository<Conversation>()
-            .GetAsync(c => c.ConversationId == conversationId && !c.IsDeleted);
+            .GetAsync(c => c.AppointmentId == request.AppointmentId && !c.IsDeleted);
 
         if (conversation == null)
-        {
-            var newConversation = new Conversation
-            {
-                UserId = senderId,
-                OtherUserId = request.ReceiverId,
-                ConversationId = conversationId
-            };
-            await _unitOfWork.GetWriteRepository<Conversation>().AddAsync(newConversation);
-        }
+            return ApiResponse<SendMessageCommandResponse>.NotFoundResult("Konuşma bulunamadı.");
+
+        if (conversation.IsClosed)
+            return ApiResponse<SendMessageCommandResponse>.FailResult("Bu konuşma kapatılmıştır. Mesaj gönderilemez.");
+
+        // Kullanıcının bu konuşmaya erişimi var mı kontrol et
+        if (conversation.UserId != senderId && conversation.OtherUserId != senderId)
+            return ApiResponse<SendMessageCommandResponse>.ForbiddenResult("Bu konuşmaya erişiminiz yok.");
+
+        var receiverId = conversation.UserId == senderId ? conversation.OtherUserId : conversation.UserId;
 
         var message = new Message
         {
             Content = request.Content,
-            ConversationId = conversationId,
+            ConversationId = conversation.ConversationId,
             SenderId = senderId,
-            ReceiverId = request.ReceiverId
+            ReceiverId = receiverId
         };
 
         await _unitOfWork.GetWriteRepository<Message>().AddAsync(message);
         await _unitOfWork.SaveAsync();
 
         return ApiResponse<SendMessageCommandResponse>.CreatedResult(
-            new SendMessageCommandResponse { MessageId = message.Id, ConversationId = conversationId },
+            new SendMessageCommandResponse { MessageId = message.Id, ConversationId = conversation.ConversationId },
             "Mesaj gonderildi.");
     }
 }

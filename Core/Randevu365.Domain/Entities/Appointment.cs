@@ -23,4 +23,6 @@ public class Appointment : BaseEntity
     public AppointmentStatus Status { get; set; } = AppointmentStatus.Pending;
     public string? CustomerNotes { get; set; }
     public string? BusinessNotes { get; set; }
+
+    public virtual Conversation? Conversation { get; set; }
 }
